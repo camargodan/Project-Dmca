@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% include 'dmca/css.html' %}
+
+  </head>
+
+  <body>
+    <div class="container-scroller">
+      {% include 'dmca/navbar.html' %}
+      <div class="container-fluid page-body-wrapper">
+        {% include 'dmca/sidebar.html' %}
+        <div class="main-panel">
+
+          {% block content %}
+          {% endblock %}
+
+          {% include 'dmca/footer.html' %}
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+{% include 'dmca/js.html' %}
+
+</body>
+
+
+</html>
