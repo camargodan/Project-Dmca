@@ -148,7 +148,7 @@ STATICFILES = (os.path.join(BASE_DIR, 'dmca/static'),)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-SITE_ID = 1
+SITE_ID = 2
 
 
 # SMTP Configuration
@@ -181,3 +181,4 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LOGIN_REDIRECT_URL = 'index'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 ACCOUNT_LOGOUT_ON_GET = True
+AUTH_USER_MODEL = 'accounts.User'
