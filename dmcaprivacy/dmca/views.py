@@ -1,6 +1,12 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
+from django.contrib.auth import get_user_model
+from django.views.generic.edit import UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
+
+
+User = get_user_model()
 
 
 class Loginview(LoginRequiredMixin, TemplateView):
@@ -14,7 +20,7 @@ class Loginview(LoginRequiredMixin, TemplateView):
         elif request.user.is_worker:
             return HttpResponseRedirect('worker')
         else:
-            return HttpResponseRedirect('user')
+            return HttpResponseRedirect('client')
         return super(TemplateView, self).get(request, *args, **kwargs)
 
 
@@ -30,7 +36,15 @@ class Worker(LoginRequiredMixin, TemplateView):
     template_name = 'dmca/worker.html'
 
 
-class User(LoginRequiredMixin, TemplateView):
+class Client(LoginRequiredMixin, TemplateView):
     login_url = '/accounts/login/'
     redirect_field_name = 'home'
-    template_name = 'dmca/user.html'
+    template_name = 'dmca/client.html'
+
+
+class UserEditView(SuccessMessageMixin, UpdateView):
+    model = User
+    fields = ['first_name', 'last_name', 'username', 'email']
+    template_name = 'dmca/edit_user.html'
+    success_url = '/edit_user/{id}'
+    success_message = '%(username)s was edited successfully'
