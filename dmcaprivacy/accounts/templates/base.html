@@ -13,9 +13,6 @@
     {% block body %}
 
 
-
-
-
     <div class="container-scroller">
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
@@ -23,7 +20,9 @@
             <div class="col-lg-6 d-flex align-items-center justify-content-center">
               <div class="auth-form-transparent text-left p-3">
                 <div class="brand-logo">
-                  <img src="{% static 'images/logo.svg' %}" alt="logo">
+                  <a href="{% url 'loginview' %}">
+                    <img src="{% static 'images/logo.svg' %}" alt="logo">
+                  </a>
                 </div>
 
                 {% if messages %}
@@ -37,15 +36,18 @@
                 </div>
                 {% endif %}
 
-
-
     {% block content %}
     {% endblock %}
     {% endblock %}
-
+    <br>
+    <br>
+    <a  style="font-size:14px;"href="{% url 'loginview' %}">
+      Home
+    </a>
+</div>
 
 </div>
-</div>
+
 <div class="col-lg-6 login-half-bg d-flex flex-row">
   <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright © Heber Camargo 2021</p>
 </div>
@@ -55,25 +57,8 @@
 </div>
 <!-- page-body-wrapper ends -->
 </div>
-
-
-
-
     {% block extra_body %}
     {% endblock %}.
     {% include 'dmca/js.html' %}
   </body>
 </html>
-
-<!-- <div>
-  <strong>Menu:</strong>
-  <ul>
-    {% if user.is_authenticated %}
-    <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-    <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-    {% else %}
-    <li><a href="{% url 'account_login' %}">Sign In</a></li>
-    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-    {% endif %}
-  </ul>
-</div> -->

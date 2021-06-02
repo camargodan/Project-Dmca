@@ -10,6 +10,6 @@ urlpatterns = [
     path('administrator/', Administrator.as_view(), name='administrator'),
     path('worker/', Worker.as_view(), name='worker'),
     path('client/', Client.as_view(), name='client'),
-    path('edit_user/<int:pk>/', UserEditView.as_view(), name='edit_user'),
+    path('edit_user/<slug:slug>/', UserEditView.as_view(), name='edit_user'),
 
 ]

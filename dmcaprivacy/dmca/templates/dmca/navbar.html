@@ -1,8 +1,8 @@
 {% load static %}
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-    <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="{% static 'images/logo.svg' %}" class="mr-2" alt="logo"/></a>
-    <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{% static 'images/logo-mini.svg' %}" alt="logo"/></a>
+    <a class="navbar-brand brand-logo mr-5" href="{% url 'loginview' %}"><img src="{% static 'images/logo.svg' %}" class="mr-2" alt="logo"/></a>
+    <a class="navbar-brand brand-logo-mini" href="{% url 'loginview' %}"><img src="{% static 'images/logo-mini.svg' %}" alt="logo"/></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -127,9 +127,21 @@
           <img src="{% static 'images/faces/face28.jpg' %}" alt="profile"/>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="{% url 'edit_user' pk=user.pk %}">
-            <i class="ti-settings text-primary"></i>
-            Settings
+          <a class="dropdown-item" href="{{ user.get_absolute_url }}">
+            <i class="ti-user text-primary"></i>
+            Edit User
+          </a>
+          <a class="dropdown-item" href="{% url 'account_change_password' %}">
+            <i class="ti-key text-primary"></i>
+            Change Password
+          </a>
+          <a class="dropdown-item" href="{% url 'account_email' %}">
+            <i class="ti-email text-primary"></i>
+            Manage Email
+          </a>
+          <a class="dropdown-item" href="{% url 'socialaccount_connections' %}">
+            <i class="ti-link text-primary"></i>
+            Manage Social Media
           </a>
           <a class="dropdown-item" href="{% url 'account_logout' %}">
             <i class="ti-power-off text-primary"></i>
