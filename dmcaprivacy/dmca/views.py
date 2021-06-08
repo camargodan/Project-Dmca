@@ -44,9 +44,9 @@ class Client(LoginRequiredMixin, TemplateView):
 
 class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
-    fields = ['first_name', 'last_name', 'email']
+    fields = ['first_name', 'last_name', 'imag_clie']
     template_name = 'dmca/edit_user.html'
-    success_message = '%(email)s was edited successfully'
+    success_message = '%(first_name)s was edited successfully'
 
     def get_queryset(self):
         return User.objects.filter(username=self.request.user)

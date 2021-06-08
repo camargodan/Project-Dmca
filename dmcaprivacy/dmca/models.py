@@ -13,7 +13,6 @@ class Plans(models.Model):
 class Clients(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
     id_clie = models.AutoField(primary_key=True)
-    imag_clie = models.ImageField(null=True, blank=True, height_field='400', width_field='400', upload_to="images/faces/")
     plan_id = models.ForeignKey(Plans, null=True, blank=True, on_delete=models.CASCADE, db_column='plans_id_plan')
     worker_id_work = models.ForeignKey(
                                         'Workers', on_delete=models.CASCADE, db_column='worker_id_work', blank=True,

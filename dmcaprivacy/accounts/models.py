@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 class User(AbstractUser):
     is_client = models.BooleanField(default=True)
     is_worker = models.BooleanField(default=False)
+    imag_clie = models.ImageField(null=True, blank=True, upload_to="dmca/static/images/faces/")
     slug = models.SlugField(null=False, unique=True)
 
     class Meta:
