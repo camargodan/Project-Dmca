@@ -7,11 +7,10 @@
 
       {% block form_content %}
           <form enctype="multipart/form-data" method="post">{% csrf_token %}
-              {{ form|crispy }}
+                {{ form|crispy }}
               <div>
                 <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
                   Update</button>
-
               </div>
           </form>
       {% endblock form_content %}

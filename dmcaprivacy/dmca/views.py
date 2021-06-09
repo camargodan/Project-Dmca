@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
+from .forms import UserEditForm
 
 User = get_user_model()
 
@@ -44,7 +45,7 @@ class Client(LoginRequiredMixin, TemplateView):
 
 class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
-    fields = ['first_name', 'last_name', 'imag_clie']
+    form_class = UserEditForm
     template_name = 'dmca/edit_user.html'
     success_message = '%(first_name)s was edited successfully'
 
