@@ -1,0 +1,25 @@
+{% extends 'dmca/body_content.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block title %} Manage Users {% endblock %}
+
+
+{% block title_content %} Manage Users {% endblock %}
+
+{% block form_content %}
+
+<ul>
+{% for user in object_list %}
+  <li>
+      {{ user.username}} - {{ user.email }}
+  </li>
+{% endfor%}
+{% endblock %}
+</ul>
+
+{% block description_content %}
+
+Here you can manage the users, change the status or the level inside the app.
+
+{% endblock %}

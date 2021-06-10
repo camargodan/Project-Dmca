@@ -11,12 +11,10 @@ class Plans(models.Model):
 
 
 class Clients(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='id_client')
     id_clie = models.AutoField(primary_key=True)
     plan_id = models.ForeignKey(Plans, null=True, blank=True, on_delete=models.CASCADE, db_column='plans_id_plan')
-    worker_id_work = models.ForeignKey(
-                                        'Workers', on_delete=models.CASCADE, db_column='worker_id_work', blank=True,
-                                        null=True)
+    worker_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='id_worker', blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'clients'
@@ -89,11 +87,3 @@ class TubeReports(models.Model):
 
     class Meta:
         verbose_name_plural = 'tube_reports'
-
-
-class Workers(models.Model):
-    id_work = models.AutoField(primary_key=True)
-    name_work = models.CharField(max_length=45)
-
-    class Meta:
-        verbose_name_plural = 'workers'

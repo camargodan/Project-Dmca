@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
 from django.views.generic.edit import UpdateView
+from django.views.generic.list import ListView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from .forms import UserEditForm
@@ -54,3 +55,14 @@ class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('edit_user', kwargs={'slug': self.object.slug})
+
+
+class ManageUsers(ListView):
+    """docstring for ."""
+    model = User
+    paginate_by = 10
+    template_name = 'dmca/admin/manage_users.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

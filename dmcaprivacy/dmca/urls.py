@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Loginview, Administrator, Worker, Client, UserEditView
+from .views import Loginview, Administrator, Worker, Client, UserEditView, ManageUsers
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -11,5 +11,6 @@ urlpatterns = [
     path('worker/', Worker.as_view(), name='worker'),
     path('client/', Client.as_view(), name='client'),
     path('edit_user/<slug:slug>/', UserEditView.as_view(), name='edit_user'),
+    path('manage_users/', ManageUsers.as_view(), name='manage_users')
 
 ]
