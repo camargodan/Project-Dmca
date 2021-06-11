@@ -1,25 +1,61 @@
-{% extends 'dmca/body_content.html' %}
+{% extends 'dmca/tables_content.html' %}
 {% load static %}
 {% load crispy_forms_filters %}
 
 {% block title %} Manage Users {% endblock %}
 
+{% block title_content %} Manage Users and some {% endblock %}
 
-{% block title_content %} Manage Users {% endblock %}
+{% block tables_complet %}
 
-{% block form_content %}
+                  <h4 class="card-title">Striped Tables</h4>
+                  <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table id="list_users" class="table table-striped" >
+                      <thead>
+                        <tr>
+                          <th>
+                            User
+                          </th>
+                          <th>
+                            First name
+                          </th>
+                          <th>
+                            Last name
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for user in object_list %}
+                          <tr>
+                            <td class="py-1">
+                              {% if user.imag_clie %}
+                                <img src="{{ user.imag_clie.url }}" alt="image"/>
+                              {% else %}
+                                <img src="{% static 'images/faces/default-profile-picture.jpg' %}"/>
+                              {% endif%}
+                            </td>
+                            <td>
+                              {{ user.first_name }}
+                            </td>
+                            <td>
+                              {{ user.last_name}}
+                            </td>
+                            <td>
+                              {{ user.email}}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
 
-<ul>
-{% for user in object_list %}
-  <li>
-      {{ user.username}} - {{ user.email }}
-  </li>
-{% endfor%}
-{% endblock %}
-</ul>
+{% endblock tables_complet %}
 
-{% block description_content %}
 
-Here you can manage the users, change the status or the level inside the app.
 
-{% endblock %}

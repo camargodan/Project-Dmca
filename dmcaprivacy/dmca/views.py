@@ -47,7 +47,7 @@ class Client(LoginRequiredMixin, TemplateView):
 class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
     form_class = UserEditForm
-    template_name = 'dmca/edit_user.html'
+    template_name = 'dmca/pages/edit_user.html'
     success_message = '%(first_name)s was edited successfully'
 
     def get_queryset(self):
@@ -60,7 +60,6 @@ class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 class ManageUsers(ListView):
     """docstring for ."""
     model = User
-    paginate_by = 10
     template_name = 'dmca/admin/manage_users.html'
 
     def get_context_data(self, **kwargs):

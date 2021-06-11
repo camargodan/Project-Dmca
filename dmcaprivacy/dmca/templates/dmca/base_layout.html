@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equv="x-wa-compatible" content="ie-edge">
     <title>{% block title %}{% endblock %}</title>
     {% include 'dmca/css.html' %}
+    {% block extra_head %}  {% endblock %}
+
   </head>
   <body>
     <div class="container-scroller">
@@ -22,5 +25,6 @@
     </div>
     <!-- container-scroller -->
 {% include 'dmca/js.html' %}
+{% block extra_body %}  {% endblock %}
 </body>
 </html>
