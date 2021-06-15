@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Clients, GoogleReports, Nicks, NicksHasPages, Pages, TubeHasPages, TubePages, TubeReports
+from .models import Clients, GoogleReports, Nicks, NicksHasPages, Pages, TubeHasPages, TubePages, TubeReports, Plans
 
 # Register your models here.
 
@@ -11,3 +11,4 @@ admin.site.register(TubeHasPages)
 admin.site.register(TubePages)
 admin.site.register(TubeReports)
 admin.site.register(Clients)
+admin.site.register(Plans)

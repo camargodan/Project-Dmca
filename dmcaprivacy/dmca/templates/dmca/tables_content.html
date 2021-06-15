@@ -37,18 +37,3 @@
 
 </div>
 {% endblock %}
-
-{% block extra_body %}
-{% include 'dmca/js_tables.html' %}
-    <script type = "application/javascript">
-        $(document).ready(function() {
-            $('#list_users').DataTable({
-                responsive: true,
-                autoWidth: false,
-                "language": {
-                    url: '{% static 'datatables-1.10.20/spanish.txt' %}'
-                }
-            } );
-        } );
-    </script>
-{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'dmca/tables_content.html' %}
+{% load static %}
+
+{% block title %} Manage Plans {% endblock %}
+
+{% block title_content %} Manage Plans {% endblock %}
+
+{% block tables_complet %}
+
+        <h4 class="card-title">List of plans for the clients</h4>
+      <p class="card-description">
+      <button type="button" class="btn btn-primary js-create-book">
+      <i class="ti-plus"></i>
+      Add New
+    </button>
+      </p>
+
+
+      <div class="table-responsive">
+        <table id="list_plans" class="table table-striped" >
+          <thead>
+            <tr>
+              <th>
+                Id
+              </th>
+              <th>
+                Plans
+              </th>
+              <th>
+                Options
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for plan in object_list %}
+            <tr>
+                <td>
+                    {{ plan.id_plan }}
+                </td>
+                <td>
+                    {{ plan.plan }}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-warning btn-rounded btn-icon"><i class="ti-cut"></i></button>
+                    <button type="button" class="btn btn-outline-danger btn-rounded btn-icon"> <i class="ti-trash"></i></button>
+                </td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+{% endblock %}
+
+{% block extra_body %}
+    {% include 'dmca/js_tables.html' %}
+    {% include 'dmca/jquery.html' %}
+    <script type = "application/javascript">
+        $(document).ready(function() {
+            $('#list_plans').DataTable({
+                responsive: true,
+                autoWidth: false,
+                "language": {
+                    url: '{% static 'datatables-1.10.20/spanish.txt' %}'
+                }
+            } );
+        } );
+    </script>
+{% endblock %}

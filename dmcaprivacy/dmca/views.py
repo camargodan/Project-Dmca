@@ -7,7 +7,8 @@ from django.views.generic.list import ListView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from .forms import UserEditForm
-
+from .models import Plans
+from .mixins import SuperuserRequired
 User = get_user_model()
 
 
@@ -45,6 +46,8 @@ class Client(LoginRequiredMixin, TemplateView):
 
 
 class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'home'
     model = User
     form_class = UserEditForm
     template_name = 'dmca/pages/edit_user.html'
@@ -57,11 +60,17 @@ class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return reverse('edit_user', kwargs={'slug': self.object.slug})
 
 
-class ManageUsers(ListView):
+class ManageUsers(LoginRequiredMixin, SuperuserRequired, ListView):
     """docstring for ."""
+    login_url = '/accounts/login/'
+    redirect_field_name = 'home'
     model = User
-    template_name = 'dmca/admin/manage_users.html'
+    template_name = "dmca/admin/manage_users.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+
+class ManagePlans(LoginRequiredMixin, SuperuserRequired, ListView):
+    model = Plans
+    template_name = 'dmca/admin/manage_plans.html'
+
+
+

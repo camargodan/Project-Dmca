@@ -9,6 +9,9 @@ class Plans(models.Model):
     class Meta:
         verbose_name_plural = 'Plans'
 
+    def __str__(self):
+        return self.plan
+
 
 class Clients(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='id_client')

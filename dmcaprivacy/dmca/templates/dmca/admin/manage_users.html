@@ -1,61 +1,75 @@
 {% extends 'dmca/tables_content.html' %}
 {% load static %}
-{% load crispy_forms_filters %}
 
 {% block title %} Manage Users {% endblock %}
 
-{% block title_content %} Manage Users and some {% endblock %}
+{% block title_content %} Manage Users {% endblock %}
 
 {% block tables_complet %}
 
-                  <h4 class="card-title">Striped Tables</h4>
-                  <p class="card-description">
-                    Add class <code>.table-striped</code>
-                  </p>
-                  <div class="table-responsive">
-                    <table id="list_users" class="table table-striped" >
-                      <thead>
-                        <tr>
-                          <th>
-                            User
-                          </th>
-                          <th>
-                            First name
-                          </th>
-                          <th>
-                            Last name
-                          </th>
-                          <th>
-                            Email
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for user in object_list %}
-                          <tr>
-                            <td class="py-1">
-                              {% if user.imag_clie %}
-                                <img src="{{ user.imag_clie.url }}" alt="image"/>
-                              {% else %}
-                                <img src="{% static 'images/faces/default-profile-picture.jpg' %}"/>
-                              {% endif%}
-                            </td>
-                            <td>
-                              {{ user.first_name }}
-                            </td>
-                            <td>
-                              {{ user.last_name}}
-                            </td>
-                            <td>
-                              {{ user.email}}
-                            </td>
-                          </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
+      <h4 class="card-title">List of user register in the App</h4>
+      <p class="card-description">
+        Manage all the users, assign roles and other
+      </p>
+      <div class="table-responsive">
+        <table id="list_users" class="table table-striped" >
+          <thead>
+            <tr>
+              <th>
+                User
+              </th>
+              <th>
+                First name
+              </th>
+              <th>
+                Last name
+              </th>
+              <th>
+                Email
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in object_list %}
+              <tr>
+                <td class="py-1">
+                  {% if user.imag_clie %}
+                    <img src="{{ user.imag_clie.url }}" alt="image"/>
+                  {% else %}
+                    <img src="{% static 'images/faces/default-profile-picture.jpg' %}"/>
+                  {% endif%}
+                </td>
+                <td>
+                  {{ user.first_name }}
+                </td>
+                <td>
+                  {{ user.last_name}}
+                </td>
+                <td>
+                  {{ user.email}}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
 {% endblock tables_complet %}
+
+{% block extra_body %}
+    {% include 'dmca/js_tables.html' %}
+    <script type = "application/javascript">
+        $(document).ready(function() {
+            $('#list_users').DataTable({
+                responsive: true,
+                autoWidth: false,
+                "language": {
+                    url: '{% static 'datatables-1.10.20/spanish.txt' %}'
+                }
+            } );
+        } );
+    </script>
+{% endblock %}
 
 
 
