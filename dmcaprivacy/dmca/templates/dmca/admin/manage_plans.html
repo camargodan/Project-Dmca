@@ -9,16 +9,28 @@
 
         <h4 class="card-title">List of plans for the clients</h4>
       <p class="card-description">
-      <button type="button" class="btn btn-primary js-create-book">
-      <i class="ti-plus"></i>
-      Add New
-    </button>
+          <button id="create-plan" type="button" name="button" class="btn btn-primary">
+        <i class="ti-plus"></i>
+        Add New
+        </button>
+      {% if messages %}
+          <div class="alert alert-warning" role="alert">
+            <strong>Messages:</strong>
+            <ul>
+              {% for message in messages %}
+              <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{message}}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+      {% endif %}
       </p>
-
 
       <div class="table-responsive">
         <table id="list_plans" class="table table-striped" >
-          <thead>
+            {#  table content suppressed #}
+                      <thead>
             <tr>
               <th>
                 Id
@@ -40,9 +52,11 @@
                 <td>
                     {{ plan.plan }}
                 </td>
-                <td>
+                <td class="py-1">
                     <button type="button" class="btn btn-outline-warning btn-rounded btn-icon"><i class="ti-cut"></i></button>
                     <button type="button" class="btn btn-outline-danger btn-rounded btn-icon"> <i class="ti-trash"></i></button>
+{#                    <a href=""><i class="ti-cut"></i>Edit</a>#}
+{#                    <a href=""<i class="ti-trash"></i>Delet</a>#}
                 </td>
             </tr>
             {% endfor %}
@@ -50,20 +64,42 @@
           </tbody>
         </table>
       </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
 {% endblock %}
 
 {% block extra_body %}
     {% include 'dmca/js_tables.html' %}
-    {% include 'dmca/jquery.html' %}
+    {% include 'dmca/js_modal_ajax.html' %}
+
     <script type = "application/javascript">
-        $(document).ready(function() {
-            $('#list_plans').DataTable({
-                responsive: true,
-                autoWidth: false,
-                "language": {
-                    url: '{% static 'datatables-1.10.20/spanish.txt' %}'
-                }
-            } );
-        } );
+    $(document).ready(function() {
+        $('#list_plans').DataTable({
+            responsive: true,
+            autoWidth: false,
+            "language": {
+                url: '{% static 'datatables-1.10.20/spanish.txt' %}'
+            }
+        });
+    });
+
+    $(function () {
+    // Sign up button
+    $("#create-plan").modalForm({
+        formURL: "{% url 'create_plan' %}"
+    });
+  });
     </script>
+
 {% endblock %}
+
+
+
+
+
+

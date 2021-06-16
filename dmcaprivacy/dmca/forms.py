@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
-
+from .models import Plans
+from bootstrap_modal_forms.forms import BSModalModelForm
 User = get_user_model()
 
 
@@ -27,4 +28,14 @@ class UserEditForm(forms.ModelForm):
         widgets = {
             'first_name': forms.TextInput(attrs={'placeholder': 'First name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last name'})
+        }
+
+
+class PlanCreateForm(BSModalModelForm):
+    class Meta:
+        model = Plans
+        fields = ('plan',)
+
+        widgets = {
+            'plan': forms.TextInput(attrs={'placeholder': 'Name of the plan'})
         }

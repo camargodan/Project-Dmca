@@ -1,14 +1,17 @@
+from bootstrap_modal_forms.generic import BSModalCreateView
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
-from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse
-from .forms import UserEditForm
+from django.urls import reverse, reverse_lazy
+from .forms import UserEditForm, PlanCreateForm
 from .models import Plans
 from .mixins import SuperuserRequired
+
+
 User = get_user_model()
 
 
@@ -73,4 +76,10 @@ class ManagePlans(LoginRequiredMixin, SuperuserRequired, ListView):
     template_name = 'dmca/admin/manage_plans.html'
 
 
-
+class CreatePlan(LoginRequiredMixin, SuperuserRequired, BSModalCreateView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'home'
+    form_class = PlanCreateForm
+    template_name = 'dmca/admin/create_plan.html'
+    success_message = 'Success: Created successfully.'
+    success_url = reverse_lazy('manage_plans')
