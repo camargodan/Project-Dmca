@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'dmca',
     'crispy_forms',
     'bootstrap_modal_forms',
-    'widget_tweaks',
 
     # 3rd party
     'allauth',  # new
