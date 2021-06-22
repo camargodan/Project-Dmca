@@ -7,7 +7,7 @@
 
 {% block tables_complet %}
 
-        <h4 class="card-title">List of plans for the clients</h4>
+        <h4 class="card-title">Manage Plans</h4>
       <p class="card-description">
           <button id="create-plan" type="button" name="button" class="btn btn-primary">
         <i class="ti-plus"></i>
@@ -30,7 +30,7 @@
       <div class="table-responsive">
         <table id="list_plans" class="table table-striped" >
             {#  table content suppressed #}
-                      <thead>
+        <thead>
             <tr>
               <th>
                 Id
@@ -42,34 +42,14 @@
                 Options
               </th>
             </tr>
-          </thead>
+        </thead>
           <tbody>
-            {% for plan in object_list %}
-            <tr>
-                <td>
-                    {{ plan.id_plan }}
-                </td>
-                <td>
-                    {{ plan.plan }}
-                </td>
-                <td class="py-1">
-                    <button type="button" class="btn btn-outline-warning btn-rounded btn-icon"><i class="ti-cut"></i></button>
-                    <button type="button" class="btn btn-outline-danger btn-rounded btn-icon"> <i class="ti-trash"></i></button>
-{#                    <a href=""><i class="ti-cut"></i>Edit</a>#}
-{#                    <a href=""<i class="ti-trash"></i>Delet</a>#}
-                </td>
-            </tr>
-            {% endfor %}
-
+                {#  DATATABLE#}
           </tbody>
         </table>
       </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content"></div>
-      </div>
-    </div>
+
 
 {% endblock %}
 
@@ -77,23 +57,67 @@
     {% include 'dmca/js_tables.html' %}
     {% include 'dmca/js_modal_ajax.html' %}
 
-    <script type = "application/javascript">
-    $(document).ready(function() {
+    <script type="application/javascript">
+        {#START CALL DATATABLE#}
+        $(function () {
+            $('#list_plans').DataTable({
+                responsive: true,
+                autoWidth: false
+            });
+
+            $('#create-plan').on('click', function () {
+                $.ajax({
+                    url: '{% url 'manage_plans' %}',
+                    type: 'POST',
+                    data: {id: 1},
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log(data);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+
+                });
+            });
+        });
+        {#END CALL DATATABLE#}
+    {#START OF AJAX FUNCTIONS#}
+    $(function () {
         $('#list_plans').DataTable({
             responsive: true,
             autoWidth: false,
-            "language": {
-                url: '{% static 'datatables-1.10.20/spanish.txt' %}'
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'searchdata'
+                },
+                dataSrc: ""
+            },
+            columns: [
+                {"data": "id_plan"},
+                {"data": "plan"},
+                {"data": "plan"},
+            ],
+            columnDefs: [
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var buttons = '<a href="/erp/category/update/' + row.id + '/" type="button" class="btn btn-outline-warning py-1"><i class="ti-cut"></i></a> ';
+                        buttons += '<a href="/erp/category/delete/' + row.id + '/" type="button" class="btn btn-outline-danger py-1"><i class="ti-trash"></i></a>';
+                        return buttons;
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
             }
         });
     });
 
-    $(function () {
-    // Sign up button
-    $("#create-plan").modalForm({
-        formURL: "{% url 'create_plan' %}"
-    });
-  });
     </script>
 
 {% endblock %}

@@ -1,10 +1,15 @@
 from django.db import models
 from django.conf import settings
+from django.forms import model_to_dict
 
 
 class Plans(models.Model):
     id_plan = models.AutoField(primary_key=True)
     plan = models.CharField(max_length=45)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name_plural = 'Plans'
