@@ -1,19 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.forms import ModelForm
 from .models import Plans
-from bootstrap_modal_forms.forms import BSModalModelForm
 User = get_user_model()
-
-
-class BootstrapModelForm(forms.ModelForm):
-    """ class to be inherited to add form class  """
-
-    def __init__(self, *args, **kwargs):
-        super(BootstrapModelForm, self).__init__(*args, **kwargs)
-        for field in iter(self.fields):
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control'
-            })
 
 
 class UserEditForm(forms.ModelForm):
@@ -31,11 +20,24 @@ class UserEditForm(forms.ModelForm):
         }
 
 
-class PlanCreateForm(BSModalModelForm):
+class PlanCreateForm(ModelForm):
+
     class Meta:
         model = Plans
         fields = ('plan',)
 
         widgets = {
-            'plan': forms.TextInput(attrs={'placeholder': 'Name of the plan'})
+            'plan': forms.TextInput(attrs={'placeholder': 'Name of the plan', 'id': 'plan'})
         }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

@@ -5,7 +5,7 @@ from django.forms import model_to_dict
 
 class Plans(models.Model):
     id_plan = models.AutoField(primary_key=True)
-    plan = models.CharField(max_length=45)
+    plan = models.CharField(max_length=45, unique=True)
 
     def toJSON(self):
         item = model_to_dict(self)

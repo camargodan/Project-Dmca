@@ -82,7 +82,6 @@ class ManagePlans(ListView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         data = {}
@@ -92,6 +91,10 @@ class ManagePlans(ListView):
                 data = []
                 for i in Plans.objects.all():
                     data.append(i.toJSON())
+            elif action == 'add':
+                pla = Plans()
+                pla.plan = request.POST['plan']
+                pla.save()
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -100,10 +103,10 @@ class ManagePlans(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Listado de Categorías FLAGGGGGGGGG'
-        context['create_url'] = reverse_lazy('create_plan')
+        context['title'] = 'List of plans, search, add, edit or remove.'
         context['list_url'] = reverse_lazy('manage_plans')
         context['entity'] = 'Plans'
+        context['form'] = PlanCreateForm()
         return context
 
 

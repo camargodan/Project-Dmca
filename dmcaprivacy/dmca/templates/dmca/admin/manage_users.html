@@ -5,32 +5,29 @@
 
 {% block title_content %} Manage Users {% endblock %}
 
-{% block tables_complet %}
+{% block card_title %} List of user register in the App {% endblock card_title %}
 
-      <h4 class="card-title">List of user register in the App</h4>
-      <p class="card-description">
-        Manage all the users, assign roles and other
-      </p>
-      <div class="table-responsive">
-        <table id="list_users" class="table table-striped" >
-          <thead>
-            <tr>
-              <th>
-                User
-              </th>
-              <th>
-                First name
-              </th>
-              <th>
-                Last name
-              </th>
-              <th>
-                Email
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for user in object_list %}
+{% block buttons %} {% endblock %}
+
+    {% block columns %}
+        <tr>
+          <th>
+            User
+          </th>
+          <th>
+            First name
+          </th>
+          <th>
+            Last name
+          </th>
+          <th>
+            Email
+          </th>
+        </tr>
+    {% endblock %}
+
+    {% block rows %}
+        {% for user in object_list %}
               <tr>
                 <td class="py-1">
                   {% if user.imag_clie %}
@@ -49,18 +46,14 @@
                   {{ user.email}}
                 </td>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-
-{% endblock tables_complet %}
+        {% endfor %}
+    {% endblock %}
 
 {% block extra_body %}
     {% include 'dmca/js_tables.html' %}
     <script type = "application/javascript">
         $(document).ready(function() {
-            $('#list_users').DataTable({
+            $('#list_data').DataTable({
                 responsive: true,
                 autoWidth: false,
                 "language": {
