@@ -25,8 +25,8 @@
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
-                        var buttons = '<a href="/erp/category/update/' + row.id + '/" type="button" class="btn btn-warning py-1"><i class="ti-cut "></i></a> ';
-                        buttons += '<a href="/erp/category/delete/' + row.id + '/" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
+                        var buttons = '<a href="#" rel="edit" type="button" class="btn btn-warning py-1"><i class="ti-cut "></i></a> ';
+                        buttons += '<a href="#" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
                         return buttons;
                     }
                 },
@@ -37,17 +37,35 @@
     }
     // when document get ready
     $(function () {
+        var modal_title = $('.modal-title');
         // call datatable
         getData();
         // button add new
-        $('#create-plan').on('click', function () {
+        $('#btnAdd').on('click', function () {
             $('input[name="action"]').val('add');
+            modal_title.find('span').html('Add a new plan');
+            modal_title.find('i').removeClass().addClass('ti-plus');
+            $('form')[0].reset();
             $('#myModalClient').modal('show');
+        });
+        // button edit
+        $('#list_data tbody').on('click', 'a[rel="edit"]', function (){
+            modal_title.find('span').html('Edit selected plan');
+            modal_title.find('i').removeClass().addClass('ti-cut');
+            var tr = tblClient.cell($(this).closest('td, li')).index();
+            var data = tblClient.row(tr.row).data();
+            console.log(data)
+            $('input[name="action"]').val('edit');
+            $('input[name="id_plan"]').val(data.id_plan);
+            $('input[name="plan"]').val(data.plan);
+            $('#myModalClient').modal('show');
+
         });
         // open modal
         $('#myModalClient').on('shown.bs.modal', function () {
             $('#plan').focus();
-            $('form')[0].reset();
+            // for the model reset all values in it.
+            // $('form')[0].reset();
         });
         // submit form
         $('form').on('submit', function (e) {

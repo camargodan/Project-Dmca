@@ -29,6 +29,10 @@ class ManagePlans(ListView, SuperuserRequired):
                 pla = Plans()
                 pla.plan = request.POST['plan']
                 pla.save()
+            elif action == 'edit':
+                pla = Plans.objects.get(pk=request.POST['id_plan'])
+                pla.plan = request.POST['plan']
+                pla.save()
             else:
                 data['error'] = 'An error has occurred'
         except Exception as e:
