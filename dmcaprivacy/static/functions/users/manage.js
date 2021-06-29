@@ -1,4 +1,4 @@
- var tblClient;
+var tblClient;
     // START CALL DATATABLE
     function getData(){
         tblClient = $('#list_data').DataTable({
@@ -15,9 +15,19 @@
                 dataSrc: ""
             },
             columns: [
-                {"data": "id_plan"},
-                {"data": "plan"},
-                {"data": "plan"},
+                {
+                    "data": "imag_clie",
+                    "render": function(data, type, row) {
+                        if (data){
+                            return '<img src="'+data+'" />';
+                        }
+                    }
+
+                },
+                {"data": "first_name"},
+                {"data": "last_name"},
+                {"data": "email"},
+                {"data": "email"},
             ],
             columnDefs: [
                 {
@@ -26,7 +36,6 @@
                     orderable: false,
                     render: function (data, type, row) {
                         var buttons = '<a href="/erp/category/update/' + row.id + '/" type="button" class="btn btn-warning py-1"><i class="ti-cut "></i></a> ';
-                        buttons += '<a href="/erp/category/delete/' + row.id + '/" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
                         return buttons;
                     }
                 },
@@ -37,27 +46,6 @@
     }
     // when document get ready
     $(function () {
-        // call datatable
+        //call datatable
         getData();
-        // button add new
-        $('#create-plan').on('click', function () {
-            $('input[name="action"]').val('add');
-            $('#myModalClient').modal('show');
-        });
-        // open modal
-        $('#myModalClient').on('shown.bs.modal', function () {
-            $('#plan').focus();
-            $('form')[0].reset();
-        });
-        // submit form
-        $('form').on('submit', function (e) {
-            e.preventDefault();
-            //var parameters = $(this).serializeArray();
-            var parameters = new FormData(this);
-            submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to do this action?', parameters, function () {
-                $('#myModalClient').modal('hide');
-                tblClient.ajax.reload();
-            });
-        });
-
     });

@@ -5,7 +5,7 @@
 
 {% block title_content %} Manage Users {% endblock %}
 
-{% block card_title %} List of user register in the App {% endblock card_title %}
+{% block card_title %} {{ title }} {% endblock card_title %}
 
 {% block buttons %} {% endblock %}
 
@@ -23,45 +23,19 @@
           <th>
             Email
           </th>
+          <th>
+            Options
+          </th>
         </tr>
     {% endblock %}
 
     {% block rows %}
-        {% for user in object_list %}
-              <tr>
-                <td class="py-1">
-                  {% if user.imag_clie %}
-                    <img src="{{ user.imag_clie.url }}" alt="image"/>
-                  {% else %}
-                    <img src="{% static 'images/faces/default-profile-picture.jpg' %}"/>
-                  {% endif%}
-                </td>
-                <td>
-                  {{ user.first_name }}
-                </td>
-                <td>
-                  {{ user.last_name}}
-                </td>
-                <td>
-                  {{ user.email}}
-                </td>
-              </tr>
-        {% endfor %}
+
     {% endblock %}
 
 {% block extra_body %}
     {% include 'dmca/js_tables.html' %}
-    <script type = "application/javascript">
-        $(document).ready(function() {
-            $('#list_data').DataTable({
-                responsive: true,
-                autoWidth: false,
-                "language": {
-                    url: '{% static 'datatables-1.10.20/spanish.txt' %}'
-                }
-            } );
-        } );
-    </script>
+    <script src="{% static 'functions/users/manage.js' %}"></script>
 {% endblock %}
 
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.forms import model_to_dict
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.core.exceptions import ValidationError
@@ -15,7 +16,9 @@ def validate_image(imag_clie):
 class User(AbstractUser):
     is_client = models.BooleanField(default=True)
     is_worker = models.BooleanField(default=False)
-    imag_clie = models.ImageField(null=True, blank=True, upload_to="dmca/static/images/faces/", validators=[validate_image])
+    imag_clie = models.ImageField(null=True, blank=True, upload_to="dmca/static/images/faces/",
+                                  default='dmca/static/images/faces/default-profile-picture.jpg',
+                                  validators=[validate_image])
     slug = models.SlugField(null=False, unique=True)
 
     class Meta:
@@ -28,3 +31,8 @@ class User(AbstractUser):
         if not self.slug:
             self.slug = slugify(self.username)
         return super().save(*args, **kwargs)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
