@@ -26,7 +26,7 @@
                     orderable: false,
                     render: function (data, type, row) {
                         var buttons = '<a href="#" rel="edit" type="button" class="btn btn-warning py-1"><i class="ti-cut "></i></a> ';
-                        buttons += '<a href="#" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
+                        buttons += '<a href="#" rel="delete" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
                         return buttons;
                     }
                 },
@@ -49,16 +49,27 @@
             $('#myModalClient').modal('show');
         });
         // button edit
-        $('#list_data tbody').on('click', 'a[rel="edit"]', function (){
+        $('#list_data tbody')
+            .on('click', 'a[rel="edit"]', function (){
             modal_title.find('span').html('Edit selected plan');
             modal_title.find('i').removeClass().addClass('ti-cut');
             var tr = tblClient.cell($(this).closest('td, li')).index();
             var data = tblClient.row(tr.row).data();
-            console.log(data)
             $('input[name="action"]').val('edit');
             $('input[name="id_plan"]').val(data.id_plan);
             $('input[name="plan"]').val(data.plan);
             $('#myModalClient').modal('show');
+
+        })
+            .on('click', 'a[rel="delete"]', function (){
+            var tr = tblClient.cell($(this).closest('td, li')).index();
+            var data = tblClient.row(tr.row).data();
+            var parameters = new FormData();
+            parameters.append('action', 'delete');
+            parameters.append('id_plan', data.id_plan);
+            submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to delete this plan?', parameters, function () {
+                tblClient.ajax.reload();
+            });
 
         });
         // open modal

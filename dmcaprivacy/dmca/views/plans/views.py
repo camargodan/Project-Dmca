@@ -33,6 +33,9 @@ class ManagePlans(ListView, SuperuserRequired):
                 pla = Plans.objects.get(pk=request.POST['id_plan'])
                 pla.plan = request.POST['plan']
                 pla.save()
+            elif action == 'delete':
+                pla = Plans.objects.get(pk=request.POST['id_plan'])
+                pla.delete()
             else:
                 data['error'] = 'An error has occurred'
         except Exception as e:
