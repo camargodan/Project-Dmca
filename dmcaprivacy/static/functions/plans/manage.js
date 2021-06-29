@@ -83,7 +83,7 @@
             e.preventDefault();
             //var parameters = $(this).serializeArray();
             var parameters = new FormData(this);
-            submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to do this action?', parameters, function () {
+            submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to add this Plan?', parameters, function () {
                 $('#myModalClient').modal('hide');
                 tblClient.ajax.reload();
             });
