@@ -63,10 +63,17 @@ class NicksHasPages(models.Model):
 
 class Pages(models.Model):
     id_page = models.AutoField(primary_key=True)
-    name_page = models.CharField(max_length=45)
+    name_page = models.CharField(max_length=45, unique=True)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name_plural = 'pages'
+
+    def __str__(self):
+        return self.name_page
 
 
 class TubeHasPages(models.Model):

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm
-from .models import Plans
+from .models import Plans, Pages
 User = get_user_model()
 
 
@@ -41,3 +41,26 @@ class PlanCreateForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+
+class PageCreateForm(ModelForm):
+
+    class Meta:
+        model = Pages
+        fields = ('name_page', )
+
+        widgets = {
+            'name_page': forms.TextInput(attrs={'placeholder': 'Name of the plan', 'id': 'name_page'})
+        }
+
+        def save(self, commit=True):
+            data = {}
+            form = super()
+            try:
+                if form.is_valid():
+                    form.save()
+                else:
+                    data['error'] = form.errors
+            except Exception as e:
+                data['error'] = str(e)
+            return data

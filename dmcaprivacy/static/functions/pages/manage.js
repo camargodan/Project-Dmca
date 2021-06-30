@@ -15,9 +15,9 @@ function getData(){
             dataSrc: ""
         },
         columns: [
-            {"data": "id_plan"},
-            {"data": "plan"},
-            {"data": "plan"},
+            {"data": "id_page"},
+            {"data": "name_page"},
+            {"data": "name_page"},
         ],
         columnDefs: [
             {
@@ -43,7 +43,7 @@ $(function () {
     // button add new
     $('#btnAdd').on('click', function () {
         $('input[name="action"]').val('add');
-        modal_title.find('span').html('Add a new plan');
+        modal_title.find('span').html('Add a new page');
         modal_title.find('i').removeClass().addClass('ti-plus');
         $('form')[0].reset();
         $('#myModalClient').modal('show');
@@ -51,13 +51,13 @@ $(function () {
     // button edit
     $('#list_data tbody')
         .on('click', 'a[rel="edit"]', function (){
-            modal_title.find('span').html('Edit selected plan');
+            modal_title.find('span').html('Edit selected page');
             modal_title.find('i').removeClass().addClass('ti-cut');
             var tr = tblClient.cell($(this).closest('td, li')).index();
             var data = tblClient.row(tr.row).data();
             $('input[name="action"]').val('edit');
-            $('input[name="id_plan"]').val(data.id_plan);
-            $('input[name="plan"]').val(data.plan);
+            $('input[name="id_page"]').val(data.id_page);
+            $('input[name="name_page"]').val(data.name_page);
             $('#myModalClient').modal('show');
 
         })
@@ -66,15 +66,15 @@ $(function () {
             var data = tblClient.row(tr.row).data();
             var parameters = new FormData();
             parameters.append('action', 'delete');
-            parameters.append('id_plan', data.id_plan);
-            submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to delete this plan?', parameters, function () {
+            parameters.append('id_page', data.id_page);
+            submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to delete this page?', parameters, function () {
                 tblClient.ajax.reload();
             });
 
         });
     // open modal
     $('#myModalClient').on('shown.bs.modal', function () {
-        $('#plan').focus();
+        $('#name_page').focus();
         // for the model reset all values in it.
         // $('form')[0].reset();
     });
@@ -83,7 +83,7 @@ $(function () {
         e.preventDefault();
         //var parameters = $(this).serializeArray();
         var parameters = new FormData(this);
-        submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to save this Plan?', parameters, function () {
+        submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to save this Page?', parameters, function () {
             $('#myModalClient').modal('hide');
             tblClient.ajax.reload();
         });
