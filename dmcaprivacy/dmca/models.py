@@ -88,10 +88,17 @@ class TubeHasPages(models.Model):
 
 class TubePages(models.Model):
     id_tube_pages = models.AutoField(primary_key=True)
-    name_tube_page = models.CharField(max_length=45)
+    name_tube_page = models.CharField(max_length=45, unique=True)
 
     class Meta:
         verbose_name_plural = 'tube_pages'
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    def __str__(self):
+        return self.name_tube_page
 
 
 class TubeReports(models.Model):

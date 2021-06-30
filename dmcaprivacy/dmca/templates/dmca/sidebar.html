@@ -23,27 +23,31 @@
                 </a>
             </li>
         {% endif %}
+
         {% if user.is_superuser %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'manage_pages' %}">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="ti-files menu-icon"></i>
                     <span class="menu-title">Manage Pages</span>
+                    <i class="menu-arrow"></i>
                 </a>
+                <div class="collapse" id="ui-basic">
+                    <ul style="list-style-type:none" class="nav flex-column sub-menu" >
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'official_pages' %}">
+                                <span class="menu-title">Official Pages</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tube_pages' %}">
+                                <span class="menu-title">Tube Pages</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         {% endif %}
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="ti-palette menu-icon"></i>
-                <span class="menu-title">UI Elements</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                </ul>
-            </div>
-        </li>
+
         <li class="nav-item">
             <a class="nav-link" href="pages/forms/basic_elements.html">
                 <i class="ti-layout-list-post menu-icon"></i>
