@@ -10,7 +10,7 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'imag_clie')
+        fields = ('first_name', 'last_name', 'imag_clie', 'is_active', 'is_superuser', 'is_worker', 'is_client')
         labels = {
             'imag_clie': 'Profile image'
         }
@@ -18,6 +18,25 @@ class UserEditForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'placeholder': 'First name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last name'})
         }
+
+
+class UserStatus(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'is_active', 'is_superuser', 'is_worker', 'is_client')
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
 
 class PlanCreateForm(ModelForm):
@@ -53,17 +72,17 @@ class OfficialPageCreateForm(ModelForm):
             'name_page': forms.TextInput(attrs={'placeholder': 'Name of the plan', 'id': 'name_page'})
         }
 
-        def save(self, commit=True):
-            data = {}
-            form = super()
-            try:
-                if form.is_valid():
-                    form.save()
-                else:
-                    data['error'] = form.errors
-            except Exception as e:
-                data['error'] = str(e)
-            return data
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
 
 class TubePageCreateForm(ModelForm):
@@ -79,14 +98,14 @@ class TubePageCreateForm(ModelForm):
             'name_tube_page': forms.TextInput(attrs={'placeholder': 'URL of the tube page', 'id': 'name_tube_page'})
         }
 
-        def save(self, commit=True):
-            data = {}
-            form = super()
-            try:
-                if form.is_valid():
-                    form.save()
-                else:
-                    data['error'] = form.errors
-            except Exception as e:
-                data['error'] = str(e)
-            return data
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

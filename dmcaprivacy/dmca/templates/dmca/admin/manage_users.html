@@ -1,6 +1,6 @@
 {% extends 'dmca/tables_content.html' %}
 {% load static %}
-
+{% load crispy_forms_filters %}
 {% block title %} Manage Users {% endblock %}
 
 {% block title_content %} Manage Users {% endblock %}
@@ -9,31 +9,53 @@
 
 {% block buttons %} {% endblock %}
 
-    {% block columns %}
-        <tr>
-          <th>
-            User
-          </th>
-          <th>
-            First name
-          </th>
-          <th>
-            Last name
-          </th>
-          <th>
-            Email
-          </th>
-          <th>
-            Options
-          </th>
-        </tr>
-    {% endblock %}
+{% block columns %}
+    <tr>
+        <th>Username</th>
+        <th>User</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Active</th>
+        <th>Superuser</th>
+        <th>Worker</th>
+        <th>Client</th>
+        <th>Options</th>
+    </tr>
+{% endblock %}
 
-    {% block rows %}
+{% block rows %}
 
-    {% endblock %}
+{% endblock %}
 
 {% block extra_body %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <b><i class="ti-search"></i> <span></span></b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="action" type="hidden" value="add">
+                        <input name="id" type="hidden" value="0">
+                        {{ form|crispy }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save" style="margin-left: 10%"></i>
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     {% include 'dmca/js_tables.html' %}
     <script src="{% static 'functions/users/manage.js' %}"></script>
 {% endblock %}

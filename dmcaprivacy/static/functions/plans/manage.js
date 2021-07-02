@@ -25,8 +25,8 @@ function getData(){
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="#" rel="edit" type="button" class="btn btn-warning py-1"><i class="ti-cut "></i></a> ';
-                    buttons += '<a href="#" rel="delete" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
+                    var buttons = '<a href="#" rel="edit" ><i class="fas fa-edit fa-lg"></i></a> ';
+                    buttons += '<a href="#" rel="delete" style="margin-left: 10%"><i class="fas fa-trash-alt fa-lg"></i></a>';
                     return buttons;
                 }
             },
@@ -55,10 +55,12 @@ $(function () {
             modal_title.find('i').removeClass().addClass('ti-cut');
             var tr = tblClient.cell($(this).closest('td, li')).index();
             var data = tblClient.row(tr.row).data();
+            console.log(data);
             $('input[name="action"]').val('edit');
             $('input[name="id_plan"]').val(data.id_plan);
             $('input[name="plan"]').val(data.plan);
             $('#myModalClient').modal('show');
+
 
         })
         .on('click', 'a[rel="delete"]', function (){

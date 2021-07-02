@@ -25,8 +25,8 @@ function getData(){
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="#" rel="edit" type="button" class="btn btn-warning py-1"><i class="ti-cut "></i></a> ';
-                    buttons += '<a href="#" rel="delete" type="button" class="btn btn-danger py-1"><i class="ti-trash "></i></a>';
+                    var buttons = '<a href="#" rel="edit"><i class="fas fa-edit fa-lg"></i></a> ';
+                    buttons += '<a href="#" rel="delete" style="margin-left: 10%"><i class="fas fa-trash-alt fa-lg"></a>';
                     return buttons;
                 }
             },

@@ -14,8 +14,10 @@ def validate_image(imag_clie):
 
 
 class User(AbstractUser):
-    is_client = models.BooleanField(default=True)
-    is_worker = models.BooleanField(default=False)
+    is_client = models.BooleanField(default=True, help_text="Designates that this user has the permissions to "
+                                                            "access to Worker module.")
+    is_worker = models.BooleanField(default=False, help_text="Designates that this user has the permissions to "
+                                                             "access to Client module.")
     imag_clie = models.ImageField(null=True, blank=True, upload_to="dmca/static/images/faces/",
                                   default='dmca/static/images/faces/default-profile-picture.jpg',
                                   validators=[validate_image])

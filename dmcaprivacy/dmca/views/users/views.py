@@ -10,7 +10,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from ...mixins import SuperuserRequired
-from ...forms import UserEditForm
+from ...forms import UserEditForm, UserStatus
 
 
 class CustomEncoder(DjangoJSONEncoder):
@@ -41,6 +41,7 @@ class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 class ManageUsers(ListView, SuperuserRequired):
     model = User
     template_name = "dmca/admin/manage_users.html"
+    form_class = UserStatus
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -54,10 +55,15 @@ class ManageUsers(ListView, SuperuserRequired):
             if action == 'searchdata':
                 data = []
                 for i in User.objects.all():
-                    if not i:
-                        i = "/media/dmca/static/images/faces/default-profile-picture.jpg"
-
                     data.append(i.toJSON())
+            elif action == 'edit':
+                use = User.objects.get(pk=request.POST['id'])
+                use.username = request.POST['username']
+                use.is_active = request.POST['is_active']
+                use.is_superuser = request.POST['is_superuser']
+                use.is_worker = request.POST['is_worker']
+                use.is_client = request.POST['is_client']
+                use.save()
             else:
                 data['error'] = 'An error has occurred'
         except Exception as e:
@@ -69,4 +75,5 @@ class ManageUsers(ListView, SuperuserRequired):
         context['title'] = 'List of user register in the App. FLAG'
         context['list_url'] = reverse_lazy('manage_users')
         context['entity'] = 'User'
+        context['form'] = UserStatus()
         return context
