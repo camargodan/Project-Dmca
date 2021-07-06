@@ -89,6 +89,7 @@ class TubeHasPages(models.Model):
 class TubePages(models.Model):
     id_tube_pages = models.AutoField(primary_key=True)
     name_tube_page = models.CharField(max_length=45, unique=True)
+    contact_tube = models.CharField(max_length=120)
 
     class Meta:
         verbose_name_plural = 'tube_pages'

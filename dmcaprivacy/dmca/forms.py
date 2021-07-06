@@ -89,13 +89,15 @@ class TubePageCreateForm(ModelForm):
 
     class Meta:
         model = TubePages
-        fields = ('name_tube_page', )
+        fields = ('name_tube_page', 'contact_tube')
         labels = {
-            'name_tube_page': 'Url of the tube page'
+            'name_tube_page': 'Url of the tube page',
+            'contact_tube': 'Contact of the tube page'
         }
 
         widgets = {
-            'name_tube_page': forms.TextInput(attrs={'placeholder': 'URL of the tube page', 'id': 'name_tube_page'})
+            'name_tube_page': forms.TextInput(attrs={'placeholder': 'URL of the tube page', 'id': 'name_tube_page'}),
+            'contact_tube': forms.TextInput(attrs={'placeholder': 'Email or url to the DMCA form'})
         }
 
     def save(self, commit=True):

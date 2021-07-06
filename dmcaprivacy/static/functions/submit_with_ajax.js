@@ -29,7 +29,7 @@ function submit_with_ajax(url, title, content, parameters, callback) {
         dragWindowBorder: false,
         buttons: {
             info: {
-                text: "Si",
+                text: "Yes",
                 btnClass: 'btn-primary',
                 action: function () {
                     $.ajax({

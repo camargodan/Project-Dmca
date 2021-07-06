@@ -71,10 +71,12 @@ class ManageTubePages(ListView, SuperuserRequired):
             elif action == 'add':
                 tub = TubePages()
                 tub.name_tube_page = request.POST['name_tube_page']
+                tub.contact_tube = request.POST['contact_tube']
                 tub.save()
             elif action == 'edit':
                 tub = TubePages.objects.get(pk=request.POST['id_tube_pages'])
                 tub.name_tube_page = request.POST['name_tube_page']
+                tub.contact_tube = request.POST['contact_tube']
                 tub.save()
             elif action == 'delete':
                 tub = TubePages.objects.get(pk=request.POST['id_tube_pages'])

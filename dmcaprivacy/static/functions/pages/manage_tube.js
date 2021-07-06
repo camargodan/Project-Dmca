@@ -17,6 +17,7 @@ function getData(){
         columns: [
             {"data": "id_tube_pages"},
             {"data": "name_tube_page"},
+            {"data": "contact_tube"},
             {"data": "name_tube_page"},
         ],
         columnDefs: [
@@ -58,6 +59,7 @@ $(function () {
             $('input[name="action"]').val('edit');
             $('input[name="id_tube_pages"]').val(data.id_tube_pages);
             $('input[name="name_tube_page"]').val(data.name_tube_page);
+            $('input[name="contact_tube"]').val(data.contact_tube);
             $('#myModalClient').modal('show');
 
         })
