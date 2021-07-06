@@ -15,7 +15,6 @@ function getData(){
             dataSrc: ""
         },
         columns: [
-            {"data": "username"},
             {
                 "data": "imag_clie",
                 "render": function(data, type, row) {
@@ -67,11 +66,6 @@ function getData(){
         ],
         columnDefs: [
             {
-                "targets": [ 0 ],
-                "visible": false,
-                "searchable": false
-            },
-            {
                 targets: [-1],
                 class: 'text-center',
                 orderable: false,
@@ -100,42 +94,59 @@ $(function () {
 
             $('input[name="action"]').val('edit');
             $('input[name="id"]').val(data.id);
-            $('input[name="username"]').val(data.username);
             $('input[name="is_active"]').val(data.is_active).each(function() {
                 if ($(this).val() == 'true') {
-                    console.log($(this).val());
+                    $(this).val('True');
                     $(this).prop('checked', true);
                 } else{
+                    $(this).val('False');
                     $(this).prop('checked', false);
                 }
               });
             $('input[name="is_superuser"]').val(data.is_superuser).each(function() {
                 if ($(this).val() == 'true') {
-                    console.log($(this).val());
+                    $(this).val('True');
                     $(this).prop('checked', true);
                 } else{
+                    $(this).val('False');
                     $(this).prop('checked', false);
                 }
               });
             $('input[name="is_worker"]').val(data.is_worker).each(function() {
                 if ($(this).val() == 'true') {
-                    console.log($(this).val());
+                    $(this).val('True');
                     $(this).prop('checked', true);
                 } else{
+                    $(this).val('False');
                     $(this).prop('checked', false);
                 }
               });
             $('input[name="is_client"]').val(data.is_client).each(function() {
                 if ($(this).val() == 'true') {
-                    console.log($(this).val());
+                    $(this).val('True');
                     $(this).prop('checked', true);
                 } else{
+                    $(this).val('False');
                     $(this).prop('checked', false);
                 }
               });
+            // modal call
             $('#myModalClient').modal('show');
-
         });
+
+        // checkbox events
+       $('input[name="is_active"]').click(function() {
+        if ($(this).val() == 'True'){$(this).val('False');}
+        else{$(this).val('True');}});
+    $('input[name="is_superuser"]').click(function() {
+        if ($(this).val() == 'True'){$(this).val('False');}
+        else{$(this).val('True');}});
+    $('input[name="is_worker"]').click(function() {
+        if ($(this).val() == 'True'){$(this).val('False');}
+        else{$(this).val('True');}});
+    $('input[name="is_client"]').click(function() {
+        if ($(this).val() == 'True'){$(this).val('False');}
+        else{$(this).val('True');}});
 
         // open modal
     $('#myModalClient').on('shown.bs.modal', function () {

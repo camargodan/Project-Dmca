@@ -58,11 +58,10 @@ class ManageUsers(ListView, SuperuserRequired):
                     data.append(i.toJSON())
             elif action == 'edit':
                 use = User.objects.get(pk=request.POST['id'])
-                use.username = request.POST['username']
-                use.is_active = request.POST['is_active']
-                use.is_superuser = request.POST['is_superuser']
-                use.is_worker = request.POST['is_worker']
-                use.is_client = request.POST['is_client']
+                use.is_active = request.POST.get('is_active', False)
+                use.is_superuser = request.POST.get('is_superuser', False)
+                use.is_worker = request.POST.get('is_worker', False)
+                use.is_client = request.POST.get('is_client', False)
                 use.save()
             else:
                 data['error'] = 'An error has occurred'
