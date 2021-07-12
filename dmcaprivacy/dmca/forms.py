@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.forms import ModelForm
-from .models import Plans, Pages, TubePages
+from django.forms import ModelForm, ModelChoiceField
+from .models import Plans, Pages, TubePages, Clients
 User = get_user_model()
 
 
@@ -10,7 +10,7 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'imag_clie', 'is_active', 'is_superuser', 'is_worker', 'is_client')
+        fields = ('first_name', 'last_name', 'imag_clie')
         labels = {
             'imag_clie': 'Profile image'
         }
@@ -24,7 +24,7 @@ class UserStatus(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'is_active', 'is_superuser', 'is_worker', 'is_client')
+        fields = ('is_active', 'is_superuser', 'is_worker', 'is_client')
 
     def save(self, commit=True):
         data = {}
@@ -37,6 +37,20 @@ class UserStatus(forms.ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+
+# Class for show the full name in a select form against the username which it is by default
+class UserModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.get_full_name()
+
+
+class UserAssign(forms.ModelForm):
+    worker_id = UserModelChoiceField(queryset=User.objects.filter(is_worker=True))
+
+    class Meta:
+        model = Clients
+        fields = ('plan_id', 'worker_id')
 
 
 class PlanCreateForm(ModelForm):

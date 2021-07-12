@@ -10,7 +10,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from ...mixins import SuperuserRequired
-from ...forms import UserEditForm, UserStatus
+from ...forms import UserEditForm, UserStatus, UserAssign
+from ...models import Clients, Plans
 
 
 class CustomEncoder(DjangoJSONEncoder):
@@ -41,7 +42,6 @@ class UserEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 class ManageUsers(ListView, SuperuserRequired):
     model = User
     template_name = "dmca/admin/manage_users.html"
-    form_class = UserStatus
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -51,11 +51,13 @@ class ManageUsers(ListView, SuperuserRequired):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
+            # HERE IS THE DEAL TO PUT THE MODEL CLIENT IN THE DATATABLE!!!!!
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
                 for i in User.objects.all():
                     data.append(i.toJSON())
+
             elif action == 'edit':
                 use = User.objects.get(pk=request.POST['id'])
                 use.is_active = request.POST.get('is_active', False)
@@ -63,6 +65,12 @@ class ManageUsers(ListView, SuperuserRequired):
                 use.is_worker = request.POST.get('is_worker', False)
                 use.is_client = request.POST.get('is_client', False)
                 use.save()
+            elif action == 'assign':
+                cli = Clients()
+                cli.user = User.objects.get(pk=request.POST['id'])
+                cli.plan_id = Plans.objects.get(pk=request.POST['plan_id'])
+                cli.worker_id = User.objects.get(pk=request.POST['worker_id'])
+                cli.save()
             else:
                 data['error'] = 'An error has occurred'
         except Exception as e:
@@ -74,5 +82,8 @@ class ManageUsers(ListView, SuperuserRequired):
         context['title'] = 'List of user register in the App. FLAG'
         context['list_url'] = reverse_lazy('manage_users')
         context['entity'] = 'User'
+        context['entity'] = 'Clients'
+        context['clients'] = Clients.objects.all()
         context['form'] = UserStatus()
+        context['form2'] = UserAssign()
         return context

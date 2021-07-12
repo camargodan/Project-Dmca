@@ -24,8 +24,15 @@ class Clients(models.Model):
     plan_id = models.ForeignKey(Plans, null=True, blank=True, on_delete=models.CASCADE, db_column='plans_id_plan')
     worker_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='id_worker', blank=True, null=True)
 
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
     class Meta:
         verbose_name_plural = 'clients'
+
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
 
 
 class GoogleReports(models.Model):

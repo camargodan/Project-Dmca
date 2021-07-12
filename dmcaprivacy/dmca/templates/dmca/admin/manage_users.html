@@ -11,12 +11,12 @@
 
 {% block columns %}
     <tr>
+        <th>date joined</th>
         <th>User</th>
-        <th>First name</th>
-        <th>Last name</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Active</th>
-        <th>Superuser</th>
+        <th>Admin</th>
         <th>Worker</th>
         <th>Client</th>
         <th>Options</th>
@@ -43,9 +43,13 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <p class="alert-danger">Be careful with this section, all the access for the users are manage on here</p>
                         <input name="action" type="hidden" value="add">
                         <input name="id" type="hidden" value="0">
-                        {{ form|crispy }}
+                        <div style="padding: 5%">
+                                {{ form|crispy }}
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save" style="margin-left: 10%"></i>
@@ -55,6 +59,40 @@
             </div>
         </form>
     </div>
+
+    //----- SECOND MODAL -----//////
+        <div class="modal fade" id="myModalClient2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <b><i class="ti-split-h"></i>  Assign selected user </b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="action" type="hidden" value="add">
+                        <input name="id" type="hidden" value="0">
+                        <div style="padding: 5%">
+                                {{ form2|crispy }}
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save" style="margin-left: 10%"></i>
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
     {% include 'dmca/js_tables.html' %}
     <script src="{% static 'functions/users/manage.js' %}"></script>
 {% endblock %}

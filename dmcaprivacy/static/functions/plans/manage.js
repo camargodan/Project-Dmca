@@ -55,7 +55,6 @@ $(function () {
             modal_title.find('i').removeClass().addClass('ti-cut');
             var tr = tblClient.cell($(this).closest('td, li')).index();
             var data = tblClient.row(tr.row).data();
-            console.log(data);
             $('input[name="action"]').val('edit');
             $('input[name="id_plan"]').val(data.id_plan);
             $('input[name="plan"]').val(data.plan);
