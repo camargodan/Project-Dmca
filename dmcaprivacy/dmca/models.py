@@ -23,6 +23,7 @@ class Clients(models.Model):
     id_clie = models.AutoField(primary_key=True)
     plan_id = models.ForeignKey(Plans, null=True, blank=True, on_delete=models.CASCADE, db_column='plans_id_plan')
     worker_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='id_worker', blank=True, null=True)
+    # data_assign = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def toJSON(self):
         item = model_to_dict(self)

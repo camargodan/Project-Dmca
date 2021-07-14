@@ -12,6 +12,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from ...mixins import SuperuserRequired
 from ...forms import UserEditForm, UserStatus, UserAssign
 from ...models import Clients, Plans
+from django.db.models import F
 
 
 class CustomEncoder(DjangoJSONEncoder):
@@ -50,11 +51,12 @@ class ManageUsers(ListView, SuperuserRequired):
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         data = {}
+
         try:
-            # HERE IS THE DEAL TO PUT THE MODEL CLIENT IN THE DATATABLE!!!!!
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
+
                 for i in User.objects.all():
                     data.append(i.toJSON())
 
@@ -70,6 +72,9 @@ class ManageUsers(ListView, SuperuserRequired):
                 cli.user = User.objects.get(pk=request.POST['id'])
                 cli.plan_id = Plans.objects.get(pk=request.POST['plan_id'])
                 cli.worker_id = User.objects.get(pk=request.POST['worker_id'])
+                usu = User.objects.get(pk=request.POST['id'])
+                usu.assign = True
+                usu.save()
                 cli.save()
             else:
                 data['error'] = 'An error has occurred'

@@ -61,10 +61,25 @@ function getData(){
             {"data": "is_client",
                 "render": function(data, type, row) {
                     if (data){
-                        return '<input type="radio" class="form-check-input" checked="" value="True">';
+                        return '<input type="radio" class="form-check-input" id="ExampleRadio2" checked="" value="True">';
                     }
                     else{
                         return '<input type="radio" class="form-check-input" disabled="" value="False">'
+                    }
+                }},
+            {"data": "assign",
+                "render": function(data, type, row) {
+                    if (data){
+                        return '<button type="button" class="btn btn-outline-success btn-icon-text btn-sm">\n' +
+                            '                          <i class="ti-arrow-circle-up btn-icon-prepend"></i>                                                    \n' +
+                            '                          Assign\n' +
+                            '                        </button>';
+                    }
+                    else{
+                        return '<button type="button" class="btn btn-outline-secondary btn-icon-text btn-sm">\n' +
+                            '                          Unassign\n' +
+                            '                          <i class="ti-arrow-circle-down btn-icon-append"></i>                          \n' +
+                            '                        </button>'
                     }
                 }},
             {"data": "email"},
@@ -81,7 +96,7 @@ function getData(){
                 orderable: false,
                 render: function (data, type, row) {
                     var buttons = '<a href="#" rel="edit"><i class="fas fa-edit fa-lg"></i></a> ';
-                    buttons += '<a href="#" rel="assign" style="margin-left: 10%"><i class="ti-split-h fa-lg"></i></a> ';
+                    buttons += '<a href="#" rel="assign" style="margin-left: 10%"><i class="ti-split-v fa-lg"></i></a> ';
                     return buttons;
                 }
             },
@@ -96,6 +111,7 @@ $(function () {
     //call datatable
     getData();
 
+
     $('#list_data tbody')
         .on('click', 'a[rel="assign"]', function (){
             var tr = tblClient.cell($(this).closest('td, li')).index();
@@ -106,7 +122,6 @@ $(function () {
             $('select[name="plan_id"]').val(data.plan_id);
             $('select[name="id_worker"]').val(data.id_worker);
             $('#myModalClient2').modal('show');
-
 
         })
         .on('click', 'a[rel="edit"]', function (){

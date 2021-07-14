@@ -18,6 +18,7 @@ class User(AbstractUser):
                                                             "access to Worker module.")
     is_worker = models.BooleanField(default=False, help_text="Designates that this user has the permissions to "
                                                              "access to Client module.")
+    assign = models.BooleanField(default=False)
     imag_clie = models.ImageField(null=True, blank=True, upload_to="dmca/static/images/faces/",
                                   default='dmca/static/images/faces/default-profile-picture.jpg',
                                   validators=[validate_image])
