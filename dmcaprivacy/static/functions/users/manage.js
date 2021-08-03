@@ -70,23 +70,23 @@ function getData(){
             {"data": "assign",
                 "render": function(data, type, row) {
                     if (data){
-                        return '<button type="button" class="btn btn-outline-success btn-icon-text btn-sm">\n' +
+                        return '<a href="#" type="button" rel="assign" class="btn btn-outline-success btn-icon-text btn-sm">\n' +
                             '                          <i class="ti-arrow-circle-up btn-icon-prepend"></i>                                                    \n' +
                             '                          Assign\n' +
-                            '                        </button>';
+                            '                        </a>';
                     }
                     else{
-                        return '<button type="button" class="btn btn-outline-secondary btn-icon-text btn-sm">\n' +
+                        return '<a href="#" type="button" rel="assign" class="btn btn-outline-secondary btn-icon-text btn-sm">\n' +
                             '                          Unassign\n' +
                             '                          <i class="ti-arrow-circle-down btn-icon-append"></i>                          \n' +
-                            '                        </button>'
+                            '                        </a>'
                     }
                 }},
             {"data": "email"},
         ],
         columnDefs: [
             {
-                "targets": [ 0 ],
+                "targets": [ 0, 4, 5, 6, 7 ],
                 "visible": false,
                 "searchable": false
             },
@@ -96,7 +96,6 @@ function getData(){
                 orderable: false,
                 render: function (data, type, row) {
                     var buttons = '<a href="#" rel="edit"><i class="fas fa-edit fa-lg"></i></a> ';
-                    buttons += '<a href="#" rel="assign" style="margin-left: 10%"><i class="ti-split-v fa-lg"></i></a> ';
                     return buttons;
                 }
             },

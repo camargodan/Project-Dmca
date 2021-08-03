@@ -72,8 +72,14 @@ class ManageUsers(ListView, SuperuserRequired):
                 cli.user = User.objects.get(pk=request.POST['id'])
                 cli.plan_id = Plans.objects.get(pk=request.POST['plan_id'])
                 cli.worker_id = User.objects.get(pk=request.POST['worker_id'])
+
+                # cli_exist = Clients.objects.get(pk=request.POST['id'])
+                # if cli_exist.exists():
+                #     cli_exist
+
                 usu = User.objects.get(pk=request.POST['id'])
                 usu.assign = True
+
                 usu.save()
                 cli.save()
             else:
