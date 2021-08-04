@@ -71,7 +71,6 @@ $(function () {
             submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to delete this plan?', parameters, function () {
                 tblClient.ajax.reload();
             });
-
         });
     // open modal
     $('#myModalClient').on('shown.bs.modal', function () {

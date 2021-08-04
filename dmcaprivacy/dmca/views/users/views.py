@@ -12,6 +12,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from ...mixins import SuperuserRequired
 from ...forms import UserEditForm, UserStatus, UserAssign
 from ...models import Clients, Plans
+from django.shortcuts import get_object_or_404
 from django.db.models import F
 
 
@@ -67,21 +68,32 @@ class ManageUsers(ListView, SuperuserRequired):
                 use.is_worker = request.POST.get('is_worker', False)
                 use.is_client = request.POST.get('is_client', False)
                 use.save()
-            elif action == 'assign':
-                cli = Clients()
-                cli.user = User.objects.get(pk=request.POST['id'])
-                cli.plan_id = Plans.objects.get(pk=request.POST['plan_id'])
-                cli.worker_id = User.objects.get(pk=request.POST['worker_id'])
 
-                # cli_exist = Clients.objects.get(pk=request.POST['id'])
-                # if cli_exist.exists():
-                #     cli_exist
+            elif action == 'assign':
+                exist = Clients.objects.filter(user_id=request.POST['id']).exists()
+                if exist:
+                    cli_exist = Clients.objects.get(user_id=request.POST['id'])
+                    cli_exist.plan_id = Plans.objects.get(pk=request.POST['plan_id'])
+                    cli_exist.worker_id = User.objects.get(pk=request.POST['worker_id'])
+                    cli_exist.date_assign = request.POST['date_assign']
+                    cli_exist.save()
+                else:
+                    cli = Clients()
+                    cli.user = User.objects.get(pk=request.POST['id'])
+                    cli.plan_id = Plans.objects.get(pk=request.POST['plan_id'])
+                    cli.worker_id = User.objects.get(pk=request.POST['worker_id'])
+                    cli.date_assign = request.POST['date_assign']
+                    cli.save()
 
                 usu = User.objects.get(pk=request.POST['id'])
                 usu.assign = True
-
                 usu.save()
-                cli.save()
+
+            elif action == 'change':
+                user = User.objects.get(pk=request.POST['id'])
+                user.assign = False
+                user.save()
+
             else:
                 data['error'] = 'An error has occurred'
         except Exception as e:

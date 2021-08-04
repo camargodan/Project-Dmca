@@ -73,7 +73,8 @@ function getData(){
                         return '<a href="#" type="button" rel="assign" class="btn btn-outline-success btn-icon-text btn-sm">\n' +
                             '                          <i class="ti-arrow-circle-up btn-icon-prepend"></i>                                                    \n' +
                             '                          Assign\n' +
-                            '                        </a>';
+                            '                        </a><a style="margin-left: 5%" href="#" type="button" rel="change" class="btn btn-outline-dark btn-icon-text btn-sm">' +
+                            '<i class="ti-arrow-circle-down btn-icon-append"></i> </a>';
                     }
                     else{
                         return '<a href="#" type="button" rel="assign" class="btn btn-outline-secondary btn-icon-text btn-sm">\n' +
@@ -169,7 +170,18 @@ $(function () {
             });
             // modal call
             $('#myModalClient').modal('show');
-        });
+        })
+
+        .on('click', 'a[rel="change"]', function (){
+                var tr = tblClient.cell($(this).closest('td, li')).index();
+                var data = tblClient.row(tr.row).data();
+                var parameters = new FormData();
+                parameters.append('action', 'change');
+                parameters.append('id', data.id);
+                submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to unassigned this user?', parameters, function () {
+                    tblClient.ajax.reload();
+                });
+            });
 
     // checkbox events
     $('input[name="is_active"]').click(function() {
