@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth',  # new
     'allauth.account',  # new
     'allauth.socialaccount',  # new
+    'django_apscheduler',
 
 
     # Providers
