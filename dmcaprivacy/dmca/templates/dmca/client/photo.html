@@ -1,0 +1,20 @@
+{% extends 'dmca/body_content.html' %}
+{% load crispy_forms_filters %}
+{% block title %} Add Image {% endblock title %}
+
+  {% block title_content %}Add profile Image{% endblock title_content %}
+
+  {% block form_content %}
+      <form method="post">{% csrf_token %}
+          {{ form|crispy }}
+          <div>
+            <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+              Update</button>
+          </div>
+      </form>
+  {% endblock form_content %}
+
+{% block description_content %}
+Adding a profile image you can help us to identify your material and be sure
+that is you who we are working at.
+{% endblock description_content %}

@@ -42,18 +42,19 @@ INSTALLED_APPS = [
     'accounts',
     'dmca',
     'crispy_forms',
+    'bootstrap_modal_forms',
+
     # 3rd party
     'allauth',  # new
     'allauth.account',  # new
     'allauth.socialaccount',  # new
+    'django_apscheduler',
+
 
     # Providers
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
-    'allauth.socialaccount.providers.instagram',
-
-
 
 ]
 
@@ -141,8 +142,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES = (os.path.join(BASE_DIR, 'dmca/static'),)
+MEDIA_URL = '/media/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    )
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -178,7 +185,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'loginview'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 ACCOUNT_LOGOUT_ON_GET = True
 AUTH_USER_MODEL = 'accounts.User'

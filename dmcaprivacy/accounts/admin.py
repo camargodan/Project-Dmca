@@ -11,12 +11,14 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = User
     list_display = ['email', 'username', ]
+    prepopulated_fields = {'slug': ('username',)}
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name',)}),
-        ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active', 'is_client', 'is_worker',)}),
-        ('Login info', {'fields': ('date_joined', 'last_login',)}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'imag_clie')}),
+        ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active', 'is_client', 'is_worker', 'assign')}),
+        ('Login info', {'fields': ('date_joined', 'last_login', 'slug',)}),
     )
+    prepopulated_fields = {'slug': ('username',)}
 
 
 admin.site.register(User, CustomUserAdmin)

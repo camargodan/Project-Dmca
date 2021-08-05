@@ -1,26 +1,40 @@
+from datetime import datetime, timedelta
 from django.db import models
 from django.conf import settings
+from django.forms import model_to_dict
 
 
 class Plans(models.Model):
     id_plan = models.AutoField(primary_key=True)
-    plan = models.CharField(max_length=45)
+    plan = models.CharField(max_length=45, unique=True)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name_plural = 'Plans'
 
+    def __str__(self):
+        return self.plan
+
 
 class Clients(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='id_client')
     id_clie = models.AutoField(primary_key=True)
-    imag_clie = models.ImageField(null=True, blank=True, height_field='400', width_field='400', upload_to="images/faces/")
     plan_id = models.ForeignKey(Plans, null=True, blank=True, on_delete=models.CASCADE, db_column='plans_id_plan')
-    worker_id_work = models.ForeignKey(
-                                        'Workers', on_delete=models.CASCADE, db_column='worker_id_work', blank=True,
-                                        null=True)
+    worker_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='id_worker', blank=True, null=True)
+    date_assign = models.DateField(default=datetime.now() + timedelta(days=31))
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name_plural = 'clients'
+
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
 
 
 class GoogleReports(models.Model):
@@ -58,10 +72,17 @@ class NicksHasPages(models.Model):
 
 class Pages(models.Model):
     id_page = models.AutoField(primary_key=True)
-    name_page = models.CharField(max_length=45)
+    name_page = models.CharField(max_length=45, unique=True)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
 
     class Meta:
         verbose_name_plural = 'pages'
+
+    def __str__(self):
+        return self.name_page
 
 
 class TubeHasPages(models.Model):
@@ -76,10 +97,18 @@ class TubeHasPages(models.Model):
 
 class TubePages(models.Model):
     id_tube_pages = models.AutoField(primary_key=True)
-    name_tube_page = models.CharField(max_length=45)
+    name_tube_page = models.CharField(max_length=45, unique=True)
+    contact_tube = models.CharField(max_length=120)
 
     class Meta:
         verbose_name_plural = 'tube_pages'
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    def __str__(self):
+        return self.name_tube_page
 
 
 class TubeReports(models.Model):
@@ -90,11 +119,3 @@ class TubeReports(models.Model):
 
     class Meta:
         verbose_name_plural = 'tube_reports'
-
-
-class Workers(models.Model):
-    id_work = models.AutoField(primary_key=True)
-    name_work = models.CharField(max_length=45)
-
-    class Meta:
-        verbose_name_plural = 'workers'

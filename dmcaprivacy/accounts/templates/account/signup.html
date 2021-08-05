@@ -2,10 +2,8 @@
 {% providers_media_js %}
 {% load crispy_forms_filters %}
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,23 +19,17 @@
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="auth-form-transparent text-left p-3">
               <div class="brand-logo">
+                <a href="{% url 'loginview' %}">
                 <img src="{% static 'images/logo.svg' %}" alt="logo">
+                </a>
               </div>
               <h4>New here?</h4>
               <h6 class="font-weight-light">Join us today! It takes only few steps</h6>
-
               <div class="form-group">
               <form class="pt-3" method="post">
-
-
                   {% block raw %}{% csrf_token %}
                   {{ form|crispy  }}{% endblock %}
                 </div>
-
-
-
-
-
                 <div class="mt-3">
                   <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
                     Sign Up</button>
@@ -45,31 +37,19 @@
 
                 <div class="mt-4">
                   <p>Or sign up with social media</p>
-
                 </div>
-
                 <div class="mb-2 d-flex">
                   <a class="btn btn-facebook auth-form-btn flex-grow mr-1" href="{% provider_login_url 'facebook' method='oauth2' %}">
                     <i class="ti-facebook mr-1"></i>Facebook</a>
-
                   <a class="btn btn-google auth-form-btn flex-grow ml-1" href="{% provider_login_url 'google' %}">
                     <i class="ti-google mr-1"></i>Google</a>
-
-                  <a class="btn btn-google auth-form-btn flex-grow ml-1" href="{% provider_login_url 'twitter' %}">
+                  <a class="btn btn-twitter auth-form-btn flex-grow ml-1" href="{% provider_login_url 'twitter' %}">
                     <i class="ti-twitter mr-1"></i>Twitter</a>
-
-
                 </div>
-
                 <div class="text-center mt-4 font-weight-light">
                   Already have an account? <a href="{% url 'account_login'%}" class="text-primary">Login</a>
                 </div>
-
-
               </form>
-
-
-
 
             </div>
           </div>
@@ -82,7 +62,6 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-
 
 {% include 'dmca/js.html' %}
 </body>
