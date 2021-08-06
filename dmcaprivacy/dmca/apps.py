@@ -6,5 +6,5 @@ class DmcaConfig(AppConfig):
     name = 'dmca'
 
     def ready(self):
-        from scheduler import scheduler
+        from .scheduler import scheduler
         scheduler.start()
