@@ -121,6 +121,8 @@ $(function () {
             $('input[name="id"]').val(data.id);
             $('select[name="plan_id"]').val(data.plan_id);
             $('select[name="id_worker"]').val(data.id_worker);
+            $('form')[0].reset();
+            $('form')[1].reset();
             $('#myModalClient2').modal('show');
 
         })
