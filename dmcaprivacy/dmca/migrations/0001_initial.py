@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Nicks',
+            name='nicks',
             fields=[
                 ('id_nick', models.AutoField(primary_key=True, serialize=False)),
                 ('nick', models.CharField(max_length=45)),
