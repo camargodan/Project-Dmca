@@ -48,6 +48,15 @@
             </li>
         {% endif %}
 
+        {% if user.is_client %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'manage_nicks' %}">
+                    <i class="far fa-address-card menu-icon"></i>
+                    <span class="menu-title">Nicks</span>
+                </a>
+            </li>
+        {% endif %}
+
         <li class="nav-item">
             <a class="nav-link" href="pages/forms/basic_elements.html">
                 <i class="ti-layout-list-post menu-icon"></i>

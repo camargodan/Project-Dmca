@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from django import forms
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm, ModelChoiceField, SelectDateWidget
-from .models import Plans, Pages, TubePages, Clients
+from .models import Plans, Pages, TubePages, Clients, Nicks
 User = get_user_model()
 
 
@@ -82,3 +82,11 @@ class TubePageCreateForm(ModelForm):
             'name_tube_page': forms.TextInput(attrs={'placeholder': 'URL of the tube page', 'id': 'name_tube_page'}),
             'contact_tube': forms.TextInput(attrs={'placeholder': 'Email or url to the DMCA form'})
         }
+
+
+class NicksCreateForm(ModelForm, forms.Form):
+
+    class Meta:
+        model = Nicks
+        fields = ('nick', 'prio', 'pages',)
+
