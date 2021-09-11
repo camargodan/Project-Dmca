@@ -4,11 +4,11 @@ from django.http import JsonResponse
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from ...forms import NicksCreateForm
-from ...models import Nicks, Clients, Pages
+from ...models import Nicks, Clients
 from ...mixins import SuperuserRequired
-# from django.contrib.auth import get_user_model
-#
-# User = get_user_model()
+
+import json
+import jsonpickle
 
 
 class ManageNicks(ListView, SuperuserRequired):
@@ -18,7 +18,7 @@ class ManageNicks(ListView, SuperuserRequired):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-#
+
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         data = {}
@@ -27,12 +27,21 @@ class ManageNicks(ListView, SuperuserRequired):
             client = Clients.objects.get(user=self.request.user.id)
             if action == 'searchdata':
                 data = []
-                # nicks = Nicks.objects.filter(pages__name_page=)
-                for i in Nicks.pages.through.objects.all():
-                    print(i)
-                    data.append(i.toJSON())
-                    # for e in Pages.objects.filter(id_page=nicks.pages_id_pages):
-                    #     data.append(e.toJSON())
+
+                for i in Nicks.objects.filter(clients_id_clie=client.id_clie):
+                    encodenicks = jsonpickle.encode(i, unpicklable=False)
+                    nicksjson = json.loads(encodenicks)
+                    pages_nicks = Nicks.objects.get(id_nick=i.id_nick).pages.all()
+
+                    for a in pages_nicks:
+                        encodepages = jsonpickle.encode(a, unpicklable=False)
+                        pagesjson = json.loads(encodepages)
+                        dest = {}
+                        dest.update(nicksjson)
+                        dest.update(pagesjson)
+
+                        data.append(dest)
+
             # elif action == 'add':
             #     nick = Nicks()
             #     nick.name_page = request.POST['name_page']
