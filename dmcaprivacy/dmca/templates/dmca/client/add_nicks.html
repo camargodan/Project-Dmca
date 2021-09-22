@@ -1,0 +1,27 @@
+{% extends 'dmca/body_content.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %} Add Nick {% endblock title %}
+
+{% block title_content %}Add Nick{% endblock title_content %}
+
+{% block form_content %}
+    <form enctype="multipart/form-data" method="post">{% csrf_token %}
+        <div style="padding: 5%">
+            {{ form|crispy }}
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+                Add New </button>
+        </div>
+    </form>
+{% endblock form_content %}
+
+{% block description_content %}
+    Add your nick with every pages in where you work or worked, with the priority. <br>
+    Please be exactly adding the nick name because this is our way to find you.
+
+{% endblock description_content %}
+

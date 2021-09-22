@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm, ModelChoiceField, SelectDateWidget
 from .models import Plans, Pages, TubePages, Clients, Nicks
+from crispy_forms.helper import FormHelper
 User = get_user_model()
 
 
@@ -85,8 +86,22 @@ class TubePageCreateForm(ModelForm):
 
 
 class NicksCreateForm(ModelForm, forms.Form):
-
     class Meta:
         model = Nicks
         fields = ('nick', 'prio', 'pages',)
+        widgets = {
+            'pages': forms.CheckboxSelectMultiple(attrs={'placeholder': 'Select one or multiple pages'}),
+        }
+
+
+class NickEditForm(forms.ModelForm):
+    class Meta:
+        model = Nicks
+        fields = ('nick', 'prio', 'pages',)
+        widgets = {
+            'pages': forms.CheckboxSelectMultiple(attrs={'placeholder': 'Select one or multiple pages'}),
+        }
+
+
+
 

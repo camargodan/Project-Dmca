@@ -2,11 +2,12 @@ from datetime import datetime, timedelta
 from django.db import models
 from django.conf import settings
 from django.forms import model_to_dict
-
+from django.urls import reverse
+from django.utils.text import slugify
 
 priority_choices = (
     ('Normal', 'Normal'),
-    ('High', 'Alta'),
+    ('High', 'High'),
 )
 
 
