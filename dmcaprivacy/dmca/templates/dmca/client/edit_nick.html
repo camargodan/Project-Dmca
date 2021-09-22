@@ -1,0 +1,22 @@
+{% extends 'dmca/body_content.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %} Edit Nick {% endblock title %}
+
+{% block title_content %}Edit Nick{% endblock title_content %}
+
+{% block form_content %}
+    <form enctype="multipart/form-data" method="post">{% csrf_token %}
+          {{ form|crispy }}
+        <div>
+          <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+            Update</button>
+        </div>
+    </form>
+{% endblock form_content %}
+
+{% block description_content %}
+Edit your nick with the priority and all the pages in where you work or worked.
+{% endblock description_content %}
+
