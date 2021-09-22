@@ -44,20 +44,6 @@ class Clients(models.Model):
         return self.user.first_name + ' ' + self.user.last_name
 
 
-class GoogleReports(models.Model):
-    id_goog_repo = models.AutoField(primary_key=True)
-    clients_id_clie = models.ForeignKey(Clients, on_delete=models.CASCADE, db_column='clients_id_clie')
-    date_gore = models.DateField()
-    id_clai_gore = models.CharField(max_length=45)
-    type_clai_gore = models.CharField(max_length=45)
-    stat_gore = models.CharField(max_length=45)
-    urls_gore = models.TextField()
-    cant_urls_gore = models.IntegerField()
-
-    class Meta:
-        verbose_name_plural = 'google_reports'
-
-
 class Pages(models.Model):
     id_page = models.AutoField(primary_key=True)
     name_page = models.CharField(max_length=45, unique=True)
@@ -142,3 +128,17 @@ class TubeReports(models.Model):
 
     class Meta:
         verbose_name_plural = 'tube_reports'
+
+
+class GoogleReports(models.Model):
+    id_goog_repo = models.AutoField(primary_key=True)
+    clients_id_clie = models.ForeignKey(Clients, on_delete=models.CASCADE, db_column='clients_id_clie')
+    date_gore = models.DateField()
+    id_clai_gore = models.CharField(max_length=45)
+    type_clai_gore = models.CharField(max_length=45)
+    stat_gore = models.CharField(max_length=45)
+    urls_gore = models.TextField()
+    cant_urls_gore = models.IntegerField()
+
+    class Meta:
+        verbose_name_plural = 'google_reports'
