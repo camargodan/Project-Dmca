@@ -1,0 +1,66 @@
+{% extends 'dmca/tables_content.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block title %} List of Clients {% endblock %}
+
+{% block title_content %} List of Clients {% endblock %}
+{% block buttons %}
+
+{% endblock %}
+
+{% block card_title %} List of Clients assigned to you{% endblock %}
+
+{% block columns %}
+    <tr class="py-1">
+        <th>
+            Name
+        </th>
+        <th>
+            Plan
+        </th>
+        <th>
+            Option
+        </th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {# datatables #}
+{% endblock %}
+
+
+{% block extra_body %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <b><i class="ti-search"></i> <span></span></b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="action" type="hidden" value="add">
+                        <input name="id_plan" type="hidden" value="0">
+                        <div style="padding: 5%">
+                            {{ form|crispy }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save"></i>
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% include 'dmca/js_tables.html' %}
+    <script src="{% static 'functions/worker/manage.js' %}"></script>
+
+{% endblock %}

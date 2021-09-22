@@ -57,6 +57,15 @@
             </li>
         {% endif %}
 
+        {% if user.is_worker %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'list_clients' %}">
+                    <i class="far fa-address-book menu-icon"></i>
+                    <span class="menu-title">List of clients</span>
+                </a>
+            </li>
+        {% endif %}
+
         <li class="nav-item">
             <a class="nav-link" href="pages/forms/basic_elements.html">
                 <i class="ti-layout-list-post menu-icon"></i>

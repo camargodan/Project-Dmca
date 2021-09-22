@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import LoginView, Administrator, Worker, Client, UserEditView, \
-    ManageUsers, ManagePlans, ManageOfficialPages, ManageTubePages, ManageNicks, AddNicks, NickEditView
+from .views import LoginView, Administrator, Worker, Client, UserEditView, ManageUsers, ManagePlans, \
+     ManageOfficialPages, ManageTubePages, ManageNicks, AddNicks, NickEditView, ListClients
 from django.contrib.auth import get_user_model
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
     path('manage_nicks', ManageNicks.as_view(), name='manage_nicks'),
     path('manage_nicks/add', AddNicks.as_view(), name='add_nicks'),
     path('manage_nicks/edit/<int:pk>/', NickEditView.as_view(), name='edit_nick'),
+    path('list_clients/', ListClients.as_view(), name='list_clients'),
 
 ]
 
