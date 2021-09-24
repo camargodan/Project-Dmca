@@ -17,8 +17,8 @@ function getData(){
         columns: [
             {"data": "id_nick"},
             {"data": "nick"},
-            {"data": "prio"},
             {"data": "name_page"},
+            {"data": "prio"},
             {"data": "prio"},
         ],
         columnDefs: [

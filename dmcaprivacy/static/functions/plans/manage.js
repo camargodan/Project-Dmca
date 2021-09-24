@@ -59,8 +59,6 @@ $(function () {
             $('input[name="id_plan"]').val(data.id_plan);
             $('input[name="plan"]').val(data.plan);
             $('#myModalClient').modal('show');
-
-
         })
         .on('click', 'a[rel="delete"]', function (){
             var tr = tblClient.cell($(this).closest('td, li')).index();

@@ -979,25 +979,25 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <table id="289" parent="2" name="auth_group_permissions"/>
     <table id="290" parent="2" name="auth_permission"/>
     <table id="291" parent="2" name="django_admin_log"/>
-    <table id="292" parent="2" name="django_apscheduler_djangojob"/>
-    <table id="293" parent="2" name="django_apscheduler_djangojobexecution"/>
-    <table id="294" parent="2" name="django_content_type"/>
-    <table id="295" parent="2" name="django_migrations"/>
-    <table id="296" parent="2" name="django_session"/>
-    <table id="297" parent="2" name="django_site"/>
-    <table id="298" parent="2" name="dmca_clients"/>
-    <table id="299" parent="2" name="dmca_googlereports"/>
-    <table id="300" parent="2" name="dmca_nicks"/>
-    <table id="301" parent="2" name="dmca_nickspages"/>
-    <table id="302" parent="2" name="dmca_pages"/>
-    <table id="303" parent="2" name="dmca_plans"/>
-    <table id="304" parent="2" name="dmca_tubehaspages"/>
-    <table id="305" parent="2" name="dmca_tubepages"/>
-    <table id="306" parent="2" name="dmca_tubereports"/>
-    <table id="307" parent="2" name="socialaccount_socialaccount"/>
-    <table id="308" parent="2" name="socialaccount_socialapp"/>
-    <table id="309" parent="2" name="socialaccount_socialapp_sites"/>
-    <table id="310" parent="2" name="socialaccount_socialtoken"/>
+    <table id="292" parent="2" name="django_content_type"/>
+    <table id="293" parent="2" name="django_migrations"/>
+    <table id="294" parent="2" name="django_session"/>
+    <table id="295" parent="2" name="django_site"/>
+    <table id="296" parent="2" name="dmca_clients"/>
+    <table id="297" parent="2" name="dmca_googlereports"/>
+    <table id="298" parent="2" name="dmca_nicks"/>
+    <table id="299" parent="2" name="dmca_pages"/>
+    <table id="300" parent="2" name="dmca_plans"/>
+    <table id="301" parent="2" name="dmca_tubehaspages"/>
+    <table id="302" parent="2" name="dmca_tubepages"/>
+    <table id="303" parent="2" name="dmca_tubereports"/>
+    <table id="304" parent="2" name="socialaccount_socialaccount"/>
+    <table id="305" parent="2" name="socialaccount_socialapp"/>
+    <table id="306" parent="2" name="socialaccount_socialapp_sites"/>
+    <table id="307" parent="2" name="socialaccount_socialtoken"/>
+    <table id="308" parent="2" name="django_apscheduler_djangojob"/>
+    <table id="309" parent="2" name="django_apscheduler_djangojobexecution"/>
+    <table id="310" parent="2" name="dmca_nickspages"/>
     <column id="311" parent="283" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
@@ -1464,20 +1464,24 @@ codename</ColNames>
     </foreign-key>
     <column id="405" parent="292" name="id">
       <Position>1</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="406" parent="292" name="next_run_time">
+    <column id="406" parent="292" name="app_label">
       <Position>2</Position>
-      <DataType>datetime(6)|0s</DataType>
-    </column>
-    <column id="407" parent="292" name="job_state">
-      <Position>3</Position>
-      <DataType>longblob|0s</DataType>
+      <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="408" parent="292" name="django_apscheduler_djangojob_next_run_time_2f022619">
-      <ColNames>next_run_time</ColNames>
+    <column id="407" parent="292" name="model">
+      <Position>3</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="408" parent="292" name="django_content_type_app_label_model_76bd3d3b_uniq">
+      <ColNames>app_label
+model</ColNames>
+      <Unique>1</Unique>
       <Type>btree</Type>
     </index>
     <key id="409" parent="292" name="PRIMARY">
@@ -1485,705 +1489,701 @@ codename</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="410" parent="293" name="id">
-      <Position>1</Position>
-      <DataType>bigint|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="411" parent="293" name="status">
-      <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="412" parent="293" name="run_time">
-      <Position>3</Position>
-      <DataType>datetime(6)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="413" parent="293" name="duration">
-      <Position>4</Position>
-      <DataType>decimal(15,2 digit)|0s</DataType>
-    </column>
-    <column id="414" parent="293" name="finished">
-      <Position>5</Position>
-      <DataType>decimal(15,2 digit)|0s</DataType>
-    </column>
-    <column id="415" parent="293" name="exception">
-      <Position>6</Position>
-      <DataType>varchar(1000)|0s</DataType>
-    </column>
-    <column id="416" parent="293" name="traceback">
-      <Position>7</Position>
-      <DataType>longtext|0s</DataType>
-    </column>
-    <column id="417" parent="293" name="job_id">
-      <Position>8</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="418" parent="293" name="django_apscheduler_djangojobexecution_run_time_16edd96b">
-      <ColNames>run_time</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="419" parent="293" name="django_apscheduler_djangojobexecution_job_id_daf5090a_fk">
-      <ColNames>job_id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="420" parent="293" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="421" parent="293" name="django_apscheduler_djangojobexecution_job_id_daf5090a_fk">
-      <ColNames>job_id</ColNames>
-      <RefTableName>django_apscheduler_djangojob</RefTableName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="422" parent="294" name="id">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="423" parent="294" name="app_label">
-      <Position>2</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="424" parent="294" name="model">
-      <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="425" parent="294" name="django_content_type_app_label_model_76bd3d3b_uniq">
-      <ColNames>app_label
-model</ColNames>
-      <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <key id="426" parent="294" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <key id="427" parent="294" name="django_content_type_app_label_model_76bd3d3b_uniq">
+    <key id="410" parent="292" name="django_content_type_app_label_model_76bd3d3b_uniq">
       <ColNames>app_label
 model</ColNames>
       <UnderlyingIndexName>django_content_type_app_label_model_76bd3d3b_uniq</UnderlyingIndexName>
     </key>
-    <column id="428" parent="295" name="id">
+    <column id="411" parent="293" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="429" parent="295" name="app">
+    <column id="412" parent="293" name="app">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="430" parent="295" name="name">
+    <column id="413" parent="293" name="name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="431" parent="295" name="applied">
+    <column id="414" parent="293" name="applied">
       <Position>4</Position>
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="432" parent="295" name="PRIMARY">
+    <key id="415" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="433" parent="296" name="session_key">
+    <column id="416" parent="294" name="session_key">
       <Position>1</Position>
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="434" parent="296" name="session_data">
+    <column id="417" parent="294" name="session_data">
       <Position>2</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="435" parent="296" name="expire_date">
+    <column id="418" parent="294" name="expire_date">
       <Position>3</Position>
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="436" parent="296" name="django_session_expire_date_a5c62663">
+    <index id="419" parent="294" name="django_session_expire_date_a5c62663">
       <ColNames>expire_date</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="437" parent="296" name="PRIMARY">
+    <key id="420" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>session_key</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="438" parent="297" name="id">
+    <column id="421" parent="295" name="id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="439" parent="297" name="domain">
+    <column id="422" parent="295" name="domain">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="440" parent="297" name="name">
+    <column id="423" parent="295" name="name">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="441" parent="297" name="django_site_domain_a2e37b91_uniq">
+    <index id="424" parent="295" name="django_site_domain_a2e37b91_uniq">
       <ColNames>domain</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="442" parent="297" name="PRIMARY">
+    <key id="425" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="443" parent="297" name="django_site_domain_a2e37b91_uniq">
+    <key id="426" parent="295" name="django_site_domain_a2e37b91_uniq">
       <ColNames>domain</ColNames>
       <UnderlyingIndexName>django_site_domain_a2e37b91_uniq</UnderlyingIndexName>
     </key>
-    <column id="444" parent="298" name="id_clie">
+    <column id="427" parent="296" name="id_clie">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="445" parent="298" name="plans_id_plan">
+    <column id="428" parent="296" name="plans_id_plan">
       <Position>2</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="446" parent="298" name="user_id">
+    <column id="429" parent="296" name="user_id">
       <Position>3</Position>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="447" parent="298" name="worker_id_id">
+    <column id="430" parent="296" name="worker_id_id">
       <Position>4</Position>
       <DataType>bigint|0s</DataType>
     </column>
-    <column id="448" parent="298" name="date_assign">
+    <column id="431" parent="296" name="date_assign">
       <Position>5</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="449" parent="298" name="user_id">
+    <index id="432" parent="296" name="user_id">
       <ColNames>user_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="450" parent="298" name="dmca_clients_plans_id_plan_694b9065_fk_dmca_plans_id_plan">
+    <index id="433" parent="296" name="dmca_clients_plans_id_plan_694b9065_fk_dmca_plans_id_plan">
       <ColNames>plans_id_plan</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="451" parent="298" name="dmca_clients_worker_id_id_21f3001a_fk_accounts_user_id">
+    <index id="434" parent="296" name="dmca_clients_worker_id_id_21f3001a_fk_accounts_user_id">
       <ColNames>worker_id_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="452" parent="298" name="PRIMARY">
+    <key id="435" parent="296" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_clie</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="453" parent="298" name="user_id">
+    <key id="436" parent="296" name="user_id">
       <ColNames>user_id</ColNames>
       <UnderlyingIndexName>user_id</UnderlyingIndexName>
     </key>
-    <foreign-key id="454" parent="298" name="dmca_clients_plans_id_plan_694b9065_fk_dmca_plans_id_plan">
+    <foreign-key id="437" parent="296" name="dmca_clients_plans_id_plan_694b9065_fk_dmca_plans_id_plan">
       <ColNames>plans_id_plan</ColNames>
       <RefTableName>dmca_plans</RefTableName>
       <RefColNames>id_plan</RefColNames>
     </foreign-key>
-    <foreign-key id="455" parent="298" name="dmca_clients_user_id_ba46022f_fk_accounts_user_id">
+    <foreign-key id="438" parent="296" name="dmca_clients_user_id_ba46022f_fk_accounts_user_id">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="456" parent="298" name="dmca_clients_worker_id_id_21f3001a_fk_accounts_user_id">
+    <foreign-key id="439" parent="296" name="dmca_clients_worker_id_id_21f3001a_fk_accounts_user_id">
       <ColNames>worker_id_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="457" parent="299" name="id_goog_repo">
+    <column id="440" parent="297" name="id_goog_repo">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="458" parent="299" name="date_gore">
+    <column id="441" parent="297" name="date_gore">
       <Position>2</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="459" parent="299" name="id_clai_gore">
+    <column id="442" parent="297" name="id_clai_gore">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <column id="460" parent="299" name="type_clai_gore">
+    <column id="443" parent="297" name="type_clai_gore">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="461" parent="299" name="stat_gore">
+    <column id="444" parent="297" name="stat_gore">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="462" parent="299" name="urls_gore">
+    <column id="445" parent="297" name="urls_gore">
       <Position>6</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="463" parent="299" name="cant_urls_gore">
+    <column id="446" parent="297" name="cant_urls_gore">
       <Position>7</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="464" parent="299" name="clients_id_clie">
+    <column id="447" parent="297" name="clients_id_clie">
       <Position>8</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="465" parent="299" name="dmca_googlereports_id_clai_gore_1d6e1de1_uniq">
+    <index id="448" parent="297" name="dmca_googlereports_id_clai_gore_1d6e1de1_uniq">
       <ColNames>id_clai_gore</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="466" parent="299" name="dmca_googlereports_clients_id_clie_58a124e0_fk_dmca_clie">
+    <index id="449" parent="297" name="dmca_googlereports_clients_id_clie_58a124e0_fk_dmca_clie">
       <ColNames>clients_id_clie</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="467" parent="299" name="PRIMARY">
+    <key id="450" parent="297" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_goog_repo</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="468" parent="299" name="dmca_googlereports_id_clai_gore_1d6e1de1_uniq">
+    <key id="451" parent="297" name="dmca_googlereports_id_clai_gore_1d6e1de1_uniq">
       <ColNames>id_clai_gore</ColNames>
       <UnderlyingIndexName>dmca_googlereports_id_clai_gore_1d6e1de1_uniq</UnderlyingIndexName>
     </key>
-    <foreign-key id="469" parent="299" name="dmca_googlereports_clients_id_clie_58a124e0_fk_dmca_clie">
+    <foreign-key id="452" parent="297" name="dmca_googlereports_clients_id_clie_58a124e0_fk_dmca_clie">
       <ColNames>clients_id_clie</ColNames>
       <RefTableName>dmca_clients</RefTableName>
       <RefColNames>id_clie</RefColNames>
     </foreign-key>
-    <column id="470" parent="300" name="id_nick">
+    <column id="453" parent="298" name="id_nick">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="471" parent="300" name="nick">
+    <column id="454" parent="298" name="nick">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="472" parent="300" name="prio">
+    <column id="455" parent="298" name="prio">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="473" parent="300" name="clients_id_clie">
+    <column id="456" parent="298" name="clients_id_clie">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="474" parent="300" name="dmca_nicks_clients_id_clie_bc66aa2f_fk_dmca_clients_id_clie">
+    <index id="457" parent="298" name="dmca_nicks_clients_id_clie_bc66aa2f_fk_dmca_clients_id_clie">
       <ColNames>clients_id_clie</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="475" parent="300" name="PRIMARY">
+    <key id="458" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_nick</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="476" parent="300" name="dmca_nicks_clients_id_clie_bc66aa2f_fk_dmca_clients_id_clie">
+    <foreign-key id="459" parent="298" name="dmca_nicks_clients_id_clie_bc66aa2f_fk_dmca_clients_id_clie">
       <ColNames>clients_id_clie</ColNames>
       <RefTableName>dmca_clients</RefTableName>
       <RefColNames>id_clie</RefColNames>
     </foreign-key>
-    <column id="477" parent="301" name="id">
-      <Position>1</Position>
-      <DataType>bigint|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="478" parent="301" name="nick_id">
-      <Position>2</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="479" parent="301" name="page_id">
-      <Position>3</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="480" parent="301" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="481" parent="302" name="id_page">
+    <column id="460" parent="299" name="id_page">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="482" parent="302" name="name_page">
+    <column id="461" parent="299" name="name_page">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <index id="483" parent="302" name="dmca_pages_name_page_51f3168f_uniq">
+    <index id="462" parent="299" name="dmca_pages_name_page_51f3168f_uniq">
       <ColNames>name_page</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="484" parent="302" name="PRIMARY">
+    <key id="463" parent="299" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_page</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="485" parent="302" name="dmca_pages_name_page_51f3168f_uniq">
+    <key id="464" parent="299" name="dmca_pages_name_page_51f3168f_uniq">
       <ColNames>name_page</ColNames>
       <UnderlyingIndexName>dmca_pages_name_page_51f3168f_uniq</UnderlyingIndexName>
     </key>
-    <column id="486" parent="303" name="id_plan">
+    <column id="465" parent="300" name="id_plan">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="487" parent="303" name="plan">
+    <column id="466" parent="300" name="plan">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
     </column>
-    <index id="488" parent="303" name="dmca_plans_plan_120e10cb_uniq">
+    <index id="467" parent="300" name="dmca_plans_plan_120e10cb_uniq">
       <ColNames>plan</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="489" parent="303" name="PRIMARY">
+    <key id="468" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_plan</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="490" parent="303" name="dmca_plans_plan_120e10cb_uniq">
+    <key id="469" parent="300" name="dmca_plans_plan_120e10cb_uniq">
       <ColNames>plan</ColNames>
       <UnderlyingIndexName>dmca_plans_plan_120e10cb_uniq</UnderlyingIndexName>
     </key>
-    <column id="491" parent="304" name="id_tube_pages">
+    <column id="470" parent="301" name="id_tube_pages">
       <Position>1</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="492" parent="304" name="tube_urls">
+    <column id="471" parent="301" name="tube_urls">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="493" parent="304" name="tube_pages_id_tube_pages">
+    <column id="472" parent="301" name="tube_pages_id_tube_pages">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="494" parent="304" name="tube_reports_id_tube_repo">
+    <column id="473" parent="301" name="tube_reports_id_tube_repo">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="495" parent="304" name="dmca_tubehaspages_tube_pages_id_tube_p_7c9d17b9_fk_dmca_tube">
+    <index id="474" parent="301" name="dmca_tubehaspages_tube_pages_id_tube_p_7c9d17b9_fk_dmca_tube">
       <ColNames>tube_pages_id_tube_pages</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="496" parent="304" name="dmca_tubehaspages_tube_reports_id_tube_06119adc_fk_dmca_tube">
+    <index id="475" parent="301" name="dmca_tubehaspages_tube_reports_id_tube_06119adc_fk_dmca_tube">
       <ColNames>tube_reports_id_tube_repo</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="497" parent="304" name="PRIMARY">
+    <key id="476" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_tube_pages</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="498" parent="304" name="dmca_tubehaspages_tube_pages_id_tube_p_7c9d17b9_fk_dmca_tube">
+    <foreign-key id="477" parent="301" name="dmca_tubehaspages_tube_pages_id_tube_p_7c9d17b9_fk_dmca_tube">
       <ColNames>tube_pages_id_tube_pages</ColNames>
       <RefTableName>dmca_tubepages</RefTableName>
       <RefColNames>id_tube_pages</RefColNames>
     </foreign-key>
-    <foreign-key id="499" parent="304" name="dmca_tubehaspages_tube_reports_id_tube_06119adc_fk_dmca_tube">
+    <foreign-key id="478" parent="301" name="dmca_tubehaspages_tube_reports_id_tube_06119adc_fk_dmca_tube">
       <ColNames>tube_reports_id_tube_repo</ColNames>
       <RefTableName>dmca_tubereports</RefTableName>
       <RefColNames>id_tube_repo</RefColNames>
     </foreign-key>
-    <column id="500" parent="305" name="id_tube_pages">
+    <column id="479" parent="302" name="id_tube_pages">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="501" parent="305" name="name_tube_page">
+    <column id="480" parent="302" name="name_tube_page">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="502" parent="305" name="contact_tube">
+    <column id="481" parent="302" name="contact_tube">
       <Position>3</Position>
       <DataType>varchar(120)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="503" parent="305" name="dmca_tubepages_name_tube_page_6807cd2a_uniq">
+    <index id="482" parent="302" name="dmca_tubepages_name_tube_page_6807cd2a_uniq">
       <ColNames>name_tube_page</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="504" parent="305" name="PRIMARY">
+    <key id="483" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_tube_pages</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="505" parent="305" name="dmca_tubepages_name_tube_page_6807cd2a_uniq">
+    <key id="484" parent="302" name="dmca_tubepages_name_tube_page_6807cd2a_uniq">
       <ColNames>name_tube_page</ColNames>
       <UnderlyingIndexName>dmca_tubepages_name_tube_page_6807cd2a_uniq</UnderlyingIndexName>
     </key>
-    <column id="506" parent="306" name="id_tube_repo">
+    <column id="485" parent="303" name="id_tube_repo">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="507" parent="306" name="stat_tube">
+    <column id="486" parent="303" name="stat_tube">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="508" parent="306" name="date_tube">
+    <column id="487" parent="303" name="date_tube">
       <Position>3</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="509" parent="306" name="clients_id_clie">
+    <column id="488" parent="303" name="clients_id_clie">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="510" parent="306" name="dmca_tubereports_clients_id_clie_44154824_fk_dmca_clie">
+    <index id="489" parent="303" name="dmca_tubereports_clients_id_clie_44154824_fk_dmca_clie">
       <ColNames>clients_id_clie</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="511" parent="306" name="PRIMARY">
+    <key id="490" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id_tube_repo</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="512" parent="306" name="dmca_tubereports_clients_id_clie_44154824_fk_dmca_clie">
+    <foreign-key id="491" parent="303" name="dmca_tubereports_clients_id_clie_44154824_fk_dmca_clie">
       <ColNames>clients_id_clie</ColNames>
       <RefTableName>dmca_clients</RefTableName>
       <RefColNames>id_clie</RefColNames>
     </foreign-key>
-    <column id="513" parent="307" name="id">
+    <column id="492" parent="304" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="514" parent="307" name="provider">
+    <column id="493" parent="304" name="provider">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="515" parent="307" name="uid">
+    <column id="494" parent="304" name="uid">
       <Position>3</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="516" parent="307" name="last_login">
+    <column id="495" parent="304" name="last_login">
       <Position>4</Position>
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="517" parent="307" name="date_joined">
+    <column id="496" parent="304" name="date_joined">
       <Position>5</Position>
       <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="518" parent="307" name="extra_data">
+    <column id="497" parent="304" name="extra_data">
       <Position>6</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="519" parent="307" name="user_id">
+    <column id="498" parent="304" name="user_id">
       <Position>7</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="520" parent="307" name="socialaccount_socialaccount_provider_uid_fc810c6e_uniq">
+    <index id="499" parent="304" name="socialaccount_socialaccount_provider_uid_fc810c6e_uniq">
       <ColNames>provider
 uid</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="521" parent="307" name="socialaccount_socialaccount_user_id_8146e70c_fk_accounts_user_id">
+    <index id="500" parent="304" name="socialaccount_socialaccount_user_id_8146e70c_fk_accounts_user_id">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="522" parent="307" name="PRIMARY">
+    <key id="501" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="523" parent="307" name="socialaccount_socialaccount_provider_uid_fc810c6e_uniq">
+    <key id="502" parent="304" name="socialaccount_socialaccount_provider_uid_fc810c6e_uniq">
       <ColNames>provider
 uid</ColNames>
       <UnderlyingIndexName>socialaccount_socialaccount_provider_uid_fc810c6e_uniq</UnderlyingIndexName>
     </key>
-    <foreign-key id="524" parent="307" name="socialaccount_socialaccount_user_id_8146e70c_fk_accounts_user_id">
+    <foreign-key id="503" parent="304" name="socialaccount_socialaccount_user_id_8146e70c_fk_accounts_user_id">
       <ColNames>user_id</ColNames>
       <RefTableName>accounts_user</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="525" parent="308" name="id">
+    <column id="504" parent="305" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="526" parent="308" name="provider">
+    <column id="505" parent="305" name="provider">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="527" parent="308" name="name">
+    <column id="506" parent="305" name="name">
       <Position>3</Position>
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="528" parent="308" name="client_id">
+    <column id="507" parent="305" name="client_id">
       <Position>4</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="529" parent="308" name="secret">
+    <column id="508" parent="305" name="secret">
       <Position>5</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="530" parent="308" name="key">
+    <column id="509" parent="305" name="key">
       <Position>6</Position>
       <DataType>varchar(191)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="531" parent="308" name="PRIMARY">
+    <key id="510" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="532" parent="309" name="id">
+    <column id="511" parent="306" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="533" parent="309" name="socialapp_id">
+    <column id="512" parent="306" name="socialapp_id">
       <Position>2</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="534" parent="309" name="site_id">
+    <column id="513" parent="306" name="site_id">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="535" parent="309" name="socialaccount_socialapp_sites_socialapp_id_site_id_71a9a768_uniq">
+    <index id="514" parent="306" name="socialaccount_socialapp_sites_socialapp_id_site_id_71a9a768_uniq">
       <ColNames>socialapp_id
 site_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="536" parent="309" name="socialaccount_socialapp_sites_site_id_2579dee5_fk_django_site_id">
+    <index id="515" parent="306" name="socialaccount_socialapp_sites_site_id_2579dee5_fk_django_site_id">
       <ColNames>site_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="537" parent="309" name="PRIMARY">
+    <key id="516" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="538" parent="309" name="socialaccount_socialapp_sites_socialapp_id_site_id_71a9a768_uniq">
+    <key id="517" parent="306" name="socialaccount_socialapp_sites_socialapp_id_site_id_71a9a768_uniq">
       <ColNames>socialapp_id
 site_id</ColNames>
       <UnderlyingIndexName>socialaccount_socialapp_sites_socialapp_id_site_id_71a9a768_uniq</UnderlyingIndexName>
     </key>
-    <foreign-key id="539" parent="309" name="socialaccount_socialapp_sites_site_id_2579dee5_fk_django_site_id">
+    <foreign-key id="518" parent="306" name="socialaccount_socialapp_sites_site_id_2579dee5_fk_django_site_id">
       <ColNames>site_id</ColNames>
       <RefTableName>django_site</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="540" parent="310" name="id">
+    <column id="519" parent="307" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="541" parent="310" name="token">
+    <column id="520" parent="307" name="token">
       <Position>2</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="542" parent="310" name="token_secret">
+    <column id="521" parent="307" name="token_secret">
       <Position>3</Position>
       <DataType>longtext|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="543" parent="310" name="expires_at">
+    <column id="522" parent="307" name="expires_at">
       <Position>4</Position>
       <DataType>datetime(6)|0s</DataType>
     </column>
-    <column id="544" parent="310" name="account_id">
+    <column id="523" parent="307" name="account_id">
       <Position>5</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="545" parent="310" name="app_id">
+    <column id="524" parent="307" name="app_id">
       <Position>6</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="546" parent="310" name="socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq">
+    <index id="525" parent="307" name="socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq">
       <ColNames>app_id
 account_id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="547" parent="310" name="socialaccount_socialtoken_account_id_951f210e_fk">
+    <index id="526" parent="307" name="socialaccount_socialtoken_account_id_951f210e_fk">
       <ColNames>account_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="548" parent="310" name="PRIMARY">
+    <key id="527" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="549" parent="310" name="socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq">
+    <key id="528" parent="307" name="socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq">
       <ColNames>app_id
 account_id</ColNames>
       <UnderlyingIndexName>socialaccount_socialtoken_app_id_account_id_fca4e0ac_uniq</UnderlyingIndexName>
     </key>
-    <foreign-key id="550" parent="310" name="socialaccount_socialtoken_account_id_951f210e_fk">
+    <foreign-key id="529" parent="307" name="socialaccount_socialtoken_account_id_951f210e_fk">
       <ColNames>account_id</ColNames>
       <RefTableName>socialaccount_socialaccount</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="551" parent="310" name="socialaccount_socialtoken_app_id_636a42d7_fk">
+    <foreign-key id="530" parent="307" name="socialaccount_socialtoken_app_id_636a42d7_fk">
       <ColNames>app_id</ColNames>
       <RefTableName>socialaccount_socialapp</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
+    <column id="531" parent="308" name="id">
+      <Position>1</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="532" parent="308" name="next_run_time">
+      <Position>2</Position>
+      <DataType>datetime(6)|0s</DataType>
+    </column>
+    <column id="533" parent="308" name="job_state">
+      <Position>3</Position>
+      <DataType>longblob|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="534" parent="308" name="django_apscheduler_djangojob_next_run_time_2f022619">
+      <ColNames>next_run_time</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="535" parent="308" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="536" parent="309" name="id">
+      <Position>1</Position>
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="537" parent="309" name="status">
+      <Position>2</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="538" parent="309" name="run_time">
+      <Position>3</Position>
+      <DataType>datetime(6)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="539" parent="309" name="duration">
+      <Position>4</Position>
+      <DataType>decimal(15,2 digit)|0s</DataType>
+    </column>
+    <column id="540" parent="309" name="finished">
+      <Position>5</Position>
+      <DataType>decimal(15,2 digit)|0s</DataType>
+    </column>
+    <column id="541" parent="309" name="exception">
+      <Position>6</Position>
+      <DataType>varchar(1000)|0s</DataType>
+    </column>
+    <column id="542" parent="309" name="traceback">
+      <Position>7</Position>
+      <DataType>longtext|0s</DataType>
+    </column>
+    <column id="543" parent="309" name="job_id">
+      <Position>8</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="544" parent="309" name="django_apscheduler_djangojobexecution_job_id_daf5090a_fk">
+      <ColNames>job_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="545" parent="309" name="django_apscheduler_djangojobexecution_run_time_16edd96b">
+      <ColNames>run_time</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="546" parent="309" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="547" parent="309" name="django_apscheduler_djangojobexecution_job_id_daf5090a_fk">
+      <ColNames>job_id</ColNames>
+      <RefTableName>django_apscheduler_djangojob</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="548" parent="310" name="id">
+      <Position>1</Position>
+      <DataType>bigint|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="549" parent="310" name="nick_id">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="550" parent="310" name="page_id">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="551" parent="310" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>

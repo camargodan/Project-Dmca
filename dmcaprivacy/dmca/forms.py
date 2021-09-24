@@ -101,7 +101,3 @@ class NickEditForm(forms.ModelForm):
         widgets = {
             'pages': forms.CheckboxSelectMultiple(attrs={'placeholder': 'Select one or multiple pages'}),
         }
-
-
-
-
