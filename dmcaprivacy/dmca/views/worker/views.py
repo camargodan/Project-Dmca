@@ -53,34 +53,31 @@ class ListClients(ListView, LoginRequiredMixin):
                     dest.update(client_json)
                     dest.update(name_json)
                     dest.update(plan_json)
+                    dic = {'nick_pages': [],
+                           }
+                    dest.update()
+
+                    for e in client:
+                        for a in Nicks.objects.filter(clients_id_clie=e.id_clie):
+                            encodenicks = jsonpickle.encode(a, unpicklable=False)
+                            nicksjson = json.loads(encodenicks)
+                            pages_nicks = Nicks.objects.get(id_nick=a.id_nick).pages.all()
+
+                            for s in pages_nicks:
+                                encodepages = jsonpickle.encode(s, unpicklable=False)
+                                pagesjson = json.loads(encodepages)
+                                dic['nick_pages'].append({
+                                    'nick': a.nick,
+                                    'name_page': s.name_page,
+                                    'prio': a.prio,
+                                })
+                            dest.update(dic)
                     data.append(dest)
             else:
-                data['error'] = 'An error has occurred'
+                data['error'] = 'An error has occurred here here here'
         except Exception as e:
             data['error'] = str(e)
 
-        try:
-            if action == 'searchdata2':
-                data2 = []
-                for e in client:
-                    for i in Nicks.objects.filter(clients_id_clie=e.id_clie):
-                        encodenicks = jsonpickle.encode(i, unpicklable=False)
-                        nicksjson = json.loads(encodenicks)
-                        pages_nicks = Nicks.objects.get(id_nick=i.id_nick).pages.all()
-                        print(i.nick)
-                        for a in pages_nicks:
-                            print(a.name_page)
-                            encodepages = jsonpickle.encode(a, unpicklable=False)
-                            pagesjson = json.loads(encodepages)
-                            dest2 = {}
-                            dest2.update(nicksjson)
-                            dest2.update(pagesjson)
-                            data2.append(dest2)
-            else:
-                data2['error'] = 'An error has occurred for 2'
-
-        except Exception as e:
-            data2['error'] = str(e)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
