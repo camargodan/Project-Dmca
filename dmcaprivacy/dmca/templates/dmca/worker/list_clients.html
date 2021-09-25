@@ -12,59 +12,27 @@
 
 {% block columns %}
     <tr class="py-1">
-        <th width="70%">
+        <th width="40%">
             Name
         </th>
-        <th width="20%">
-            Plan
+        <th width="50%">
+            Nick - Page
         </th>
-        <th width="10%">
+        <th width="5%">
             Option
+        </th>
+        <th width="5%">
+            Hide
         </th>
     </tr>
 {% endblock %}
-
+<tr class="values">
 {% block rows %}
     {# datatables #}
 {% endblock %}
-
+</tr>
 
 {% block extra_body %}
-    <!-- Modal -->
-    <div class="modal fade" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <b><i class="ti-search"></i> <span></span></b>
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-
-                <table id="list_data2" class="table table-striped">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Nick</th>
-                        <th scope="col">Page</th>
-                        <th scope="col">Priority</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-
-                    </tbody>
-                </table>
-
-
-
-            </div>
-        </div>
-    </div>
-
     {% include 'dmca/js_tables.html' %}
     <script src="{% static 'functions/worker/manage.js' %}"></script>
-
 {% endblock %}
