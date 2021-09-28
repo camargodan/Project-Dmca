@@ -5,9 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
-from ...forms import NicksCreateForm, NickEditForm
-from ...models import Nicks, Clients, Pages, NicksPages, Plans
+from ...forms import AddReport
+from ...models import Nicks, Clients, Pages, NicksPages, Plans, GoogleReports
 from ...mixins import SuperuserRequired
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
@@ -85,4 +86,50 @@ class ListClients(ListView, LoginRequiredMixin):
         context['title'] = 'List of Clients assigned to you'
         context['list_url'] = reverse_lazy('list_clients')
         context['entity'] = 'Clients'
+        return context
+
+
+class GoogleReports(CreateView, SuperuserRequired):
+    model = GoogleReports
+    form_class = AddReport
+    # fields = ['clients_id_clie', 'date_gore', 'id_clai_gore', 'type_clai_gore', 'stat_gore', 'urls_gore',
+    #           'cant_urls_gore']
+    template_name = 'dmca/worker/add_google_report.html'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    # @method_decorator(csrf_exempt)
+    # def post(self, request, *args, **kwargs):
+    #     data = {}
+    #     try:
+    #         action = request.POST['action']
+    #         if action == 'searchdata':
+    #             data = []
+    #             for i in Pages.objects.all():
+    #                 data.append(i.toJSON())
+    #         elif action == 'add':
+    #             pag = Pages()
+    #             pag.name_page = request.POST['name_page']
+    #             pag.save()
+    #         elif action == 'edit':
+    #             pag = Pages.objects.get(pk=request.POST['id_page'])
+    #             pag.name_page = request.POST['name_page']
+    #             pag.save()
+    #         elif action == 'delete':
+    #             pag = Pages.objects.get(pk=request.POST['id_page'])
+    #             pag.delete()
+    #         else:
+    #             data['error'] = 'An error has occurred'
+    #     except Exception as e:
+    #         data['error'] = str(e)
+    #     return JsonResponse(data, safe=False)
+    #
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add a new report'
+        context['list_url'] = reverse_lazy('google_reports')
+        context['entity'] = 'GoogleReports'
+        # context['form'] = OfficialPageCreateForm()
         return context
