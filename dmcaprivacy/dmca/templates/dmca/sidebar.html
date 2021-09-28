@@ -66,6 +66,15 @@
             </li>
         {% endif %}
 
+        {% if user.is_worker %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'google_reports' %}">
+                    <i class="ti-write menu-icon"></i>
+                    <span class="menu-title">Upload reports</span>
+                </a>
+            </li>
+        {% endif %}
+
         <li class="nav-item">
             <a class="nav-link" href="pages/forms/basic_elements.html">
                 <i class="ti-layout-list-post menu-icon"></i>

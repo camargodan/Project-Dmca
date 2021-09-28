@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django import forms
 from django.contrib.auth import get_user_model
 from django.forms import ModelForm, ModelChoiceField, SelectDateWidget
-from .models import Plans, Pages, TubePages, Clients, Nicks
+from .models import Plans, Pages, TubePages, Clients, Nicks, GoogleReports
 from crispy_forms.helper import FormHelper
 User = get_user_model()
 
@@ -100,4 +100,20 @@ class NickEditForm(forms.ModelForm):
         fields = ('nick', 'prio', 'pages',)
         widgets = {
             'pages': forms.CheckboxSelectMultiple(attrs={'placeholder': 'Select one or multiple pages'}),
+        }
+
+
+class AddReport(forms.ModelForm):
+    class Meta:
+        model = GoogleReports
+        fields = ('clients_id_clie', 'date_gore', 'id_clai_gore', 'type_clai_gore', 'urls_gore', )
+
+        widgets = {
+            'clients_id_clie': forms.Select(attrs={'placeholder': 'Client', 'id': 'floatingInput',
+                                                   'class': 'form-control'}),
+            'date_gore': forms.DateInput(attrs={'placeholder': 'Date', 'class': 'form-control', 'value': date.today()}),
+            'id_clai_gore': forms.TextInput(attrs={'placeholder': 'ID of the claim', 'class': 'form-control'}),
+            'type_clai_gore': forms.Select(attrs={'placeholder': 'Type of claim', 'class': 'form-control'}),
+            'urls_gore': forms.Textarea(attrs={'placeholder': 'Fill the input with the links', 'class': 'form-control',
+                                               'style': 'height: 100px'}),
         }

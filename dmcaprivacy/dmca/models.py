@@ -9,6 +9,10 @@ priority_choices = (
     ('Normal', 'Normal'),
     ('High', 'High'),
 )
+type_claim_choices = (
+    ('DMCA-IMAGES', 'DMCA-IMAGES'),
+    ('DMCA-CONTENT', 'DMCA-CONTENT'),
+)
 
 
 class Plans(models.Model):
@@ -135,8 +139,7 @@ class GoogleReports(models.Model):
     clients_id_clie = models.ForeignKey(Clients, on_delete=models.CASCADE, db_column='clients_id_clie')
     date_gore = models.DateField()
     id_clai_gore = models.CharField(max_length=45)
-    type_clai_gore = models.CharField(max_length=45)
-    stat_gore = models.CharField(max_length=45)
+    type_clai_gore = models.CharField(max_length=45, choices=type_claim_choices, default='DMCA-IMAGES', verbose_name='Type of claim')
     urls_gore = models.TextField()
     cant_urls_gore = models.IntegerField()
 

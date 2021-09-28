@@ -1,0 +1,61 @@
+{% extends 'dmca/tables_content.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block title %} Upload reports {% endblock %}
+
+{% block title_content %} Upload reports{% endblock %}
+
+{#    CONTENT   #}
+{% block card_title %} {{ title }} {% endblock card_title %}
+
+{% block buttons %}
+
+{% endblock %}
+
+{% block columns %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    {{ form.clients_id_clie }}
+                    <label for="floatingSelect">Client</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    {{ form.date_gore }}
+                    <label for="floatingInput">Date</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    {{ form.id_clai_gore }}
+                    <label for="floatingInput">ID of the Claim </label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    {{ form.type_clai_gore }}
+                    <label for="floatingInput">Report Type</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-text">
+                    <label for="floatingTextarea2">URL's</label>
+                    {{ form.urls_gore }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block rows %}
+    {# datatables #}
+{% endblock %}
+
+{% block extra_body %}
+
+{% endblock %}
