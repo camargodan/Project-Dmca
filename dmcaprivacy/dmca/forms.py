@@ -104,16 +104,27 @@ class NickEditForm(forms.ModelForm):
 
 
 class AddReport(forms.ModelForm):
+
     class Meta:
         model = GoogleReports
-        fields = ('clients_id_clie', 'date_gore', 'id_clai_gore', 'type_clai_gore', 'urls_gore', )
+        fields = ('clients_id_clie', 'date_gore', 'id_clai_gore', 'type_clai_gore', 'urls_gore',)
 
         widgets = {
-            'clients_id_clie': forms.Select(attrs={'placeholder': 'Client', 'id': 'floatingInput',
-                                                   'class': 'form-control'}),
+            'clients_id_clie': forms.Select(attrs={'placeholder': 'Client', 'class': 'form-control',
+                                                      'list': 'list_names'}),
             'date_gore': forms.DateInput(attrs={'placeholder': 'Date', 'class': 'form-control', 'value': date.today()}),
             'id_clai_gore': forms.TextInput(attrs={'placeholder': 'ID of the claim', 'class': 'form-control'}),
             'type_clai_gore': forms.Select(attrs={'placeholder': 'Type of claim', 'class': 'form-control'}),
             'urls_gore': forms.Textarea(attrs={'placeholder': 'Fill the input with the links', 'class': 'form-control',
                                                'style': 'height: 100px'}),
         }
+
+
+# class NicksList(forms.ModelForm):
+#     class Meta:
+#         model = Nicks
+#         fields = ('nick',)
+#
+#         widgets = {
+#             'nick': forms.TextInput(attrs={'placeholder': 'Client', 'class': 'form-control', 'list': 'list_names'}),
+#         }

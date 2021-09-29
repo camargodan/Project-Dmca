@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
@@ -13,6 +14,7 @@ from ...mixins import SuperuserRequired
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
 import jsonpickle
+from django.contrib import messages
 # from django.apps import apps
 # User = apps.get_model('accounts', 'User')
 from django.contrib.auth import get_user_model
@@ -89,47 +91,47 @@ class ListClients(ListView, LoginRequiredMixin):
         return context
 
 
-class GoogleReports(CreateView, SuperuserRequired):
+class AddGoogleReports(CreateView, SuperuserRequired):
     model = GoogleReports
     form_class = AddReport
-    # fields = ['clients_id_clie', 'date_gore', 'id_clai_gore', 'type_clai_gore', 'stat_gore', 'urls_gore',
-    #           'cant_urls_gore']
     template_name = 'dmca/worker/add_google_report.html'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    # @method_decorator(csrf_exempt)
-    # def post(self, request, *args, **kwargs):
-    #     data = {}
-    #     try:
-    #         action = request.POST['action']
-    #         if action == 'searchdata':
-    #             data = []
-    #             for i in Pages.objects.all():
-    #                 data.append(i.toJSON())
-    #         elif action == 'add':
-    #             pag = Pages()
-    #             pag.name_page = request.POST['name_page']
-    #             pag.save()
-    #         elif action == 'edit':
-    #             pag = Pages.objects.get(pk=request.POST['id_page'])
-    #             pag.name_page = request.POST['name_page']
-    #             pag.save()
-    #         elif action == 'delete':
-    #             pag = Pages.objects.get(pk=request.POST['id_page'])
-    #             pag.delete()
-    #         else:
-    #             data['error'] = 'An error has occurred'
-    #     except Exception as e:
-    #         data['error'] = str(e)
-    #     return JsonResponse(data, safe=False)
-    #
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        # make the 'name' field use a datalist to autocomplete
+        form.fields['clients_id_clie'].widget.attrs.update({'list': 'nicks'})
+        return form
+
+    @method_decorator(csrf_exempt)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        try:
+            report = GoogleReports()
+            nick = Nicks.objects.get(nick=request.POST['nick'])
+            report.clients_id_clie = nick.clients_id_clie
+            report.date_gore = request.POST['date_gore']
+            report.id_clai_gore = request.POST['id_clai_gore']
+            report.type_clai_gore = request.POST['type_clai_gore']
+            report.urls_gore = request.POST['urls_gore']
+            number = len(report.urls_gore.splitlines())
+            report.cant_urls_gore = number
+            report.save()
+
+            messages.success(request, 'Report uploaded successfully')
+            return HttpResponseRedirect('google_reports')
+        except Exception as e:
+            messages.error(request, e)
+
+        return render(request, self.template_name, {'form': form})
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Add a new report'
-        context['list_url'] = reverse_lazy('google_reports')
+        context['list_url'] = reverse_lazy('worker')
         context['entity'] = 'GoogleReports'
-        # context['form'] = OfficialPageCreateForm()
+        context['nicks'] = Nicks.objects.values_list('nick', flat=True)
         return context
