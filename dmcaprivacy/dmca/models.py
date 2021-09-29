@@ -145,3 +145,10 @@ class GoogleReports(models.Model):
 
     class Meta:
         verbose_name_plural = 'google_reports'
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    def __str__(self):
+        return self.id_clai_gore

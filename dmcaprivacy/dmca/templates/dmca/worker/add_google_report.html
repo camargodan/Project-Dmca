@@ -15,28 +15,39 @@
 
 {% block columns %}
     <div class="container">
+    <form autocomplete="off" enctype="multipart/form-data" method="post">{% csrf_token %}
         <div class="row">
             <div class="col">
                 <div class="form-floating">
-                    {{ form.clients_id_clie }}
+{#                    {{ form.clients_id_clie }}#}
+                <input list="nicks" name="nick" id="name-id" class="form-control" />
+                    <datalist id="nicks">
+                        {% for nick in nicks %}
+                            <option value="{{ nick }}">
+                        {% endfor %}
+                    </datalist>
                     <label for="floatingSelect">Client</label>
+                {{ form.nick.errors }}
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating mb-3">
                     {{ form.date_gore }}
+                    {{ form.date_gore.errors }}
                     <label for="floatingInput">Date</label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating mb-3">
                     {{ form.id_clai_gore }}
+                    {{ form.id_clai_gore.errors }}
                     <label for="floatingInput">ID of the Claim </label>
                 </div>
             </div>
             <div class="col">
                 <div class="form-floating mb-3">
                     {{ form.type_clai_gore }}
+                    {{ form.type_clai_gore.errors }}
                     <label for="floatingInput">Report Type</label>
                 </div>
             </div>
@@ -46,9 +57,15 @@
                 <div class="form-text">
                     <label for="floatingTextarea2">URL's</label>
                     {{ form.urls_gore }}
+                    {{ form.urls_gore.errors }}
                 </div>
+
+                <input name="action" type="hidden" value="add">
+                <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+                Upload </button>
             </div>
         </div>
+    </form>
     </div>
 {% endblock %}
 
