@@ -69,10 +69,20 @@
         {% if user.is_worker %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'google_reports' %}">
-                    <i class="ti-write menu-icon"></i>
+                    <i class="fas fa-file-upload menu-icon"></i>
                     <span class="menu-title">Upload reports</span>
                 </a>
             </li>
+        {% endif %}
+
+        {% if user.is_worker %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'manage_reports' %}">
+                    <i class="far fa-file-alt menu-icon"></i>
+                    <span class="menu-title">Manage reports</span>
+                </a>
+            </li>
+
         {% endif %}
 
         <li class="nav-item">
