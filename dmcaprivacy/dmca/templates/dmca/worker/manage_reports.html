@@ -1,0 +1,120 @@
+{% extends 'dmca/tables_content.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block title %} Manage Reports {% endblock %}
+
+{% block title_content %} Manage Reports {% endblock %}
+
+{#    CONTENT   #}
+{% block card_title %} {{ title }} {% endblock card_title %}
+
+{% block buttons %}{% endblock %}
+
+{% block columns %}
+    <tr class="py-1">
+        <th>
+            Id google
+        </th>
+        <th>
+            Id Client
+        </th>
+        <th>
+            Nick
+        </th>
+        <th>
+            Urls
+        </th>
+        <th width="30%">
+            Id Claim
+        </th>
+        <th width="30%">
+            Date
+        </th>
+        <th width="30%">
+            Report Type
+        </th>
+        <th width="10%">
+            Options
+        </th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {# datatables #}
+{% endblock %}
+
+{% block extra_body %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form autocomplete="off" method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <b><i class="ti-search"></i> <span></span></b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="action" type="hidden" value="add">
+                        <input name="id_goog_repo" type="hidden" value="0">
+
+
+                        <div class="form-floating">
+{#                    {{ form.clients_id_clie }}#}
+                <input list="nicks" name="nick" id="name-id" class="form-control" />
+                    <datalist id="nicks">
+                        {% for nick in nicks %}
+                            <option value="{{ nick }}">
+                        {% endfor %}
+                    </datalist>
+                    <label for="floatingSelect">Client</label>
+                {{ form.nick.errors }}
+                </div>
+
+
+                    <div class="form-floating mb-3">
+                    {{ form.date_gore }}
+                    {{ form.date_gore.errors }}
+                    <label for="floatingInput">Date</label>
+                </div>
+
+                    <div class="form-floating mb-3">
+                    {{ form.id_clai_gore }}
+                    {{ form.id_clai_gore.errors }}
+                    <label for="floatingInput">ID of the Claim </label>
+                </div>
+
+                    <div class="form-floating mb-3">
+                    {{ form.type_clai_gore }}
+                    {{ form.type_clai_gore.errors }}
+                    <label for="floatingInput">Report Type</label>
+                </div>
+
+                    <div class="form-text">
+                    <label for="floatingTextarea2">URL's</label>
+                    {{ form.urls_gore }}
+                    {{ form.urls_gore.errors }}
+                </div>
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save"></i>
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% include 'dmca/js_tables.html' %}
+    <script src="{% static 'functions/worker/manage_reports.js' %}"></script>
+
+{% endblock %}

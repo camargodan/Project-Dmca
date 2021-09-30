@@ -118,13 +118,3 @@ class AddReport(forms.ModelForm):
             'urls_gore': forms.Textarea(attrs={'placeholder': 'Fill the input with the links', 'class': 'form-control',
                                                'style': 'height: 100px'}),
         }
-
-
-# class NicksList(forms.ModelForm):
-#     class Meta:
-#         model = Nicks
-#         fields = ('nick',)
-#
-#         widgets = {
-#             'nick': forms.TextInput(attrs={'placeholder': 'Client', 'class': 'form-control', 'list': 'list_names'}),
-#         }
