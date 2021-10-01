@@ -6,7 +6,7 @@ function getData(){
         autoWidth: false,
         destroy: true,
         deferRender: true,
-        "order": [[ 4, "desc" ]],
+        "order": [[ 3, "desc" ]],
         ajax: {
             url: window.location.pathname,
             type: 'POST',
@@ -16,17 +16,16 @@ function getData(){
             dataSrc: ""
         },
         columns: [
-            {"data": "id_goog_repo"},
+            {"data": "id_tube_repo"},
+            {"data": "tube_urls"},
             {"data": "nick"},
-            {"data": "urls_gore"},
-            {"data": "id_clai_gore"},
-            {"data": "date_gore"},
-            {"data": "type_clai_gore"},
-            {"data": "type_clai_gore"},
+            {"data": "date_tube"},
+            {"data": "name_tube_page"},
+            {"data": "name_tube_page"},
         ],
         columnDefs: [
             {
-                "targets": [ 0, 1, 2],
+                "targets": [ 0, 1,],
                 "visible": false,
                 "searchable": false
             },
@@ -58,12 +57,11 @@ $(function () {
             var tr = tblClient.cell($(this).closest('td, li')).index();
             var data = tblClient.row(tr.row).data();
             $('input[name="action"]').val('edit');
-            $('input[name="id_goog_repo"]').val(data.id_goog_repo);
+            $('input[name="id_tube_repo"]').val(data.id_tube_repo);
+            $('textarea[name="tube_urls"]').val(data.tube_urls);
             $('input[name="nick"]').val(data.nick);
-            $('textarea[name="urls_gore"]').val(data.urls_gore);
-            $('input[name="id_clai_gore"]').val(data.id_clai_gore);
-            $('input[name="date_gore"]').val(data.date_gore);
-            $('select[name="type_clai_gore"]').val(data.type_clai_gore);
+            $('input[name="date_tube"]').val(data.date_tube);
+            $('input[name="tube"]').val(data.name_tube_page);
             $('#myModalClient').modal('show');
         })
         .on('click', 'a[rel="delete"]', function (){
@@ -71,7 +69,7 @@ $(function () {
             var data = tblClient.row(tr.row).data();
             var parameters = new FormData();
             parameters.append('action', 'delete');
-            parameters.append('id_goog_repo', data.id_goog_repo);
+            parameters.append('id_tube_repo', data.id_tube_repo);
             submit_with_ajax(window.location.pathname, 'Notification', 'Are you sure to delete this Report?', parameters, function () {
                 tblClient.ajax.reload();
             });

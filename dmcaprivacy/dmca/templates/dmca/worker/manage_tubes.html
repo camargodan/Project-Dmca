@@ -2,9 +2,9 @@
 {% load static %}
 {% load crispy_forms_filters %}
 
-{% block title %} Manage Google Reports {% endblock %}
+{% block title %} Manage Tube Reports {% endblock %}
 
-{% block title_content %} Manage Google Reports {% endblock %}
+{% block title_content %} Manage Tubes Reports {% endblock %}
 
 {#    CONTENT   #}
 {% block card_title %} {{ title }} {% endblock card_title %}
@@ -14,22 +14,19 @@
 {% block columns %}
     <tr class="py-1">
         <th>
-            Id google
-        </th>
-        <th>
-            Nick
+            Id tube report
         </th>
         <th>
             Urls
         </th>
         <th width="30%">
-            Id Claim
+            Client
         </th>
         <th width="30%">
             Date
         </th>
         <th width="30%">
-            Report Type
+            Page
         </th>
         <th width="10%">
             Options
@@ -58,7 +55,7 @@
                     </div>
                     <div class="modal-body">
                         <input name="action" type="hidden" value="add">
-                        <input name="id_goog_repo" type="hidden" value="0">
+                        <input name="id_tube_repo" type="hidden" value="0">
 
 
                         <div class="form-floating">
@@ -72,10 +69,9 @@
                 {{ form.nick.errors }}
                 </div>
 
-
                     <div class="form-floating mb-3">
-                    {{ form.date_gore }}
-                    {{ form.date_gore.errors }}
+                    {{ form.date_tube }}
+                    {{ form.date_tube.errors }}
                     <label for="floatingInput">Date</label>
                 </div>
 
@@ -85,16 +81,21 @@
                     <label for="floatingInput">ID of the Claim </label>
                 </div>
 
-                    <div class="form-floating mb-3">
-                    {{ form.type_clai_gore }}
-                    {{ form.type_clai_gore.errors }}
-                    <label for="floatingInput">Report Type</label>
+                <div class="form-floating">
+                <input list="tubes" name="tube" class="form-control" />
+                    <datalist id="tubes">
+                        {% for tube in name_tube_page %}
+                            <option value="{{ tube }}">
+                        {% endfor %}
+                    </datalist>
+                    <label for="floatingSelect">Tube Page</label>
+                {{ form.tube.errors }}
                 </div>
 
                     <div class="form-text">
                     <label for="floatingTextarea2">URL's</label>
-                    {{ form.urls_gore }}
-                    {{ form.urls_gore.errors }}
+                    {{ form.tube_urls }}
+                    {{ form.tube_urls.errors }}
                 </div>
 
                     </div>
@@ -108,6 +109,6 @@
     </div>
 
     {% include 'dmca/js_tables.html' %}
-    <script src="{% static 'functions/worker/manage_reports.js' %}"></script>
+    <script src="{% static 'functions/worker/manage_tube.js' %}"></script>
 
 {% endblock %}

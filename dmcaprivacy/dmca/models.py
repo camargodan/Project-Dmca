@@ -90,20 +90,6 @@ class NicksPages(models.Model):
         return item
 
 
-class TubeHasPages(models.Model):
-    id_tube_pages = models.CharField(primary_key=True, max_length=45)
-    tube_reports_id_tube_repo = models.ForeignKey('TubeReports', on_delete=models.CASCADE, db_column='tube_reports_id_tube_repo')
-    tube_pages_id_tube_pages = models.ForeignKey('TubePages', on_delete=models.CASCADE, db_column='tube_pages_id_tube_pages')
-    tube_urls = models.CharField(max_length=45)
-
-    def toJSON(self):
-        item = model_to_dict(self)
-        return item
-
-    class Meta:
-        verbose_name_plural = 'tube_has_pages'
-
-
 class TubePages(models.Model):
     id_tube_pages = models.AutoField(primary_key=True)
     name_tube_page = models.CharField(max_length=45, unique=True)
@@ -122,9 +108,11 @@ class TubePages(models.Model):
 
 class TubeReports(models.Model):
     id_tube_repo = models.AutoField(primary_key=True)
-    clients_id_clie = models.ForeignKey(Clients, on_delete=models.CASCADE, db_column='clients_id_clie')
-    stat_tube = models.CharField(max_length=45)
+    clients_id_clie = models.ForeignKey(Clients, on_delete=models.CASCADE)
     date_tube = models.DateField()
+    id_tube_pages = models.ForeignKey(TubePages, on_delete=models.CASCADE)
+    tube_urls = models.TextField()
+    cant_urls = models.IntegerField()
 
     def toJSON(self):
         item = model_to_dict(self)

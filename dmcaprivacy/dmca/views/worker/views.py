@@ -8,8 +8,8 @@ from django.views.generic import CreateView, UpdateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy, reverse
-from ...forms import AddReport
-from ...models import Nicks, Clients, Pages, NicksPages, Plans, GoogleReports
+from ...forms import AddReport, AddTube
+from ...models import Nicks, Clients, Plans, GoogleReports, TubePages, TubeReports
 from ...mixins import SuperuserRequired
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
@@ -95,12 +95,6 @@ class AddGoogleReports(CreateView, SuperuserRequired):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        # make the 'name' field use a datalist to autocomplete
-        form.fields['clients_id_clie'].widget.attrs.update({'list': 'nicks'})
-        return form
-
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -125,7 +119,7 @@ class AddGoogleReports(CreateView, SuperuserRequired):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Add a new report'
+        context['title'] = 'Add a new Google Report'
         context['list_url'] = reverse_lazy('worker')
         context['entity'] = 'GoogleReports'
         context['nicks'] = Nicks.objects.values_list('nick', flat=True)
@@ -183,9 +177,119 @@ class ManageGoogleReports(ListView, SuperuserRequired):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'List of reports'
+        context['title'] = 'List of Google Reports'
         context['list_url'] = reverse_lazy('manage_reports')
         context['entity'] = 'GoogleReports'
         context['form'] = AddReport()
         context['nicks'] = Nicks.objects.values_list('nick', flat=True)
+        return context
+
+
+class AddTubeReports(CreateView, SuperuserRequired):
+    model = TubeReports
+    form_class = AddTube
+    template_name = 'dmca/worker/add_tube_reports.html'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    @method_decorator(csrf_exempt)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        try:
+            report = TubeReports()
+            nick = Nicks.objects.get(nick=request.POST['nick'])
+            report.clients_id_clie = nick.clients_id_clie
+
+            report.date_tube = request.POST['date_tube']
+
+            tube = TubePages.objects.get(name_tube_page=request.POST['tube'])
+            report.id_tube_pages_id = tube.id_tube_pages
+
+            report.tube_urls = request.POST['tube_urls']
+            number = len(report.tube_urls.splitlines())
+            report.cant_urls = number
+            report.save()
+
+            messages.success(request, 'Report uploaded successfully')
+            return HttpResponseRedirect('tube_reports')
+        except Exception as e:
+            messages.error(request, e)
+
+        return render(request, self.template_name, {'form': form})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Add a new Tube Report'
+        context['list_url'] = reverse_lazy('worker')
+        context['entity'] = 'TubeReports'
+        context['nicks'] = Nicks.objects.values_list('nick', flat=True)
+        context['name_tube_page'] = TubePages.objects.values_list('name_tube_page', flat=True)
+        return context
+
+
+class ManageTubeReports(ListView, SuperuserRequired):
+    model = TubeReports
+    template_name = 'dmca/worker/manage_tubes.html'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    @method_decorator(csrf_exempt)
+    def post(self, request, *args, **kwargs):
+        data = {}
+        worker = User.objects.get(id=self.request.user.id)
+        client = Clients.objects.filter(worker_id=worker.id)
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in client:
+                    for e in TubeReports.objects.filter(clients_id_clie=i.id_clie):
+                        encode_reports = jsonpickle.encode(e, unpicklable=False)
+                        reports_json = json.loads(encode_reports)
+                        dest = {}
+                        dest.update(reports_json)
+                        for a in Nicks.objects.filter(clients_id_clie=e.clients_id_clie):
+                            encodenicks = jsonpickle.encode(a, unpicklable=False)
+                            nicksjson = json.loads(encodenicks)
+                            dest.update(nicksjson)
+                        for b in TubePages.objects.filter(id_tube_pages=e.id_tube_pages_id):
+                            encodepage = jsonpickle.encode(b, unpicklable=False)
+                            pagejson = json.loads(encodepage)
+                            dest.update(pagejson)
+                        data.append(dest)
+
+            elif action == 'edit':
+                report = TubeReports.objects.get(pk=request.POST['id_tube_repo'])
+                nick = Nicks.objects.get(nick=request.POST['nick'])
+                page = TubePages.objects.get(name_tube_page=request.POST['tube'])
+
+                report.clients_id_clie = nick.clients_id_clie
+                report.date_tube = request.POST['date_tube']
+                report.id_tube_pages_id = page.id_tube_pages
+                report.tube_urls = request.POST['tube_urls']
+
+                number = len(report.tube_urls.splitlines())
+                report.cant_urls = number
+                report.save()
+            elif action == 'delete':
+                report = TubeReports.objects.get(pk=request.POST['id_tube_repo'])
+                report.delete()
+            else:
+                data['error'] = 'An error has occurred'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'List of Tube Reports'
+        context['list_url'] = reverse_lazy('manage_tubes')
+        context['entity'] = 'TubeReports'
+        context['form'] = AddTube()
+        context['nicks'] = Nicks.objects.values_list('nick', flat=True)
+        context['name_tube_page'] = TubePages.objects.values_list('name_tube_page', flat=True)
         return context
