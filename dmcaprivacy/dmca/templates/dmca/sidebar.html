@@ -70,7 +70,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'google_reports' %}">
                     <i class="fas fa-file-upload menu-icon"></i>
-                    <span class="menu-title">Upload reports</span>
+                    <span class="menu-title">Upload Google reports</span>
                 </a>
             </li>
         {% endif %}
@@ -79,10 +79,27 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'manage_reports' %}">
                     <i class="far fa-file-alt menu-icon"></i>
-                    <span class="menu-title">Manage reports</span>
+                    <span class="menu-title">Manage Google reports</span>
                 </a>
             </li>
+        {% endif %}
 
+        {% if user.is_worker %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'tube_reports' %}">
+                    <i class="fas fa-file-invoice menu-icon"></i>
+                    <span class="menu-title">Upload Tube reports</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% if user.is_worker %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'manage_tubes' %}">
+                    <i class="far fa-list-alt menu-icon"></i>
+                    <span class="menu-title">Manage Tube reports</span>
+                </a>
+            </li>
         {% endif %}
 
         <li class="nav-item">

@@ -2,9 +2,9 @@
 {% load static %}
 {% load crispy_forms_filters %}
 
-{% block title %} Upload Google Reports {% endblock %}
+{% block title %} Upload Tube report {% endblock %}
 
-{% block title_content %} Upload Google Reports{% endblock %}
+{% block title_content %} Upload Tube report{% endblock %}
 
 {#    CONTENT   #}
 {% block card_title %} {{ title }} {% endblock card_title %}
@@ -19,6 +19,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-floating">
+{#                    {{ form.clients_id_clie }}#}
                 <input list="nicks" name="nick" id="name-id" class="form-control" />
                     <datalist id="nicks">
                         {% for nick in nicks %}
@@ -31,23 +32,21 @@
             </div>
             <div class="col">
                 <div class="form-floating mb-3">
-                    {{ form.date_gore }}
-                    {{ form.date_gore.errors }}
+                    {{ form.date_tube }}
+                    {{ form.date_tube.errors }}
                     <label for="floatingInput">Date</label>
                 </div>
             </div>
             <div class="col">
-                <div class="form-floating mb-3">
-                    {{ form.id_clai_gore }}
-                    {{ form.id_clai_gore.errors }}
-                    <label for="floatingInput">ID of the Claim </label>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-floating mb-3">
-                    {{ form.type_clai_gore }}
-                    {{ form.type_clai_gore.errors }}
-                    <label for="floatingInput">Report Type</label>
+                <div class="form-floating">
+                <input list="tubes" name="tube" class="form-control" />
+                    <datalist id="tubes">
+                        {% for tube in name_tube_page %}
+                            <option value="{{ tube }}">
+                        {% endfor %}
+                    </datalist>
+                    <label for="floatingSelect">Tube Page</label>
+                {{ form.name_tube_page.errors }}
                 </div>
             </div>
         </div>
@@ -55,8 +54,8 @@
             <div class="col">
                 <div class="form-text">
                     <label for="floatingTextarea2">URL's</label>
-                    {{ form.urls_gore }}
-                    {{ form.urls_gore.errors }}
+                    {{ form.tube_urls }}
+                    {{ form.tube_urls.errors }}
                 </div>
                 <br>
                 <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
