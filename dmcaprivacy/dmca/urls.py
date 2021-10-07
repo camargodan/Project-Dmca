@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import LoginView, Administrator, Worker, Client, UserEditView, ManageUsers, ManagePlans, \
      ManageOfficialPages, ManageTubePages, ManageNicks, AddNicks, NickEditView, ListClients, AddGoogleReports, \
-     ManageGoogleReports, AddTubeReports, ManageTubeReports
+     ManageGoogleReports, AddTubeReports, ManageTubeReports, ReportsList, TubesList
 from django.contrib.auth import get_user_model
 
 
@@ -25,6 +25,8 @@ urlpatterns = [
     path('manage_reports', ManageGoogleReports.as_view(), name='manage_reports'),
     path('tube_reports', AddTubeReports.as_view(), name='tube_reports'),
     path('manage_tubes', ManageTubeReports.as_view(), name='manage_tubes'),
+    path('reports_list', ReportsList.as_view(), name='reports_list'),
+    path('tubes_list', TubesList.as_view(), name='tubes_list'),
 
 ]
 
