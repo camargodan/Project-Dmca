@@ -6,7 +6,7 @@ function getData(){
         autoWidth: false,
         destroy: true,
         deferRender: true,
-        "order": [[ 4, "desc" ]],
+        "order": [[ 3, "desc" ]],
         ajax: {
             url: window.location.pathname,
             type: 'POST',
@@ -16,26 +16,25 @@ function getData(){
             dataSrc: ""
         },
         columns: [
-            {"data": "id_goog_repo"},
-            {"data": "nick"},
-            {"data": "urls_gore"},
-            {"data": "id_clai_gore",
+            {"data": "id_tube_repo"},
+            {"data": "tube_urls"},
+            {"data": "date_tube",
                 "render": function(data, type, row) {
                     return '<a href="#" style="text-decoration: none; color: inherit">'+ data +'</a>';
-                }},
-            {"data": "date_gore",
+                },},
+            {"data": "name_tube_page",
                 "render": function(data, type, row) {
                     return '<a href="#" style="text-decoration: none; color: inherit">'+ data +'</a>';
-                }},
-            {"data": "type_clai_gore",
+                },},
+            {"data": "cant_urls",
                 "render": function(data, type, row) {
                     return '<a href="#" style="text-decoration: none; color: inherit">'+ data +'</a>';
-                }},
-            {"data": "type_clai_gore"},
+                },},
+            {"data": "name_tube_page"},
         ],
         columnDefs: [
             {
-                "targets": [ 0, 1, 2],
+                "targets": [ 0, 1,],
                 "visible": false,
                 "searchable": false
             },
@@ -44,7 +43,7 @@ function getData(){
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="#" style="text-decoration: none; color: inherit"><label class="badge badge-success">Approved</label></a>';
+                    var buttons = '<a href="#" style="text-decoration: none; color: inherit"><label class="badge badge-success">Approved</label></a> ';
                     return buttons;
                 }
             },
@@ -55,30 +54,19 @@ function getData(){
 }
 // when document get ready
 $(function () {
-    var modal_title = $('.modal-title');
     // call datatable
     getData();
 
+    // call modal
     $('#list_data tbody')
         .on('click', 'tr', 'a', function (){
             var data = tblClient.row( this ).data();
 
-            document.getElementById("total_urls").innerHTML = data.cant_urls_gore;
-            document.getElementById("id_claim").innerHTML = data.id_clai_gore;
-            document.getElementById("type_content").innerHTML = data.type_clai_gore;
-            document.getElementById("date_claim").innerHTML = data.date_gore;
-            document.getElementById("urls_claim").innerHTML = data.urls_gore;
+            document.getElementById("cant_urls").innerHTML = data.cant_urls;
+            document.getElementById("name_tube_page").innerHTML = data.name_tube_page;
+            document.getElementById("date_tube").innerHTML = data.date_tube;
+            document.getElementById("tube_urls").innerHTML = data.tube_urls;
 
-
-            // var tr = tblClient.cell($(this).closest('td, li')).index();
-            // var data = tblClient.row(tr.row).data();
-            // $('input[name="action"]').val('edit');
-            // $('input[name="id_goog_repo"]').val(data.id_goog_repo);
-            // $('input[name="nick"]').val(data.nick);
-            // $('textarea[name="urls_gore"]').val(data.urls_gore);
-            // $('input[name="id_clai_gore"]').val(data.id_clai_gore);
-            // $('input[name="date_gore"]').val(data.date_gore);
-            // $('select[name="type_clai_gore"]').val(data.type_clai_gore);
             $('#myModalClient').modal('show');
         });
 

@@ -1,11 +1,12 @@
 {% extends 'dmca/base_layout.html' %}
 {% load static %}
-{% block extra_head %}  {% include 'dmca/css_tables.html' %} {% endblock %}
 {% block title %} Home {% endblock %}
 {% block title_content %} Home {% endblock %}
 
 {% block content %}
+
     <div class="content-wrapper">
+    {# Title and back button#}
         <div class="row">
             <div class="col-md-12 grid-margin">
                 <div class="d-flex justify-content-between align-items-center">
@@ -20,6 +21,8 @@
                 </div>
             </div>
         </div>
+
+        {# Totals div's#}
         <div class="row">
             <div class="col-md-3 grid-margin stretch-card">
                 <div class="card">
@@ -78,176 +81,321 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
+            {# 1ts charts#}
+            <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Sales details</p>
-                        <p class="text-muted font-weight-light">Received overcame oh sensible so at an. Formed do change merely to county it. Am separate contempt domestic to to oh. On relation my so addition branched.</p>
-                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
-                        <canvas id="sales-chart"></canvas>
+                        <div class="last_week_div">
+                            <h4 class="card-title">Last week reports</h4>
+                            <canvas id="barChart" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
+                        </div>
+                        <div class="this_month_div">
+                            <h4 class="card-title">This month reports</h4>
+                            <canvas id="barChart2" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
+                        </div>
+                        <div class="last_month_div">
+                            <h4 class="card-title">Last month reports</h4>
+                            <canvas id="barChart3" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
+                        </div>
+                        <div class="two_month_div">
+                            <h4 class="card-title">2 month ago</h4>
+                            <canvas id="barChart4" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
+                        </div>
                     </div>
+
                     <div class="card border-right-0 border-left-0 border-bottom-0">
                         <div class="d-flex justify-content-center justify-content-md-end">
                             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                                <button class="btn btn-lg btn-outline-light dropdown-toggle rounded-0 border-top-0 border-bottom-0" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    Today
+                                <button class="btn btn-lg alert-info dropdown-toggle rounded-0 border-top-0 border-bottom-0" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <b>Reports Charts</b>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                                    <a class="dropdown-item" href="#">January - March</a>
-                                    <a class="dropdown-item" href="#">March - June</a>
-                                    <a class="dropdown-item" href="#">June - August</a>
-                                    <a class="dropdown-item" href="#">August - November</a>
+                                    <a class="dropdown-item" id="last_week_btn" href="#">Last week</a>
+                                    <a class="dropdown-item" id="this_month_btn" role="button">This month</a>
+                                    <a class="dropdown-item" id="last_month_btn" href="#">Last month</a>
+                                    <a class="dropdown-item" id="two_month_btn" href="#">2 month ago</a>
                                 </div>
                             </div>
-                            <button class="btn btn-lg btn-outline-light text-primary rounded-0 border-0 d-none d-md-block" type="button"> View all </button>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-md-6 grid-margin stretch-card">
+            {# 2ts charts#}
+            <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h4 class="card-title">  All the reports  </h4>
-                            </div>
+                        <div class="last_week_div">
+                            <h4 class="card-title">Reports Type</h4>
+                            <canvas id="pieChart" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
                         </div>
-
-                        {# TABLE BLOCK#}
-                        <div class="table-responsive">
-                            <table id="list_data" class="table table-striped" >
-                                {#  table content suppressed #}
-                                <thead>
-                                <tr class="py-1">
-                                    <th>
-                                        Id google
-                                    </th>
-                                    <th>
-                                        Nick
-                                    </th>
-                                    <th>
-                                        Urls
-                                    </th>
-                                    <th width="30%">
-                                        Id Claim
-                                    </th>
-                                    <th width="30%">
-                                        Date
-                                    </th>
-                                    <th width="30%">
-                                        Report Type
-                                    </th>
-                                    <th width="10%">
-                                        Status
-                                    </th>
-                                </tr>
-                                </thead>
-                                <a href="#">
-                                    <tbody>
-                                    {#Datatables#}
-                                    </tbody>
-                                </a>
-                            </table>
+                        <div class="this_month_div">
+                            <h4 class="card-title">Reports Type</h4>
+                            <canvas id="pieChart2" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
                         </div>
-
+                        <div class="last_month_div">
+                            <h4 class="card-title">Reports Type</h4>
+                            <canvas id="pieChart3" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
+                        </div>
+                        <div class="two_month_div">
+                            <h4 class="card-title">Reports Type</h4>
+                            <canvas id="pieChart4" width="461" height="330" style="display: block; width: 461px; height: 230px;" class="chartjs-render-monitor"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
-
     </div>
 {% endblock content %}
 
 
 {% block extra_body %}
-    <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div>
-                        <img src="{% static "images/Logo-dmcaprivacy.png" %}" width="120px" height="28px" >
-                    </div>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+    {# styles for the charts#}
+    <style>
+        .this_month_div{
+            display: none;
+        }
+        .last_month_div{
+            display: none;
+        }
+        .two_month_div{
+            display: none;
+        }
+    </style>
+
+    {# All the scripts for the charts#}
+<script>
+$(document).ready(function(){
+    const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+    const randomRGB = () => `rgba(${randomNum()}, ${randomNum()}, ${randomNum()}, 0.6)`;
+    const randomRGBBorder = () => `rgba(200, 200, 200, 1)`;
+
+    $("#last_week_btn").click(function(){
+        $('.this_month_div').hide(1000);
+        $('.last_month_div').hide(1000);
+        $('.two_month_div').hide(1000);
+        $('.last_week_div').slideToggle("slow");
+    });
+
+    $("#this_month_btn").click(function(){
+        $('.last_week_div').hide(1000);
+        $('.last_month_div').hide(1000);
+        $('.two_month_div').hide(1000);
+        $('.this_month_div').slideToggle("slow");
+    });
+    $("#last_month_btn").click(function(){
+        $('.last_week_div').hide(1000);
+        $('.this_month_div').hide(1000);
+        $('.two_month_div').hide(1000);
+        $('.last_month_div').slideToggle("slow");
+    });
+    $("#two_month_btn").click(function(){
+        $('.last_week_div').hide(1000);
+        $('.this_month_div').hide(1000);
+        $('.last_month_div').hide(1000);
+        $('.two_month_div').slideToggle("slow");
+    });
+
+    /* ChartJS
+      * -------
+      * Data and config for chartjs
+      */
+    'use strict';
+    var data = {
+        labels: [{%for data in last_week%}'{{data.date_gore}}',{%endfor%}],
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in last_week%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in last_week%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie = {
+        datasets: [{
+            data: ['{{ last_week_images.cant_urls_gore__sum }}', '{{ last_week_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
 
 
-                    <div class="row">
-                        <div class="col-md-12 grid-margin stretch-card">
+    var data2 = {
+        labels: [{%for data in this_month%}'{{data.date_gore}}',{%endfor%}], //loop through queryset,
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in this_month%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in this_month%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie2 = {
+        datasets: [{
+            data: ['{{ this_month_images.cant_urls_gore__sum }}', '{{ this_month_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
 
-                            <div class="card position-relative">
-                                <div class="card-body">
-                                    <p class="card-title">Detailed Report</p>
+    var data3 = {
+        labels: [{%for data in last_month%}'{{data.date_gore}}',{%endfor%}],
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in last_month%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in last_month%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie3 = {
+        datasets: [{
+            data: ['{{ last_month_images.cant_urls_gore__sum }}', '{{ last_month_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
 
-                                    <div class="row">
-                                        <div class="col-md-12 col-xl-3 ">
-                                            <div class="ml-xl-4">
-                                                <h1 id="total_urls" align="center">number of urls </h1>
-                                                <p class="alert-success" align="center">Urls approved</p>
-                                                <h6 class="font-weight-light mb-xl-4">ID Claim <br><b id="id_claim" style="font-weight: bold"></b></h6>
-                                                <h6 class="font-weight-light mb-xl-4"><b id="type_content" style="font-weight: bold"></b> </h6>
-                                                <p class="text-muted mb-2 mb-xl-0">
-                                                    This report was sent and approved on <b id="date_claim" style="font-weight: bold"></b>
-                                                </p>
-                                            </div>
-                                        </div>
+    var data4 = {
+        labels: [{%for data in two_month%}'{{data.date_gore}}',{%endfor%}],
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in two_month%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in two_month%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie4 = {
+        datasets: [{
+            data: ['{{ two_month_images.cant_urls_gore__sum }}', '{{ two_month_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
 
-                                        <div class="col-md-12 col-xl-9">
-                                            <div class="row">
-                                                <div class="form-text">
-                                                    <textarea id="urls_claim" style="height: 350px; width: 100%" readonly> </textarea>
-                                                </div>
-                                            </div>
-                                        </div>
+    var options = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        legend: {
+            display: false
+        },
+        elements: {
+            point: {
+                radius: 0
+            }
+        }
+    };
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    var PieOptions = {
+        responsive: true,
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    };
 
+    // Get context with jQuery - using jQuery's .get() method.
+    if ($("#barChart").length) {
+        var barChartCanvas = $("#barChart").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+    }
+    if ($("#barChart2").length) {
+        var barChartCanvas2 = $("#barChart2").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas2, {
+            type: 'bar',
+            data: data2,
+            options: options
+        });
+    }
+    if ($("#barChart3").length) {
+        var barChartCanvas3 = $("#barChart3").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas3, {
+            type: 'bar',
+            data: data3,
+            options: options
+        });
+    }
+    if ($("#barChart4").length) {
+        var barChartCanvas4 = $("#barChart4").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas4, {
+            type: 'bar',
+            data: data4,
+            options: options
+        });
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-flat btn-block"><i class="fas fa-save"></i>
-                        Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% include 'dmca/js_tables.html' %}
-    <script src="{% static 'functions/clients/table_home.js' %}"></script>
-
+    if ($("#pieChart").length) {
+        var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+        var pieChart = new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: dataPie,
+            options: PieOptions
+        });
+    }
+    if ($("#pieChart2").length) {
+        var pieChartCanvas2 = $("#pieChart2").get(0).getContext("2d");
+        var pieChart2 = new Chart(pieChartCanvas2, {
+            type: 'pie',
+            data: dataPie2,
+            options: PieOptions
+        });
+    }
+    if ($("#pieChart3").length) {
+        var pieChartCanvas3 = $("#pieChart3").get(0).getContext("2d");
+        var pieChart3 = new Chart(pieChartCanvas3, {
+            type: 'pie',
+            data: dataPie3,
+            options: PieOptions
+        });
+    }
+    if ($("#pieChart4").length) {
+        var pieChartCanvas4 = $("#pieChart4").get(0).getContext("2d");
+        var pieChart4 = new Chart(pieChartCanvas4, {
+            type: 'pie',
+            data: dataPie4,
+            options: PieOptions
+        });
+    }
+});
+</script>
 {% endblock %}

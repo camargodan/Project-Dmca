@@ -56,6 +56,22 @@
                 </a>
             </li>
         {% endif %}
+        {% if user.is_client %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'reports_list' %}">
+                    <i class="ti-files menu-icon"></i>
+                    <span class="menu-title">Google Reports</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if user.is_client %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'tubes_list' %}">
+                    <i class="ti-clipboard menu-icon"></i>
+                    <span class="menu-title">Tubes Reports</span>
+                </a>
+            </li>
+        {% endif %}
 
         {% if user.is_worker %}
             <li class="nav-item">

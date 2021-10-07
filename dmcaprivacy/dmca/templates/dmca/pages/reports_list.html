@@ -1,0 +1,113 @@
+{% extends 'dmca/tables_content.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block extra_head %} {% include 'dmca/css_tables.html' %}
+    <link rel="stylesheet" href="{% static 'css/dataTables.dateTime.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap5.min.css' %}">
+{% endblock %}
+
+{% block title %} Google Reports {% endblock %}
+{% block title_content %} Google Reports {% endblock %}
+{#    CONTENT   #}
+{% block card_title %} {{ title }} {% endblock card_title %}
+{% block buttons %}
+    <tbody><tr>
+    <td>From :</td>
+    <td><input class="btn-sm" type="text" id="min" name="min"></td>
+    <td>To :</td>
+    <td><input class="btn-sm" type="text" id="max" name="max"></td>
+</tr>
+<br>
+</tbody>
+<br>
+{% endblock %}
+
+
+{% block columns %}
+    <tr class="py-1">
+        <th>Id google</th>
+        <th>Nick </th>
+        <th>Urls</th>
+        <th width="30%">Id Claim</th>
+        <th width="30%">Date</th>
+        <th width="30%">Report Type</th>
+        <th width="10%">Status</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {# datatables #}
+{% endblock %}
+
+{% block extra_body %}
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        <img src="{% static "images/Logo-dmcaprivacy.png" %}" width="120px" height="28px" >
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+
+                            <div class="card position-relative">
+                                <div class="card-body">
+                                    <p class="card-title">Detailed Report</p>
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-xl-3 ">
+                                            <div class="ml-xl-4">
+                                                <h1 id="total_urls" align="center">number of urls </h1>
+                                                <p class="alert-success" align="center">Urls approved</p>
+                                                <h6 class="font-weight-light mb-xl-4">ID Claim <br><b id="id_claim" style="font-weight: bold"></b></h6>
+                                                <h6 class="font-weight-light mb-xl-4"><b id="type_content" style="font-weight: bold"></b> </h6>
+                                                <p class="text-muted mb-2 mb-xl-0">
+                                                    This report was sent and approved on <b id="date_claim" style="font-weight: bold"></b>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-xl-9">
+                                            <div class="row">
+                                                <div class="form-text">
+                                                    <textarea id="urls_claim" style="height: 350px; width: 100%" readonly> </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <b>Nicks: </b>
+                    {% for nick in for_nicks %}
+                        - {{ nick }}
+                    {% endfor %}
+                    |   <b>Pages: </b>
+                    {% for pages in for_pages %}
+                        {{ pages }}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'dmca/js_tables.html' %}
+    <script src="{% static 'js/dataTables.dateTime.min.js' %}"></script>
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <script src="{% static 'functions/clients/reports_list.js' %}"></script>
+
+{% endblock %}
