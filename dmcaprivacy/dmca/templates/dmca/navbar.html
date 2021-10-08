@@ -21,50 +21,58 @@
       </li>
     </ul>
     <ul class="navbar-nav navbar-nav-right">
+
+
+
+
+
+
       <li class="nav-item dropdown mr-1">
         <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
           <i class="ti-email mx-0"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
-          <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-          <a class="dropdown-item">
-            <div class="item-thumbnail">
-                <img src="{% static 'images/faces/face28.jpg' %}" alt="image" class="profile-pic">
+          <p class="mb-0 font-weight-normal float-left dropdown-header">Last five reports</p>
+
+
+            <div id="divbtnmodal">
+            {% for five in last_five_google %}
+
+                <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+                    <input id="idclaim" type="hidden" value="{{ five.id_clai_gore }}" >
+                    <input id="numberurls" type="hidden" value="{{ five.cant_urls_gore }}">
+                    <input id="typeofclaim" type="hidden" value="{{ five.type_clai_gore }}">
+                    <input id="dateclaim" type="hidden" value="{{ five.date_gore }}">
+                    <input id="urls" type="hidden" value="{{ five.urls_gore }}">
+                    <div class="item-thumbnail">
+                        {% if five.type_clai_gore == 'DMCA-IMAGES' %}
+                            <i class="far fa-file-image fa-2x"></i>
+                        {% else %}
+                            <i class="fas fa-film fa-2x"></i>
+                        {% endif %}
+                    </div>
+                    <div class="item-content flex-grow">
+                      <h6 class="ellipsis font-weight-normal">
+                          {{ five.id_clai_gore }}
+                      </h6>
+                      <p class="font-weight-light small-text text-muted mb-0">
+                          {{  five.date_gore }}
+                      </p>
+                    </div>
+                </a>
+
+            {% endfor %}
             </div>
-            <div class="item-content flex-grow">
-              <h6 class="ellipsis font-weight-normal">David Grey
-              </h6>
-              <p class="font-weight-light small-text text-muted mb-0">
-                The meeting is cancelled
-              </p>
-            </div>
-          </a>
-          <a class="dropdown-item">
-            <div class="item-thumbnail">
-                <img src="{% static 'images/faces/face28.jpg' %}" alt="image" class="profile-pic">
-            </div>
-            <div class="item-content flex-grow">
-              <h6 class="ellipsis font-weight-normal">Tim Cook
-              </h6>
-              <p class="font-weight-light small-text text-muted mb-0">
-                New product launch
-              </p>
-            </div>
-          </a>
-          <a class="dropdown-item">
-            <div class="item-thumbnail">
-                <img src="{% static 'images/faces/face28.jpg' %}" alt="image" class="profile-pic">
-            </div>
-            <div class="item-content flex-grow">
-              <h6 class="ellipsis font-weight-normal"> Johnson
-              </h6>
-              <p class="font-weight-light small-text text-muted mb-0">
-                Upcoming board meeting
-              </p>
-            </div>
-          </a>
+
+
+
+
         </div>
       </li>
+
+
+
+
       <li class="nav-item dropdown">
         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
           <i class="ti-bell mx-0"></i>
@@ -159,3 +167,57 @@
     </button>
   </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <div>
+            <img src="{% static "images/Logo-dmcaprivacy.png" %}" width="120px" height="28px" >
+          </div>
+          <br>
+        <h6 class="modal-title" id="exampleModalLabel" style="margin-left: 5%;">Modal title</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="card-title">Detailed Report</p>
+
+            <div class="container">
+                <div class="row">
+                        <div class="col-sm">
+                            <h4 id="cant_urls" align="center">number of urls </h4>
+                            <p class="alert-success" align="center">Urls approved</p>
+                        </div>
+                        <div class="col-sm">
+                            <h6 class="font-weight-light"><b id="name_tube_page" style="font-weight: bold">Type of claim</b> </h6>
+
+                        </div>
+                    <div class="col-sm">
+                      <p class="text-muted mb-2 mb-xl-0">
+                                This report was sent and approved on <b id="date_tube" style="font-weight: bold"> date of the tube</b>
+                            </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm form-text">
+                            <textarea id="tube_urls" style="height: 200px; width: 100%" readonly> </textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

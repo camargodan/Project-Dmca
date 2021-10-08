@@ -14,9 +14,9 @@
                         <h4 class="font-weight-bold mb-0">DMCAprivacy dashboard</h4>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary btn-icon-text btn-rounded">
-                            <i class="ti-clipboard btn-icon-prepend"></i>Report
-                        </button>
+                        <a role="button" href="{% url 'reports_list' %}" type="button" class="btn btn-primary btn-icon-text btn-rounded">
+                            <i class="ti-files btn-icon-prepend"></i>Report
+                        </a>
                     </div>
                 </div>
             </div>
@@ -152,6 +152,30 @@
 
 
 {% block extra_body %}
+{#        {% for three in last_three_google %}#}
+{#            <!-- Modal -->#}
+{#            <div class="modal fade" id="exampleModal{{three.id_goog_repo}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#              <div class="modal-dialog" role="document">#}
+{#                <div class="modal-content">#}
+{#                  <div class="modal-header">#}
+{#                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>#}
+{#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                      <span aria-hidden="true">&times;</span>#}
+{#                    </button>#}
+{#                  </div>#}
+{#                  <div class="modal-body">#}
+{#                    <h1>aqui estamos mi rey</h1>#}
+{#                  </div>#}
+{#                  <div class="modal-footer">#}
+{#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+{#                    <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#    {% endfor %}#}
+
+
     {# styles for the charts#}
     <style>
         .this_month_div{
@@ -163,6 +187,7 @@
         .two_month_div{
             display: none;
         }
+
     </style>
 
     {# All the scripts for the charts#}
@@ -396,6 +421,30 @@ $(document).ready(function(){
             options: PieOptions
         });
     }
+
+
+    $('#divbtnmodal')
+        .on('click', 'a', function (){
+            var idclaim = $( this ).find("#idclaim").val();
+            var numberurls = $( this ).find("#numberurls").val();
+            var typeofclaim = $( this ).find("#typeofclaim").val();
+            var dateclaim = $( this ).find("#dateclaim").val();
+            var urls = $( this ).find("#urls").val();
+
+            document.getElementById("exampleModalLabel").innerHTML = idclaim;
+            document.getElementById("cant_urls").innerHTML = numberurls;
+            document.getElementById("name_tube_page").innerHTML = typeofclaim;
+            document.getElementById("date_tube").innerHTML = dateclaim;
+            document.getElementById("tube_urls").innerHTML = urls;
+
+            $('#exampleModal').modal('show');
+        });
+
 });
 </script>
 {% endblock %}
+
+
+
+
+
