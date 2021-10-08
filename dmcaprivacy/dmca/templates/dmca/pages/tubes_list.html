@@ -37,14 +37,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
                     <div class="row">
                         <div class="col-md-12 grid-margin stretch-card">
-
                             <div class="card position-relative">
                                 <div class="card-body">
                                     <p class="card-title">Detailed Report</p>
-
                                     <div class="container">
                                         <div class="row">
                                                 <div class="col-sm">
@@ -53,7 +50,6 @@
                                                 </div>
                                                 <div class="col-sm">
                                                     <h4 class="font-weight-light"><b id="name_tube_page" style="font-weight: bold"></b> </h4>
-
                                                 </div>
                                             <div class="col-sm">
                                               <p class="text-muted mb-2 mb-xl-0">
@@ -74,7 +70,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <b>Nicks: </b>
                     {% for nick in for_nicks %}
@@ -84,13 +79,10 @@
                     {% for pages in for_pages %}
                         {{ pages }}
                     {% endfor %}
-
                 </div>
             </div>
         </div>
     </div>
-
     {% include 'dmca/js_tables.html' %}
     <script src="{% static 'functions/clients/tubes_list.js' %}"></script>
-
 {% endblock %}
