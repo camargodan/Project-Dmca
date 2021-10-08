@@ -121,6 +121,11 @@ class Client(LoginRequiredMixin, TemplateView):
         context['two_month_images'] = two_month_images
         context['two_month_content'] = two_month_content
 
+        last_three = GoogleReports.objects.filter(clients_id_clie=client.id_clie).order_by('-id_goog_repo')[:5]
+        last_three_google = reversed(last_three)
+        context['last_five_google'] = last_three_google
+        context['last_five_google2'] = last_three_google
+
         return context
 
 
