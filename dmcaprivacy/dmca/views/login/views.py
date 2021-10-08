@@ -121,31 +121,6 @@ class Client(LoginRequiredMixin, TemplateView):
         context['two_month_images'] = two_month_images
         context['two_month_content'] = two_month_content
 
-        last_five = GoogleReports.objects.filter(clients_id_clie=client.id_clie).order_by('-date_gore')[:5]
-        context['last_five_google'] = last_five
-
-        data = {}
-        data = []
-        for e in TubeReports.objects.filter(clients_id_clie=client.id_clie):
-            encode_reports = jsonpickle.encode(e, unpicklable=False)
-            reports_json = json.loads(encode_reports)
-            dest = {}
-            dest.update(reports_json)
-            for a in Nicks.objects.filter(clients_id_clie=e.clients_id_clie):
-                encodenicks = jsonpickle.encode(a, unpicklable=False)
-                nicksjson = json.loads(encodenicks)
-                dest.update(nicksjson)
-            for b in TubePages.objects.filter(id_tube_pages=e.id_tube_pages_id):
-                encodepage = jsonpickle.encode(b, unpicklable=False)
-                pagejson = json.loads(encodepage)
-                dest.update(pagejson)
-            data.append(dest)
-        context['last_tubes'] = data
-
-
-
-
-
         return context
 
 
