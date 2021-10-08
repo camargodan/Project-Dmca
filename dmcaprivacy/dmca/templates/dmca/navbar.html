@@ -24,20 +24,21 @@
 
 
 
-
-
-
       <li class="nav-item dropdown mr-1">
         <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-          <i class="ti-email mx-0"></i>
+            <i class="fas fa-list-ol"></i>
+            {% if last_five_google %}
+                <span class="count"></span>
+            {% endif %}
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
-          <p class="mb-0 font-weight-normal float-left dropdown-header">Last five reports</p>
-
-
+            {% if not last_five_google %}
+                <p class="mb-0 font-weight-normal float-left dropdown-header">There's not reports in the past five days. </p>
+            {% else %}
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Last five reports</p>
+            {% endif %}
             <div id="divbtnmodal">
             {% for five in last_five_google %}
-
                 <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
                     <input id="idclaim" type="hidden" value="{{ five.id_clai_gore }}" >
                     <input id="numberurls" type="hidden" value="{{ five.cant_urls_gore }}">
@@ -60,65 +61,46 @@
                       </p>
                     </div>
                 </a>
-
             {% endfor %}
             </div>
-
-
-
-
         </div>
       </li>
 
-
-
-
       <li class="nav-item dropdown">
         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-          <i class="ti-bell mx-0"></i>
-          <span class="count"></span>
+          <i class="far fa-copyright mx-0"></i>
+            {% if last_tubes %}
+                <span class="count"></span>
+            {% endif %}
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
-          <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-          <a class="dropdown-item">
-            <div class="item-thumbnail">
-              <div class="item-icon bg-success">
-                <i class="ti-info-alt mx-0"></i>
-              </div>
-            </div>
-            <div class="item-content">
-              <h6 class="font-weight-normal">Application Error</h6>
-              <p class="font-weight-light small-text mb-0 text-muted">
-                Just now
-              </p>
-            </div>
-          </a>
-          <a class="dropdown-item">
-            <div class="item-thumbnail">
-              <div class="item-icon bg-warning">
-                <i class="ti-settings mx-0"></i>
-              </div>
-            </div>
-            <div class="item-content">
-              <h6 class="font-weight-normal">Settings</h6>
-              <p class="font-weight-light small-text mb-0 text-muted">
-                Private message
-              </p>
-            </div>
-          </a>
-          <a class="dropdown-item">
-            <div class="item-thumbnail">
-              <div class="item-icon bg-info">
-                <i class="ti-user mx-0"></i>
-              </div>
-            </div>
-            <div class="item-content">
-              <h6 class="font-weight-normal">New user registration</h6>
-              <p class="font-weight-light small-text mb-0 text-muted">
-                2 days ago
-              </p>
-            </div>
-          </a>
+            {% if not last_tubes %}
+                <p class="mb-0 font-weight-normal float-left dropdown-header">There's not tubes in the past five days. </p>
+            {% else %}
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Last five tubes</p>
+            {% endif %}
+
+          <div id="divbtnmodal2">
+            {% for five in last_tubes %}
+                <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal2">
+                    <input id="date_tube" type="hidden" value="{{ five.date_tube }}" >
+                    <input id="tube_urls" type="hidden" value="{{ five.tube_urls }}">
+                    <input id="cant_urls" type="hidden" value="{{ five.cant_urls }}">
+                    <input id="name_tube_page" type="hidden" value="{{ five.name_tube_page }}">
+                    <div class="item-thumbnail">
+                    <i class="fas fa-eraser fa-2x"></i>
+                    </div>
+                    <div class="item-content flex-grow">
+                      <h6 class="ellipsis font-weight-normal">
+                          {{ five.name_tube_page }}
+                      </h6>
+                      <p class="font-weight-light small-text text-muted mb-0">
+                          {{  five.date_tube }}
+                      </p>
+                    </div>
+                </a>
+            {% endfor %}
+          </div>
         </div>
       </li>
 
@@ -168,7 +150,7 @@
   </div>
 </nav>
 
-<!-- Modal -->
+<!-- Modal google reports -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -183,21 +165,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="card-title">Detailed Report</p>
-
+        <p class="card-title">Detailed Google Report</p>
             <div class="container">
                 <div class="row">
                         <div class="col-sm">
-                            <h4 id="cant_urls" align="center">number of urls </h4>
+                            <h4 id="goog_cant" align="center">number of urls </h4>
                             <p class="alert-success" align="center">Urls approved</p>
                         </div>
                         <div class="col-sm">
-                            <h6 class="font-weight-light"><b id="name_tube_page" style="font-weight: bold">Type of claim</b> </h6>
+                            <h6 class="font-weight-light"><b id="type_claim" style="font-weight: bold">Type of claim</b> </h6>
 
                         </div>
                     <div class="col-sm">
                       <p class="text-muted mb-2 mb-xl-0">
-                                This report was sent and approved on <b id="date_tube" style="font-weight: bold"> date of the tube</b>
+                                This report was sent and approved on <b id="date_goog" style="font-weight: bold"> date of the tube</b>
                             </p>
                     </div>
                 </div>
@@ -205,12 +186,58 @@
             <div class="col-md-12">
                     <div class="row">
                         <div class="col-sm form-text">
-                            <textarea id="tube_urls" style="height: 200px; width: 100%" readonly> </textarea>
+                            <textarea id="urls_goog" style="height: 200px; width: 100%" readonly> </textarea>
                         </div>
                     </div>
                 </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
+
+<!-- Modal tube reports-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <div>
+            <img src="{% static "images/Logo-dmcaprivacy.png" %}" width="120px" height="28px" >
+          </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="card-title">Detailed Tube Report</p>
+            <div class="container">
+                <div class="row">
+                        <div class="col-sm">
+                            <h4 id="urls_cant" align="center">number of urls </h4>
+                            <p class="alert-success" align="center">Urls approved</p>
+                        </div>
+                        <div class="col-sm">
+                            <h6 class="font-weight-light"><b id="name_tube" style="font-weight: bold">Name of the page</b> </h6>
+
+                        </div>
+                    <div class="col-sm">
+                      <p class="text-muted mb-2 mb-xl-0">
+                                This report was sent and approved on <b id="tube_date" style="font-weight: bold"> date of the tube</b>
+                            </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm form-text">
+                            <textarea id="urls_tube" style="height: 200px; width: 100%" readonly> </textarea>
+                        </div>
+                    </div>
+                </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
