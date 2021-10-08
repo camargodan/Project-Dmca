@@ -26,5 +26,41 @@
     <!-- container-scroller -->
 {% include 'dmca/js.html' %}
 {% block extra_body %}  {% endblock %}
+  <script>
+$(document).ready(function(){
+    $('#divbtnmodal')
+        .on('click', 'a', function (){
+            var idclaim = $( this ).find("#idclaim").val();
+            var numberurls = $( this ).find("#numberurls").val();
+            var typeofclaim = $( this ).find("#typeofclaim").val();
+            var dateclaim = $( this ).find("#dateclaim").val();
+            var urls = $( this ).find("#urls").val();
+
+            document.getElementById("exampleModalLabel").innerHTML = idclaim;
+            document.getElementById("goog_cant").innerHTML = numberurls;
+            document.getElementById("type_claim").innerHTML = typeofclaim;
+            document.getElementById("date_goog").innerHTML = dateclaim;
+            document.getElementById("urls_goog").innerHTML = urls;
+
+            $('#exampleModal').modal('show');
+        });
+
+    $('#divbtnmodal2')
+        .on('click', 'a', function (){
+            var date_tube = $( this ).find("#date_tube").val();
+            var tube_urls = $( this ).find("#tube_urls").val();
+            var cant_urls = $( this ).find("#cant_urls").val();
+            var name_tube_page = $( this ).find("#name_tube_page").val();
+
+            document.getElementById("tube_date").innerHTML = date_tube;
+            document.getElementById("urls_tube").innerHTML = tube_urls;
+            document.getElementById("urls_cant").innerHTML = cant_urls;
+            document.getElementById("name_tube").innerHTML = name_tube_page;
+
+            $('#exampleModal2').modal('show');
+        });
+
+});
+</script>
 </body>
 </html>
