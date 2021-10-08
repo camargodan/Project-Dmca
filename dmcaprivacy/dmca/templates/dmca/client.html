@@ -110,7 +110,7 @@
                         <div class="d-flex justify-content-center justify-content-md-end">
                             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                                 <button class="btn btn-lg alert-info dropdown-toggle rounded-0 border-top-0 border-bottom-0" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                    <b>Reports Charts</b>
+                                  <i class="far fa-chart-bar"></i>  <b>Reports Charts</b>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
                                     <a class="dropdown-item" id="last_week_btn" href="#">Last week</a>
@@ -150,32 +150,7 @@
     </div>
 {% endblock content %}
 
-
 {% block extra_body %}
-{#        {% for three in last_three_google %}#}
-{#            <!-- Modal -->#}
-{#            <div class="modal fade" id="exampleModal{{three.id_goog_repo}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#              <div class="modal-dialog" role="document">#}
-{#                <div class="modal-content">#}
-{#                  <div class="modal-header">#}
-{#                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>#}
-{#                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-{#                      <span aria-hidden="true">&times;</span>#}
-{#                    </button>#}
-{#                  </div>#}
-{#                  <div class="modal-body">#}
-{#                    <h1>aqui estamos mi rey</h1>#}
-{#                  </div>#}
-{#                  <div class="modal-footer">#}
-{#                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
-{#                    <button type="button" class="btn btn-primary">Save changes</button>#}
-{#                  </div>#}
-{#                </div>#}
-{#              </div>#}
-{#            </div>#}
-{#    {% endfor %}#}
-
-
     {# styles for the charts#}
     <style>
         .this_month_div{
@@ -432,12 +407,27 @@ $(document).ready(function(){
             var urls = $( this ).find("#urls").val();
 
             document.getElementById("exampleModalLabel").innerHTML = idclaim;
-            document.getElementById("cant_urls").innerHTML = numberurls;
-            document.getElementById("name_tube_page").innerHTML = typeofclaim;
-            document.getElementById("date_tube").innerHTML = dateclaim;
-            document.getElementById("tube_urls").innerHTML = urls;
+            document.getElementById("goog_cant").innerHTML = numberurls;
+            document.getElementById("type_claim").innerHTML = typeofclaim;
+            document.getElementById("date_goog").innerHTML = dateclaim;
+            document.getElementById("urls_goog").innerHTML = urls;
 
             $('#exampleModal').modal('show');
+        });
+
+    $('#divbtnmodal2')
+        .on('click', 'a', function (){
+            var date_tube = $( this ).find("#date_tube").val();
+            var tube_urls = $( this ).find("#tube_urls").val();
+            var cant_urls = $( this ).find("#cant_urls").val();
+            var name_tube_page = $( this ).find("#name_tube_page").val();
+
+            document.getElementById("tube_date").innerHTML = date_tube;
+            document.getElementById("urls_tube").innerHTML = tube_urls;
+            document.getElementById("urls_cant").innerHTML = cant_urls;
+            document.getElementById("name_tube").innerHTML = name_tube_page;
+
+            $('#exampleModal2').modal('show');
         });
 
 });

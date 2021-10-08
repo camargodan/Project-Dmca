@@ -61,9 +61,6 @@ class Client(LoginRequiredMixin, TemplateView):
         tubes = TubeReports.objects.filter(clients_id_clie_id=client.id_clie).aggregate(Sum('cant_urls'))
         total = google['cant_urls_gore__sum'] + content['cant_urls_gore__sum'] + tubes['cant_urls__sum']
 
-        for_pages = Pages.objects.filter(nicks__clients_id_clie=client.id_clie)
-        for_nicks = Nicks.objects.filter(pages__nicks__clients_id_clie=client.id_clie).distinct()
-
         context = super().get_context_data(**kwargs)
         context['title'] = 'List of Google Reports'
         context['list_url'] = reverse_lazy('manage_reports')
@@ -74,6 +71,9 @@ class Client(LoginRequiredMixin, TemplateView):
         context['images'] = google
         context['content'] = content
         context['tubes'] = tubes
+
+        for_pages = Pages.objects.filter(nicks__clients_id_clie=client.id_clie)
+        for_nicks = Nicks.objects.filter(pages__nicks__clients_id_clie=client.id_clie).distinct()
         context['for_nicks'] = for_nicks
         context['for_pages'] = for_pages
 
@@ -121,10 +121,30 @@ class Client(LoginRequiredMixin, TemplateView):
         context['two_month_images'] = two_month_images
         context['two_month_content'] = two_month_content
 
-        last_three = GoogleReports.objects.filter(clients_id_clie=client.id_clie).order_by('-id_goog_repo')[:5]
-        last_three_google = reversed(last_three)
-        context['last_five_google'] = last_three_google
-        context['last_five_google2'] = last_three_google
+        last_five = GoogleReports.objects.filter(clients_id_clie=client.id_clie).order_by('-date_gore')[:5]
+        context['last_five_google'] = last_five
+
+        data = {}
+        data = []
+        for e in TubeReports.objects.filter(clients_id_clie=client.id_clie):
+            encode_reports = jsonpickle.encode(e, unpicklable=False)
+            reports_json = json.loads(encode_reports)
+            dest = {}
+            dest.update(reports_json)
+            for a in Nicks.objects.filter(clients_id_clie=e.clients_id_clie):
+                encodenicks = jsonpickle.encode(a, unpicklable=False)
+                nicksjson = json.loads(encodenicks)
+                dest.update(nicksjson)
+            for b in TubePages.objects.filter(id_tube_pages=e.id_tube_pages_id):
+                encodepage = jsonpickle.encode(b, unpicklable=False)
+                pagejson = json.loads(encodepage)
+                dest.update(pagejson)
+            data.append(dest)
+        context['last_tubes'] = data
+
+
+
+
 
         return context
 
