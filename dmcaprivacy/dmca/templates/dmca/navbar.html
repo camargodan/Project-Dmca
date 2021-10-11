@@ -9,6 +9,7 @@
       <span class="ti-view-list"></span>
     </button>
     <ul class="navbar-nav navbar-nav-right">
+    {% if user.is_client %}
       <li class="nav-item dropdown mr-1">
         <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
             <i class="fas fa-list-ol"></i>
@@ -88,7 +89,7 @@
           </div>
         </div>
       </li>
-
+    {% endif %}
       <li class="nav-item">
         <div>
           {% block raw %}
