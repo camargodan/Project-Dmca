@@ -60,10 +60,10 @@ $(function () {
     $('#list_data tbody')
         .on('click', 'tr', 'a', function (){
             var data = tblClient.row( this ).data();
-            document.getElementById("cant_urls").innerHTML = data.cant_urls;
-            document.getElementById("name_tube_page").innerHTML = data.name_tube_page;
-            document.getElementById("date_tube").innerHTML = data.date_tube;
-            document.getElementById("tube_urls").innerHTML = data.tube_urls;
+            document.getElementById("num_url").innerHTML = data.cant_urls;
+            document.getElementById("tube_name").innerHTML = data.name_tube_page;
+            document.getElementById("date_tub").innerHTML = data.date_tube;
+            document.getElementById("url_tubes").innerHTML = data.tube_urls;
             $('#myModalClient').modal('show');
         });
 });

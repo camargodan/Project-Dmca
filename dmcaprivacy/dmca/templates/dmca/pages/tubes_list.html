@@ -2,6 +2,9 @@
 {% load static %}
 {% load crispy_forms_filters %}
 
+{% block extra_head %} {% include 'dmca/css_tables.html' %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap5.min.css' %}">
+{% endblock %}
 {% block title %} Tubes Reports {% endblock %}
 {% block title_content %} Tubes Reports {% endblock %}
 {#    CONTENT   #}
@@ -45,15 +48,15 @@
                                     <div class="container">
                                         <div class="row">
                                                 <div class="col-sm">
-                                                    <h1 id="cant_urls" align="center">number of urls </h1>
+                                                    <h1 id="num_url" align="center">number of urls </h1>
                                                     <p class="alert-success" align="center">Urls approved</p>
                                                 </div>
                                                 <div class="col-sm">
-                                                    <h4 class="font-weight-light"><b id="name_tube_page" style="font-weight: bold"></b> </h4>
+                                                    <h4 class="font-weight-light"><b id="tube_name" style="font-weight: bold"></b> </h4>
                                                 </div>
                                             <div class="col-sm">
                                               <p class="text-muted mb-2 mb-xl-0">
-                                                        This report was sent and approved on <b id="date_tube" style="font-weight: bold"></b>
+                                                        This report was sent and approved on <b id="date_tub" style="font-weight: bold"></b>
                                                     </p>
                                             </div>
                                         </div>
@@ -61,7 +64,7 @@
                                     <div class="col-md-12">
                                             <div class="row">
                                                 <div class="col-sm form-text">
-                                                    <textarea id="tube_urls" style="height: 250px; width: 100%" readonly> </textarea>
+                                                    <textarea id="url_tubes" style="height: 250px; width: 100%" readonly> </textarea>
                                                 </div>
                                             </div>
                                         </div>
