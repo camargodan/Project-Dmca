@@ -7,6 +7,9 @@ def custom_processor(request):
     if not request.user.id:
         data = 'none'
         last_five = 'none'
+    elif request.user.is_worker or request.user.is_superuser:
+        data = 'none'
+        last_five = 'none'
     else:
         client = Clients.objects.get(user=request.user.id)
         last_five = GoogleReports.objects.filter(clients_id_clie=client.id_clie).order_by('-date_gore')[:5]

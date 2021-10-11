@@ -1,0 +1,240 @@
+{# styles for the charts#}
+    <style>
+        .this_month_div{display: none;}
+        .last_month_div{display: none;}
+        .two_month_div{display: none;}
+    </style>
+    {# All the scripts for the charts#}
+<script>
+$(document).ready(function(){
+    const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+    const randomRGB = () => `rgba(${randomNum()}, ${randomNum()}, ${randomNum()}, 0.6)`;
+    const randomRGBBorder = () => `rgba(200, 200, 200, 1)`;
+
+    $("#last_week_btn").click(function(){
+        $('.this_month_div').hide(1000);
+        $('.last_month_div').hide(1000);
+        $('.two_month_div').hide(1000);
+        $('.last_week_div').slideToggle("slow");
+    });
+
+    $("#this_month_btn").click(function(){
+        $('.last_week_div').hide(1000);
+        $('.last_month_div').hide(1000);
+        $('.two_month_div').hide(1000);
+        $('.this_month_div').slideToggle("slow");
+    });
+    $("#last_month_btn").click(function(){
+        $('.last_week_div').hide(1000);
+        $('.this_month_div').hide(1000);
+        $('.two_month_div').hide(1000);
+        $('.last_month_div').slideToggle("slow");
+    });
+    $("#two_month_btn").click(function(){
+        $('.last_week_div').hide(1000);
+        $('.this_month_div').hide(1000);
+        $('.last_month_div').hide(1000);
+        $('.two_month_div').slideToggle("slow");
+    });
+
+    /* ChartJS
+      * -------
+      * Data and config for chartjs
+      */
+    'use strict';
+    var data = {
+        labels: [{%for data in last_week%}'{{data.date_gore}}',{%endfor%}],
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in last_week%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in last_week%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie = {
+        datasets: [{
+            data: ['{{ last_week_images.cant_urls_gore__sum }}', '{{ last_week_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
+
+
+    var data2 = {
+        labels: [{%for data in this_month%}'{{data.date_gore}}',{%endfor%}], //loop through queryset,
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in this_month%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in this_month%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie2 = {
+        datasets: [{
+            data: ['{{ this_month_images.cant_urls_gore__sum }}', '{{ this_month_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
+
+    var data3 = {
+        labels: [{%for data in last_month%}'{{data.date_gore}}',{%endfor%}],
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in last_month%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in last_month%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie3 = {
+        datasets: [{
+            data: ['{{ last_month_images.cant_urls_gore__sum }}', '{{ last_month_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
+
+    var data4 = {
+        labels: [{%for data in two_month%}'{{data.date_gore}}',{%endfor%}],
+        datasets: [{
+            label: "# of Url's approved",
+            data: [{%for data in two_month%}'{{data.cant_urls_gore}}',{%endfor%}],
+            backgroundColor: [{%for data in two_month%} randomRGB(),{%endfor%}],
+            borderColor: [randomRGBBorder()],
+            borderWidth: 1,
+            fill: false
+        }]
+    };
+    var dataPie4 = {
+        datasets: [{
+            data: ['{{ two_month_images.cant_urls_gore__sum }}', '{{ two_month_content.cant_urls_gore__sum }}'],
+            backgroundColor: [randomRGB(), randomRGB()],
+            borderColor: [randomRGBBorder()],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'DMCA-IMAGES',
+            'DMCA-CONTENT',
+        ]
+    };
+
+    var options = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        legend: {
+            display: false
+        },
+        elements: {
+            point: {
+                radius: 0
+            }
+        }
+    };
+
+    var PieOptions = {
+        responsive: true,
+        animation: {
+            animateScale: true,
+            animateRotate: true
+        }
+    };
+
+    // Get context with jQuery - using jQuery's .get() method.
+    if ($("#barChart").length) {
+        var barChartCanvas = $("#barChart").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+    }
+    if ($("#barChart2").length) {
+        var barChartCanvas2 = $("#barChart2").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas2, {
+            type: 'bar',
+            data: data2,
+            options: options
+        });
+    }
+    if ($("#barChart3").length) {
+        var barChartCanvas3 = $("#barChart3").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas3, {
+            type: 'bar',
+            data: data3,
+            options: options
+        });
+    }
+    if ($("#barChart4").length) {
+        var barChartCanvas4 = $("#barChart4").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var barChart = new Chart(barChartCanvas4, {
+            type: 'bar',
+            data: data4,
+            options: options
+        });
+    }
+
+    if ($("#pieChart").length) {
+        var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+        var pieChart = new Chart(pieChartCanvas, {
+            type: 'pie',
+            data: dataPie,
+            options: PieOptions
+        });
+    }
+    if ($("#pieChart2").length) {
+        var pieChartCanvas2 = $("#pieChart2").get(0).getContext("2d");
+        var pieChart2 = new Chart(pieChartCanvas2, {
+            type: 'pie',
+            data: dataPie2,
+            options: PieOptions
+        });
+    }
+    if ($("#pieChart3").length) {
+        var pieChartCanvas3 = $("#pieChart3").get(0).getContext("2d");
+        var pieChart3 = new Chart(pieChartCanvas3, {
+            type: 'pie',
+            data: dataPie3,
+            options: PieOptions
+        });
+    }
+    if ($("#pieChart4").length) {
+        var pieChartCanvas4 = $("#pieChart4").get(0).getContext("2d");
+        var pieChart4 = new Chart(pieChartCanvas4, {
+            type: 'pie',
+            data: dataPie4,
+            options: PieOptions
+        });
+    }
+
+});
+</script>
