@@ -5,9 +5,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.list import ListView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from ...forms import NicksCreateForm, NickEditForm
-from ...models import Nicks, Clients, Pages, NicksPages
+from ...models import Nicks, Clients
 from ...mixins import SuperuserRequired
 
 import json
