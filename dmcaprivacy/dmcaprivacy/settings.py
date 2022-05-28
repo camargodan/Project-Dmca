@@ -42,10 +42,14 @@ INSTALLED_APPS = [
     'accounts',
     'dmca',
     'crispy_forms',
+    'bootstrap_modal_forms',
+
     # 3rd party
     'allauth',  # new
     'allauth.account',  # new
     'allauth.socialaccount',  # new
+    'django_apscheduler',
+
 
     # Providers
     'allauth.socialaccount.providers.facebook',

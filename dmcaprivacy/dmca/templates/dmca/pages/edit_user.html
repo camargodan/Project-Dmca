@@ -1,0 +1,32 @@
+{% extends 'dmca/body_content.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %} Edit User {% endblock title %}
+
+{% block title_content %}Edit User{% endblock title_content %}
+
+{% block form_content %}
+    <form enctype="multipart/form-data" method="post">{% csrf_token %}
+          {{ form|crispy }}
+        <div>
+          <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+            Update</button>
+        </div>
+    </form>
+{% endblock form_content %}
+
+{% block description_content %}
+Complete your profile with valid information. Name and last name only
+letters.<br>
+Adding a profile image you can help us to identify your material and be sure
+that is you who we are working at.
+<br><br>
+  <div align="center" >
+    {% if user.imag_clie %}
+      <img src="{{ user.imag_clie.url }}" class = "img-responsive" width = "auto" height="300px" alt="profile">
+    {% endif %}
+  </div>
+
+{% endblock description_content %}
+

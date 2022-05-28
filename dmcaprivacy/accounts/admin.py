@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'imag_clie')}),
-        ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active', 'is_client', 'is_worker',)}),
+        ('Permissions', {'fields': ('is_superuser', 'is_staff', 'is_active', 'is_client', 'is_worker', 'assign')}),
         ('Login info', {'fields': ('date_joined', 'last_login', 'slug',)}),
     )
     prepopulated_fields = {'slug': ('username',)}
