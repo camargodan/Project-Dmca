@@ -1,17 +1,12 @@
-from datetime import datetime, timedelta, timezone, date
-import jsonpickle
+from datetime import timedelta, date
 from django.contrib.auth import get_user_model
-from django.core import serializers
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, JsonResponse
-from jsonpickle import json
+from django.http import HttpResponseRedirect
 from django.db.models import Sum
-
-from ...mixins import SuperuserRequired
 from ...models import Nicks, Clients, Plans, GoogleReports, TubePages, TubeReports, Pages
 User = get_user_model()
 
@@ -252,93 +247,3 @@ class Client(LoginRequiredMixin, TemplateView):
         except Exception as e:
             data['error'] = str(e)
         return data
-
-
-class ReportsList(ListView, SuperuserRequired):
-    model = GoogleReports
-    template_name = 'dmca/pages/reports_list.html'
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    @method_decorator(csrf_exempt)
-    def post(self, request, *args, **kwargs):
-        client = Clients.objects.get(user=self.request.user.id)
-        try:
-            action = request.POST['action']
-            data = {}
-            if action == 'searchdata':
-                data = []
-                for e in GoogleReports.objects.filter(clients_id_clie=client.id_clie):
-                    encode_reports = jsonpickle.encode(e, unpicklable=False)
-                    reports_json = json.loads(encode_reports)
-                    dest = {}
-                    dest.update(reports_json)
-                    for a in Nicks.objects.filter(clients_id_clie=e.clients_id_clie):
-                        encodenicks = jsonpickle.encode(a, unpicklable=False)
-                        nicksjson = json.loads(encodenicks)
-                        dest.update(nicksjson)
-                    data.append(dest)
-            else:
-                data['error'] = 'An error has occurred'
-        except Exception as e:
-            data['error'] = str(e)
-        return JsonResponse(data, safe=False)
-
-    def get_context_data(self, **kwargs):
-        client = Clients.objects.get(user=self.request.user.id)
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'List of all Google Reports'
-        for_pages = Pages.objects.filter(nicks__clients_id_clie=client.id_clie)
-        for_nicks = Nicks.objects.filter(pages__nicks__clients_id_clie=client.id_clie).distinct()
-        context['for_nicks'] = for_nicks
-        context['for_pages'] = for_pages
-        return context
-
-
-class TubesList(ListView, SuperuserRequired):
-    model = TubeReports
-    template_name = 'dmca/pages/tubes_list.html'
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
-    @method_decorator(csrf_exempt)
-    def post(self, request, *args, **kwargs):
-        client = Clients.objects.get(user=self.request.user.id)
-        try:
-            action = request.POST['action']
-            data = {}
-            if action == 'searchdata':
-                data = []
-                for e in TubeReports.objects.filter(clients_id_clie_id=client.id_clie):
-                    encode_reports = jsonpickle.encode(e, unpicklable=False)
-                    reports_json = json.loads(encode_reports)
-                    dest = {}
-                    dest.update(reports_json)
-                    for a in Nicks.objects.filter(clients_id_clie=e.clients_id_clie):
-                        encodenicks = jsonpickle.encode(a, unpicklable=False)
-                        nicksjson = json.loads(encodenicks)
-                        dest.update(nicksjson)
-                    for b in TubePages.objects.filter(id_tube_pages=e.id_tube_pages_id):
-                        encodepage = jsonpickle.encode(b, unpicklable=False)
-                        pagejson = json.loads(encodepage)
-                        dest.update(pagejson)
-                    data.append(dest)
-            else:
-                data['error'] = 'An error has occurred'
-        except Exception as e:
-            data['error'] = str(e)
-        return JsonResponse(data, safe=False)
-
-    def get_context_data(self, **kwargs):
-        client = Clients.objects.get(user=self.request.user.id)
-        for_pages = Pages.objects.filter(nicks__clients_id_clie=client.id_clie)
-        for_nicks = Nicks.objects.filter(pages__nicks__clients_id_clie=client.id_clie).distinct()
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'List of all Tube Reports'
-        context['for_nicks'] = for_nicks
-        context['for_pages'] = for_pages
-        return context
